@@ -1,0 +1,1 @@
+Varje parkerad bil hindrar nästa bil från att parkera.

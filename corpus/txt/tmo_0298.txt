@@ -1,0 +1,1 @@
+Istället för parkering skapas parker och platser.

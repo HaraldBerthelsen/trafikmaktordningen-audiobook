@@ -1,0 +1,1 @@
+Förflyttningen i bilen sker helt isolerad.

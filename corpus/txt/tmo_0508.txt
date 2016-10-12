@@ -1,0 +1,1 @@
+Det begär efter öppna landskap som driver plankningen löper alltid risken att avstanna i en enskild öppning, som lätt stängs igen.

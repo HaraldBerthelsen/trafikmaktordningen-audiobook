@@ -1,0 +1,1 @@
+Ofta är det inte längre en människa som fattar ett beslut om att något är en säkerhetsrisk, utan ett program som analyserar rörliga bilder för att hitta oönskade beteenden.

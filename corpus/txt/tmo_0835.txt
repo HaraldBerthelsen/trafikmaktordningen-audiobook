@@ -1,0 +1,1 @@
+Genom data mining, bearbetning av stora mängder data, byggs sociogram som sedan används för att förutsäga oönskat beteende.

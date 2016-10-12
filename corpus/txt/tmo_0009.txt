@@ -1,0 +1,1 @@
+Trafikmaktordningen är en hierarki bland trafikslag, med bilen i toppen och kollektivtrafiken, fotgängarna och cyklisterna nederst, som tar sig uttryck i att dessa färdmedel tilldelas olika mycket resurser och plats.
