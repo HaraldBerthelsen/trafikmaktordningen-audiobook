@@ -1,1 +1,1 @@
-En bilist tar upp 1 000 gånger så stor tidsyta (den tid en viss yta används) som en kollektivtrafikant och den allra största delen av denna tidsyta består av parkering.
+En bilist tar upp tusen gånger så stor tidsyta (den tid en viss yta används) som en kollektivtrafikant och den allra största delen av denna tidsyta består av parkering.

@@ -23,13 +23,15 @@ Run split script: 'perl scripts/splitMasterText.pl'. Output: tmo/txt/tmo_0{1-9}.
 Corrections
 tmo/tmo.txt has been corrected manually in many ways to match spoken audio. Midsentence newlines have been removed, and sentence-final newlines have been added. There should be one sentence on each line.
 
+egrep -n [0-9] tmo/tmo.txt > tmo/numbers.txt, use to find numbers and change them to words. DONE
+
 ----------
 
 Split audio and text into sentences.
 
 Using aeneas ( https://github.com/readbeyond/aeneas ) to locate sentence boundaries in the audio files.
 
-Aeneas can be configured to shift boundaries. Boundary offset -0.200 seems to be the best setting, it moves every boundary back 200 ms. Without it, many sentences start too late. With it, there are a few cases where they instead start too early.
+Aeneas can be configured to shift boundaries.
 
 TODO: Try to automatically find cases where aeneas splits in midword..
 
@@ -61,3 +63,70 @@ sox WARN mp3: recoverable MAD error
 But the output files seem to be ok.
 
 Output: corpus/txt/tmo_{0001-1099}.txt and corpus/wav/tmo_{0001-1099}.wav
+
+----------------
+
+Find and label English or other sentences that should not be included.
+
+python3 scripts/detectLanguage.py > corpus/detectedLanguages.txt
+
+Look through the file, removing any files that are mislabelled as not Swedish,
+and then run
+
+perl scripts/removeWrongLanguageFilesFromCorpus.pl < corpus/detectedLanguages.txt
+
+
+----------------
+
+
+Build mary voice
+
+~~~
+mkdir mary_build; mkdir mary_build/wav; mkdir mary_build/text
+perl scripts/convertWavForMary.pl
+cp corpus/txt/* mary_build/text/
+
+
+(copy importMain.config if you want..)
+sh ~/git/marytts/target/marytts-builder-5.2-SNAPSHOT/bin/voiceimport.sh
+~~~
+
+First run AllophonesExtractor to check for oov words
+
+perl scripts/checkMaryxmlForWordsNotInLexicon.pl | sort | uniq -c | sort -n
+
+
+Pitchmarker and MCEPMaker only needs to be run if soundfiles have been changed
+
+EHMMLabeler is slow. When models have been trained they can then be used the next time:
+~~~
+edit database.config:
+
+EHMMLabeler.prepareAudioFiles false
+(only set to false if audio files have not been changed!)
+
+
+EHMMLabeler.doTraining false
+EHMMLabeler.startEHMMModelDir /home/harald/git/trafikmaktordningen-audiobook/mary_sv_tmo_ehmm_mod
+~~~
+
+It should now only take a minute or two to realign the files.
+
+
+
+
+
+
+
+
+
+
+
+
+
+TODO CORRECTIONS:
+
+egrep [0-9]{4} corpus/txt/*
+
+check for years, they will very often be mislabelled by mary. Compounds like 1900-talet will be especially wrong.
+There are 28 of these.

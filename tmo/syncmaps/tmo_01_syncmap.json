@@ -3,7 +3,7 @@
   {
    "begin": "0.000", 
    "children": [], 
-   "end": "9.120", 
+   "end": "9.320", 
    "id": "f000001", 
    "language": "swe", 
    "lines": [
@@ -11,9 +11,9 @@
    ]
   }, 
   {
-   "begin": "9.120", 
+   "begin": "9.320", 
    "children": [], 
-   "end": "10.800", 
+   "end": "11.000", 
    "id": "f000002", 
    "language": "swe", 
    "lines": [
@@ -21,9 +21,9 @@
    ]
   }, 
   {
-   "begin": "10.800", 
+   "begin": "11.000", 
    "children": [], 
-   "end": "14.600", 
+   "end": "14.800", 
    "id": "f000003", 
    "language": "swe", 
    "lines": [
@@ -31,9 +31,9 @@
    ]
   }, 
   {
-   "begin": "14.600", 
+   "begin": "14.800", 
    "children": [], 
-   "end": "18.240", 
+   "end": "18.440", 
    "id": "f000004", 
    "language": "swe", 
    "lines": [
@@ -41,9 +41,9 @@
    ]
   }, 
   {
-   "begin": "18.240", 
+   "begin": "18.440", 
    "children": [], 
-   "end": "39.000", 
+   "end": "39.200", 
    "id": "f000005", 
    "language": "swe", 
    "lines": [
@@ -51,9 +51,9 @@
    ]
   }, 
   {
-   "begin": "39.000", 
+   "begin": "39.200", 
    "children": [], 
-   "end": "46.880", 
+   "end": "47.080", 
    "id": "f000006", 
    "language": "swe", 
    "lines": [
@@ -61,9 +61,9 @@
    ]
   }, 
   {
-   "begin": "46.880", 
+   "begin": "47.080", 
    "children": [], 
-   "end": "54.880", 
+   "end": "55.080", 
    "id": "f000007", 
    "language": "swe", 
    "lines": [
@@ -71,9 +71,9 @@
    ]
   }, 
   {
-   "begin": "54.880", 
+   "begin": "55.080", 
    "children": [], 
-   "end": "68.920", 
+   "end": "69.120", 
    "id": "f000008", 
    "language": "swe", 
    "lines": [
@@ -81,9 +81,9 @@
    ]
   }, 
   {
-   "begin": "68.920", 
+   "begin": "69.120", 
    "children": [], 
-   "end": "86.480", 
+   "end": "86.680", 
    "id": "f000009", 
    "language": "swe", 
    "lines": [
@@ -91,9 +91,9 @@
    ]
   }, 
   {
-   "begin": "86.480", 
+   "begin": "86.680", 
    "children": [], 
-   "end": "93.280", 
+   "end": "93.480", 
    "id": "f000010", 
    "language": "swe", 
    "lines": [
@@ -101,9 +101,9 @@
    ]
   }, 
   {
-   "begin": "93.280", 
+   "begin": "93.480", 
    "children": [], 
-   "end": "99.520", 
+   "end": "99.720", 
    "id": "f000011", 
    "language": "swe", 
    "lines": [
@@ -111,9 +111,9 @@
    ]
   }, 
   {
-   "begin": "99.520", 
+   "begin": "99.720", 
    "children": [], 
-   "end": "108.360", 
+   "end": "108.560", 
    "id": "f000012", 
    "language": "swe", 
    "lines": [
@@ -121,9 +121,9 @@
    ]
   }, 
   {
-   "begin": "108.360", 
+   "begin": "108.560", 
    "children": [], 
-   "end": "120.160", 
+   "end": "120.360", 
    "id": "f000013", 
    "language": "swe", 
    "lines": [
@@ -131,9 +131,9 @@
    ]
   }, 
   {
-   "begin": "120.160", 
+   "begin": "120.360", 
    "children": [], 
-   "end": "137.320", 
+   "end": "137.520", 
    "id": "f000014", 
    "language": "swe", 
    "lines": [
@@ -141,9 +141,9 @@
    ]
   }, 
   {
-   "begin": "137.320", 
+   "begin": "137.520", 
    "children": [], 
-   "end": "140.720", 
+   "end": "140.920", 
    "id": "f000015", 
    "language": "swe", 
    "lines": [
@@ -151,9 +151,9 @@
    ]
   }, 
   {
-   "begin": "140.720", 
+   "begin": "140.920", 
    "children": [], 
-   "end": "146.560", 
+   "end": "146.760", 
    "id": "f000016", 
    "language": "swe", 
    "lines": [
@@ -161,9 +161,9 @@
    ]
   }, 
   {
-   "begin": "146.560", 
+   "begin": "146.760", 
    "children": [], 
-   "end": "157.440", 
+   "end": "157.640", 
    "id": "f000017", 
    "language": "swe", 
    "lines": [
@@ -171,9 +171,9 @@
    ]
   }, 
   {
-   "begin": "157.440", 
+   "begin": "157.640", 
    "children": [], 
-   "end": "168.920", 
+   "end": "169.120", 
    "id": "f000018", 
    "language": "swe", 
    "lines": [
@@ -181,9 +181,9 @@
    ]
   }, 
   {
-   "begin": "168.920", 
+   "begin": "169.120", 
    "children": [], 
-   "end": "178.680", 
+   "end": "178.880", 
    "id": "f000019", 
    "language": "swe", 
    "lines": [
@@ -191,9 +191,9 @@
    ]
   }, 
   {
-   "begin": "178.680", 
+   "begin": "178.880", 
    "children": [], 
-   "end": "195.720", 
+   "end": "195.920", 
    "id": "f000020", 
    "language": "swe", 
    "lines": [
@@ -201,9 +201,9 @@
    ]
   }, 
   {
-   "begin": "195.720", 
+   "begin": "195.920", 
    "children": [], 
-   "end": "206.080", 
+   "end": "206.280", 
    "id": "f000021", 
    "language": "swe", 
    "lines": [
@@ -211,9 +211,9 @@
    ]
   }, 
   {
-   "begin": "206.080", 
+   "begin": "206.280", 
    "children": [], 
-   "end": "213.080", 
+   "end": "213.280", 
    "id": "f000022", 
    "language": "swe", 
    "lines": [
@@ -221,9 +221,9 @@
    ]
   }, 
   {
-   "begin": "213.080", 
+   "begin": "213.280", 
    "children": [], 
-   "end": "222.480", 
+   "end": "222.680", 
    "id": "f000023", 
    "language": "swe", 
    "lines": [
@@ -231,9 +231,9 @@
    ]
   }, 
   {
-   "begin": "222.480", 
+   "begin": "222.680", 
    "children": [], 
-   "end": "226.400", 
+   "end": "226.600", 
    "id": "f000024", 
    "language": "swe", 
    "lines": [
@@ -241,9 +241,9 @@
    ]
   }, 
   {
-   "begin": "226.400", 
+   "begin": "226.600", 
    "children": [], 
-   "end": "232.200", 
+   "end": "232.400", 
    "id": "f000025", 
    "language": "swe", 
    "lines": [
@@ -251,9 +251,9 @@
    ]
   }, 
   {
-   "begin": "232.200", 
+   "begin": "232.400", 
    "children": [], 
-   "end": "235.320", 
+   "end": "235.520", 
    "id": "f000026", 
    "language": "swe", 
    "lines": [
@@ -261,9 +261,9 @@
    ]
   }, 
   {
-   "begin": "235.320", 
+   "begin": "235.520", 
    "children": [], 
-   "end": "250.200", 
+   "end": "250.400", 
    "id": "f000027", 
    "language": "swe", 
    "lines": [
@@ -271,9 +271,9 @@
    ]
   }, 
   {
-   "begin": "250.200", 
+   "begin": "250.400", 
    "children": [], 
-   "end": "265.920", 
+   "end": "266.120", 
    "id": "f000028", 
    "language": "swe", 
    "lines": [
@@ -281,9 +281,9 @@
    ]
   }, 
   {
-   "begin": "265.920", 
+   "begin": "266.120", 
    "children": [], 
-   "end": "277.000", 
+   "end": "277.200", 
    "id": "f000029", 
    "language": "swe", 
    "lines": [
@@ -291,9 +291,9 @@
    ]
   }, 
   {
-   "begin": "277.000", 
+   "begin": "277.200", 
    "children": [], 
-   "end": "289.880", 
+   "end": "290.080", 
    "id": "f000030", 
    "language": "swe", 
    "lines": [
@@ -301,9 +301,9 @@
    ]
   }, 
   {
-   "begin": "289.880", 
+   "begin": "290.080", 
    "children": [], 
-   "end": "300.360", 
+   "end": "300.560", 
    "id": "f000031", 
    "language": "swe", 
    "lines": [
@@ -311,9 +311,9 @@
    ]
   }, 
   {
-   "begin": "300.360", 
+   "begin": "300.560", 
    "children": [], 
-   "end": "308.040", 
+   "end": "308.240", 
    "id": "f000032", 
    "language": "swe", 
    "lines": [
@@ -321,9 +321,9 @@
    ]
   }, 
   {
-   "begin": "308.040", 
+   "begin": "308.240", 
    "children": [], 
-   "end": "325.760", 
+   "end": "325.960", 
    "id": "f000033", 
    "language": "swe", 
    "lines": [
@@ -331,9 +331,9 @@
    ]
   }, 
   {
-   "begin": "325.760", 
+   "begin": "325.960", 
    "children": [], 
-   "end": "339.040", 
+   "end": "339.240", 
    "id": "f000034", 
    "language": "swe", 
    "lines": [
@@ -341,9 +341,9 @@
    ]
   }, 
   {
-   "begin": "339.040", 
+   "begin": "339.240", 
    "children": [], 
-   "end": "346.240", 
+   "end": "346.440", 
    "id": "f000035", 
    "language": "swe", 
    "lines": [
@@ -351,9 +351,9 @@
    ]
   }, 
   {
-   "begin": "346.240", 
+   "begin": "346.440", 
    "children": [], 
-   "end": "368.200", 
+   "end": "368.400", 
    "id": "f000036", 
    "language": "swe", 
    "lines": [
@@ -361,9 +361,9 @@
    ]
   }, 
   {
-   "begin": "368.200", 
+   "begin": "368.400", 
    "children": [], 
-   "end": "392.080", 
+   "end": "392.280", 
    "id": "f000037", 
    "language": "swe", 
    "lines": [
@@ -371,9 +371,9 @@
    ]
   }, 
   {
-   "begin": "392.080", 
+   "begin": "392.280", 
    "children": [], 
-   "end": "399.360", 
+   "end": "399.560", 
    "id": "f000038", 
    "language": "swe", 
    "lines": [
@@ -381,9 +381,9 @@
    ]
   }, 
   {
-   "begin": "399.360", 
+   "begin": "399.560", 
    "children": [], 
-   "end": "420.440", 
+   "end": "420.640", 
    "id": "f000039", 
    "language": "swe", 
    "lines": [
@@ -391,9 +391,9 @@
    ]
   }, 
   {
-   "begin": "420.440", 
+   "begin": "420.640", 
    "children": [], 
-   "end": "432.240", 
+   "end": "432.440", 
    "id": "f000040", 
    "language": "swe", 
    "lines": [
@@ -401,9 +401,9 @@
    ]
   }, 
   {
-   "begin": "432.240", 
+   "begin": "432.440", 
    "children": [], 
-   "end": "440.400", 
+   "end": "440.600", 
    "id": "f000041", 
    "language": "swe", 
    "lines": [
@@ -411,9 +411,9 @@
    ]
   }, 
   {
-   "begin": "440.400", 
+   "begin": "440.600", 
    "children": [], 
-   "end": "448.880", 
+   "end": "449.080", 
    "id": "f000042", 
    "language": "swe", 
    "lines": [
@@ -421,9 +421,9 @@
    ]
   }, 
   {
-   "begin": "448.880", 
+   "begin": "449.080", 
    "children": [], 
-   "end": "451.960", 
+   "end": "452.160", 
    "id": "f000043", 
    "language": "swe", 
    "lines": [
@@ -431,9 +431,9 @@
    ]
   }, 
   {
-   "begin": "451.960", 
+   "begin": "452.160", 
    "children": [], 
-   "end": "466.720", 
+   "end": "466.920", 
    "id": "f000044", 
    "language": "swe", 
    "lines": [
@@ -441,9 +441,9 @@
    ]
   }, 
   {
-   "begin": "466.720", 
+   "begin": "466.920", 
    "children": [], 
-   "end": "476.000", 
+   "end": "476.200", 
    "id": "f000045", 
    "language": "swe", 
    "lines": [
@@ -451,9 +451,9 @@
    ]
   }, 
   {
-   "begin": "476.000", 
+   "begin": "476.200", 
    "children": [], 
-   "end": "479.720", 
+   "end": "479.920", 
    "id": "f000046", 
    "language": "swe", 
    "lines": [
@@ -461,9 +461,9 @@
    ]
   }, 
   {
-   "begin": "479.720", 
+   "begin": "479.920", 
    "children": [], 
-   "end": "490.400", 
+   "end": "490.600", 
    "id": "f000047", 
    "language": "swe", 
    "lines": [
@@ -471,9 +471,9 @@
    ]
   }, 
   {
-   "begin": "490.400", 
+   "begin": "490.600", 
    "children": [], 
-   "end": "492.200", 
+   "end": "492.400", 
    "id": "f000048", 
    "language": "swe", 
    "lines": [
@@ -481,9 +481,9 @@
    ]
   }, 
   {
-   "begin": "492.200", 
+   "begin": "492.400", 
    "children": [], 
-   "end": "506.000", 
+   "end": "506.200", 
    "id": "f000049", 
    "language": "swe", 
    "lines": [
@@ -491,9 +491,9 @@
    ]
   }, 
   {
-   "begin": "506.000", 
+   "begin": "506.200", 
    "children": [], 
-   "end": "519.560", 
+   "end": "519.760", 
    "id": "f000050", 
    "language": "swe", 
    "lines": [
@@ -501,9 +501,9 @@
    ]
   }, 
   {
-   "begin": "519.560", 
+   "begin": "519.760", 
    "children": [], 
-   "end": "531.560", 
+   "end": "531.760", 
    "id": "f000051", 
    "language": "swe", 
    "lines": [
@@ -511,19 +511,19 @@
    ]
   }, 
   {
-   "begin": "531.560", 
+   "begin": "531.760", 
    "children": [], 
-   "end": "542.480", 
+   "end": "542.680", 
    "id": "f000052", 
    "language": "swe", 
    "lines": [
-    "F\u00f6r att inte tala om de \u00f6ver 1,2 miljoner m\u00e4nniskor som varje \u00e5r d\u00f6r som en direkt f\u00f6ljd av bilolyckor."
+    "F\u00f6r att inte tala om de \u00f6ver en komma tv\u00e5 miljoner m\u00e4nniskor som varje \u00e5r d\u00f6r som en direkt f\u00f6ljd av bilolyckor."
    ]
   }, 
   {
-   "begin": "542.480", 
+   "begin": "542.680", 
    "children": [], 
-   "end": "553.160", 
+   "end": "553.360", 
    "id": "f000053", 
    "language": "swe", 
    "lines": [
@@ -531,9 +531,9 @@
    ]
   }, 
   {
-   "begin": "553.160", 
+   "begin": "553.360", 
    "children": [], 
-   "end": "555.920", 
+   "end": "556.120", 
    "id": "f000054", 
    "language": "swe", 
    "lines": [
@@ -541,9 +541,9 @@
    ]
   }, 
   {
-   "begin": "555.920", 
+   "begin": "556.120", 
    "children": [], 
-   "end": "558.200", 
+   "end": "558.400", 
    "id": "f000055", 
    "language": "swe", 
    "lines": [
@@ -551,19 +551,19 @@
    ]
   }, 
   {
-   "begin": "558.200", 
+   "begin": "558.400", 
    "children": [], 
-   "end": "569.080", 
+   "end": "569.280", 
    "id": "f000056", 
    "language": "swe", 
    "lines": [
-    "V\u00e5ra v\u00e4gar och bilar, som \u00e4r byggda f\u00f6r att fr\u00e4mja automobilitet, d\u00f6dar \u00f6ver 3 000 m\u00e4nniskor varje dag."
+    "V\u00e5ra v\u00e4gar och bilar, som \u00e4r byggda f\u00f6r att fr\u00e4mja automobilitet, d\u00f6dar \u00f6ver tretusen m\u00e4nniskor varje dag."
    ]
   }, 
   {
-   "begin": "569.080", 
+   "begin": "569.280", 
    "children": [], 
-   "end": "575.880", 
+   "end": "576.080", 
    "id": "f000057", 
    "language": "swe", 
    "lines": [
@@ -571,9 +571,9 @@
    ]
   }, 
   {
-   "begin": "575.880", 
+   "begin": "576.080", 
    "children": [], 
-   "end": "583.400", 
+   "end": "584.280", 
    "id": "f000058", 
    "language": "swe", 
    "lines": [
@@ -581,9 +581,9 @@
    ]
   }, 
   {
-   "begin": "583.400", 
+   "begin": "584.280", 
    "children": [], 
-   "end": "587.440", 
+   "end": "587.640", 
    "id": "f000059", 
    "language": "swe", 
    "lines": [
@@ -591,9 +591,9 @@
    ]
   }, 
   {
-   "begin": "587.440", 
+   "begin": "587.640", 
    "children": [], 
-   "end": "597.520", 
+   "end": "597.720", 
    "id": "f000060", 
    "language": "swe", 
    "lines": [
@@ -601,9 +601,9 @@
    ]
   }, 
   {
-   "begin": "597.520", 
+   "begin": "597.720", 
    "children": [], 
-   "end": "610.360", 
+   "end": "610.720", 
    "id": "f000061", 
    "language": "swe", 
    "lines": [
@@ -611,9 +611,9 @@
    ]
   }, 
   {
-   "begin": "610.360", 
+   "begin": "610.720", 
    "children": [], 
-   "end": "620.680", 
+   "end": "620.840", 
    "id": "f000062", 
    "language": "swe", 
    "lines": [
@@ -621,9 +621,9 @@
    ]
   }, 
   {
-   "begin": "620.680", 
+   "begin": "620.840", 
    "children": [], 
-   "end": "627.400", 
+   "end": "626.800", 
    "id": "f000063", 
    "language": "swe", 
    "lines": [
@@ -631,9 +631,9 @@
    ]
   }, 
   {
-   "begin": "627.400", 
+   "begin": "626.800", 
    "children": [], 
-   "end": "637.760", 
+   "end": "637.960", 
    "id": "f000064", 
    "language": "swe", 
    "lines": [
@@ -641,9 +641,9 @@
    ]
   }, 
   {
-   "begin": "637.760", 
+   "begin": "637.960", 
    "children": [], 
-   "end": "650.760", 
+   "end": "650.960", 
    "id": "f000065", 
    "language": "swe", 
    "lines": [
@@ -651,9 +651,9 @@
    ]
   }, 
   {
-   "begin": "650.760", 
+   "begin": "650.960", 
    "children": [], 
-   "end": "664.800", 
+   "end": "665.000", 
    "id": "f000066", 
    "language": "swe", 
    "lines": [
@@ -661,9 +661,9 @@
    ]
   }, 
   {
-   "begin": "664.800", 
+   "begin": "665.000", 
    "children": [], 
-   "end": "683.320", 
+   "end": "683.520", 
    "id": "f000067", 
    "language": "swe", 
    "lines": [
@@ -671,9 +671,9 @@
    ]
   }, 
   {
-   "begin": "683.320", 
+   "begin": "683.520", 
    "children": [], 
-   "end": "695.080", 
+   "end": "695.280", 
    "id": "f000068", 
    "language": "swe", 
    "lines": [
@@ -681,7 +681,7 @@
    ]
   }, 
   {
-   "begin": "695.080", 
+   "begin": "695.280", 
    "children": [], 
    "end": "713.120", 
    "id": "f000069", 
@@ -693,7 +693,7 @@
   {
    "begin": "713.120", 
    "children": [], 
-   "end": "729.680", 
+   "end": "729.880", 
    "id": "f000070", 
    "language": "swe", 
    "lines": [
@@ -701,9 +701,9 @@
    ]
   }, 
   {
-   "begin": "729.680", 
+   "begin": "729.880", 
    "children": [], 
-   "end": "735.000", 
+   "end": "734.240", 
    "id": "f000071", 
    "language": "swe", 
    "lines": [
@@ -711,9 +711,9 @@
    ]
   }, 
   {
-   "begin": "735.000", 
+   "begin": "734.240", 
    "children": [], 
-   "end": "747.320", 
+   "end": "747.520", 
    "id": "f000072", 
    "language": "swe", 
    "lines": [
@@ -721,9 +721,9 @@
    ]
   }, 
   {
-   "begin": "747.320", 
+   "begin": "747.520", 
    "children": [], 
-   "end": "755.080", 
+   "end": "755.280", 
    "id": "f000073", 
    "language": "swe", 
    "lines": [
@@ -731,9 +731,9 @@
    ]
   }, 
   {
-   "begin": "755.080", 
+   "begin": "755.280", 
    "children": [], 
-   "end": "771.320", 
+   "end": "771.360", 
    "id": "f000074", 
    "language": "swe", 
    "lines": [
@@ -741,9 +741,9 @@
    ]
   }, 
   {
-   "begin": "771.320", 
+   "begin": "771.360", 
    "children": [], 
-   "end": "781.800", 
+   "end": "782.000", 
    "id": "f000075", 
    "language": "swe", 
    "lines": [
@@ -751,9 +751,9 @@
    ]
   }, 
   {
-   "begin": "781.800", 
+   "begin": "782.000", 
    "children": [], 
-   "end": "785.320", 
+   "end": "785.520", 
    "id": "f000076", 
    "language": "swe", 
    "lines": [
@@ -761,9 +761,9 @@
    ]
   }, 
   {
-   "begin": "785.320", 
+   "begin": "785.520", 
    "children": [], 
-   "end": "800.200", 
+   "end": "800.360", 
    "id": "f000077", 
    "language": "swe", 
    "lines": [
@@ -771,9 +771,9 @@
    ]
   }, 
   {
-   "begin": "800.200", 
+   "begin": "800.360", 
    "children": [], 
-   "end": "809.320", 
+   "end": "809.520", 
    "id": "f000078", 
    "language": "swe", 
    "lines": [
@@ -781,9 +781,9 @@
    ]
   }, 
   {
-   "begin": "809.320", 
+   "begin": "809.520", 
    "children": [], 
-   "end": "815.760", 
+   "end": "815.960", 
    "id": "f000079", 
    "language": "swe", 
    "lines": [
@@ -791,9 +791,9 @@
    ]
   }, 
   {
-   "begin": "815.760", 
+   "begin": "815.960", 
    "children": [], 
-   "end": "825.880", 
+   "end": "827.040", 
    "id": "f000080", 
    "language": "swe", 
    "lines": [
@@ -801,9 +801,9 @@
    ]
   }, 
   {
-   "begin": "825.880", 
+   "begin": "827.040", 
    "children": [], 
-   "end": "834.400", 
+   "end": "834.000", 
    "id": "f000081", 
    "language": "swe", 
    "lines": [
@@ -811,9 +811,9 @@
    ]
   }, 
   {
-   "begin": "834.400", 
+   "begin": "834.000", 
    "children": [], 
-   "end": "853.120", 
+   "end": "853.320", 
    "id": "f000082", 
    "language": "swe", 
    "lines": [
@@ -821,9 +821,9 @@
    ]
   }, 
   {
-   "begin": "853.120", 
+   "begin": "853.320", 
    "children": [], 
-   "end": "861.160", 
+   "end": "861.360", 
    "id": "f000083", 
    "language": "swe", 
    "lines": [
@@ -831,9 +831,9 @@
    ]
   }, 
   {
-   "begin": "861.160", 
+   "begin": "861.360", 
    "children": [], 
-   "end": "870.880", 
+   "end": "871.080", 
    "id": "f000084", 
    "language": "swe", 
    "lines": [
@@ -841,9 +841,9 @@
    ]
   }, 
   {
-   "begin": "870.880", 
+   "begin": "871.080", 
    "children": [], 
-   "end": "876.640", 
+   "end": "876.840", 
    "id": "f000085", 
    "language": "swe", 
    "lines": [

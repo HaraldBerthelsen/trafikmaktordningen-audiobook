@@ -13,7 +13,7 @@ Men om detta är frihet, vad är då friheten värd?
 Är det inte något konstigt med friheten när eventuella tidsvinster äts upp av att vi behöver jobba ännu mer för att ha råd att åka, liksom att den kortare restiden för med sig en regionförstoring som innebär att vi måste åka längre till jobbet?
 Höghastighetssamhället manifesteras kanske allra tydligast i vår samtids vurm för flygmaskiner och höghastighetståg, två transportmedel som vi nu kommer att titta närmare på.
 Till en början är det dock på sin plats att höja ett varningens finger för att göra motståndet mot höghastighetssamhället till ett individuellt omfamnande av det långsamma, det äkta.
-Att GÖRA VALET att åka InterCity istället för X2000, sakta mula käften full av slow food.
+Att GÖRA VALET att åka InterCity istället för X tvåtusen, sakta mula käften full av slow food.
 För det är inget fritt val:
 de allra flesta har inte lyxen att välja.
 För de flesta som lever i ett höghastighetssamhälle så gäller det att hänga med för att klara sig, hetspendla till jobbet och äta äcklig take-away på någon öde bensinmack för att spara tid.
@@ -33,29 +33,29 @@ Här vill vi börja med att gå igenom några konsekvenser som ett byggande av h
 Ett av målen med att bygga en höghastighetsbana likt den som har föreslagits mellan Stockholm och Göteborg är att det ska gå fort, gärna väldigt fort, att åka den sträckan.
 Det kan låta som en självklarhet, och dessutom som något självklart positivt.
 Inte kan det väl vara dåligt att det går fortare att ta sig till Liseberg eller hälsa på mormor i Stockholm – och på ett klimatsmart sätt dessutom?
-Frågan är dock hur stor skillnad den marginella tidsvinsten (mellan 10 och 45 minuter beroende på uträkningsmetod) egentligen har för den som nöjesreser.
+Frågan är dock hur stor skillnad den marginella tidsvinsten (mellan tio och fyrtiofem minuter beroende på uträkningsmetod) egentligen har för den som nöjesreser.
 Knappast särskilt stor.
 Den stora skillnaden (vinsten enligt förespråkarna) är snarare att höghastighetstågen skulle minska restiden till en nivå som på allvar skulle kunna möjliggöra arbetspendling och ökad regionförstoring.
 Finns möjligheten att jobba i Stockholm och bo i Göteborg, eller vice versa, kommer människor att se sig tvungna att göra detta, och likaså kommer arbetsförmedlingen att kunna tvinga dem till det.
 Detta står i skarp kontrast till den utveckling av våra städer som vi tidigare diskuterat som fördelaktig.
 För varför skulle det finnas ett egenvärde i regionförstoring, funktionsuppdelning och onödiga, påtvingade restimmar?
 Att skynda på den redan skenande regionförstoringen är sannerligen inte ett vettigt sätt att bygga städer för att lösa de framtida resurs- och klimatproblemen – för att inte tala om hur jävligt det är att ha två timmars restid till jobbet!
-Att bygga höghastighetsbanor och i förlängningen tvinga in folk i ännu längre arbetspendling är ett 1900-talstänk som hör transportåldern till.
+Att bygga höghastighetsbanor och i förlängningen tvinga in folk i ännu längre arbetspendling är ett nittonhundratalstänk som hör transportåldern till.
 Vad vi behöver är verktyg för att styra stadens rumsliga utbredning och på så sätt minimera antalet nödvändiga resor.
 Klimatsmart eller bara osmart?
 Att höghastighetstågen är snabbare än vanliga tåg och klimatsmartare än flyget är väl närmast en plattityd.
 Frågan är dock om byggandet av infrastruktur för höghastighetståg verkligen är rätt.
-När vi bygger infrastruktur som vi ska leva med i åtminstone 100 år krävs det att ordentliga utredningar görs.
+När vi bygger infrastruktur som vi ska leva med i åtminstone hundra år krävs det att ordentliga utredningar görs.
 Precis som vi och många andra har kritiserat stadsmotorvägen Förbifart Stockholm och liknande projekt för att de planeras och byggs utan att alternativen har utretts, så har inte heller alternativen till höghastighetståg undersökts ordentligt.
 Regeringens utredning av höghastighetsbanor beaktar inte dess alternativ på ett seriöst sätt – något som bland annat har påpekats av Statens institut för kommunikationsanalys (SIKA), Statens väg- och transportforskningsinstitut (VTI) och Ekonomistyrningsverket i deras remissvar.
 Inom modern transportforskning är det praxis att man vid stora infrastrukturprojekt följer en modell som kallas avoid–shift–improve.
 Det är ett tänkesätt som utgår från att all utbyggnad av infrastruktur, och i princip alla resor, är kostsamma och har en negativ miljöpåverkan.
-I Sverige införde Vägverket en liknande princip kallad fyrstegsprincipen i början av 00-talet, och åtföljdes snart av Banverket.
+I Sverige införde Vägverket en liknande princip kallad fyrstegsprincipen i början av tjugohundra-talet, och åtföljdes snart av Banverket.
 Fyrstegsprincipen innebär att varje upplevd brist på transport-infrastruktur ska avhjälpas med följande ”åtgärdstrappa”:
-1. Åtgärder som kan påverka transportbehovet och valet av transportsätt.
-2. Åtgärder som ger mer effektivt utnyttjande av befintliga väg- /järnvägsnät och fordon.
-3. Begränsade ombyggnadsåtgärder.
-4. Nyinvesteringar och större ombyggnadsåtgärder.
+Ett. Åtgärder som kan påverka transportbehovet och valet av transportsätt.
+Två. Åtgärder som ger mer effektivt utnyttjande av befintliga väg- /järnvägsnät och fordon.
+Tre. Begränsade ombyggnadsåtgärder.
+Fyra. Nyinvesteringar och större ombyggnadsåtgärder.
 Regeringens utredning om höghastighetsbanor är ett klassiskt exempel på att man utreder hur något ska göras innan man har analyserat om det behövs.
 Det är också ett exempel på hur man flagrant bryter mot allt vad fyrstegsprincipen står för.
 Det är självklart att höghastighetståg är bättre än flyg.
@@ -66,14 +66,14 @@ Två av de mest övergripande systemanalyserna som vi har sett av hur olika samh
 Båda dessa rapporter når liknande slutsatser, nämligen att inte ens med de mest teknikoptimistiska scenarion finns det någon möjlighet att lösa klimatfrågan om rese- och transportvolymerna fortsätter att öka enligt dagens konventionella beräkningar.
 Med detta i åtanke tycks det närmast dumdristigt att bygga höghastighetsbanor, då det inte skulle bidra till att minska antalet transportkilometer.
 Snarare är det så att mer infrastruktur nästan alltid leder till fler transporter.
-Dels därför att ny infrastruktur ger folk fler möjligheter att transportera sig, och dels därför att en investering i transportinfrastruktur på 125 miljarder kronor kräver ett högt nyttjande för att bli samhällsekonomiskt lönsam.
+Dels därför att ny infrastruktur ger folk fler möjligheter att transportera sig, och dels därför att en investering i transportinfrastruktur på hundratjugofem miljarder kronor kräver ett högt nyttjande för att bli samhällsekonomiskt lönsam.
 Men om vi bortser från detta, och tänker oss att höghastighetsbanorna endast ska ersätta en stor del av inrikesflyget, en del av bilismen och den nuvarande tågtrafiken, är det ändå långt ifrån ett smart framtidsval.
 Förutom klimatkrisen kommer vi under den tid som höghastighetsbanorna planeras vara i drift att ställas inför en rad andra problem relaterade till en generell resurskris, det som på engelska brukar benämnas peak everything.
 Det mest välkända av dessa är oljekrönet, som kommer att leda till en energikris och nya krav på inte bara klimatsmarta, utan även energisnåla transporter.
 Ju högre hastighet, desto högre energiförbrukning, allt annat lika.
-Per Kågesson, doktor i miljö- och energisystemanalys, har efter en genomgång av befintlig forskning uppskattat att energiförbrukningen vid en övergång från befintliga banor till höghastighetsbanor ökar med minst 60 procent.
+Per Kågesson, doktor i miljö- och energisystemanalys, har efter en genomgång av befintlig forskning uppskattat att energiförbrukningen vid en övergång från befintliga banor till höghastighetsbanor ökar med minst sextio procent.
 Med den annalkande resurskrisen i åtanke ska vi heller inte glömma bort de enorma mängder olja, stål och koppar som krävs för att bygga infrastrukturen och tågen, för att inte tala om alla de ingrepp i mycket skyddsvärd natur som kommer att krävas för att lägga spåren.
-Att bygga de höghastighetsbanor som regeringens utredning föreslår skulle kosta 125 miljarder, med reservation för att budgeten för infrastrukturprojekt i princip alltid spräcks.
+Att bygga de höghastighetsbanor som regeringens utredning föreslår skulle kosta hundratjugofem miljarder, med reservation för att budgeten för infrastrukturprojekt i princip alltid spräcks.
 Tänk om dessa pengar investerades i den eftersatta kollektivtrafiken i Sveriges städer istället.
 Det vore garanterat ett säkrare kort för att med begränsade resurser uppnå största möjliga minskning av klimatfarliga utsläpp från transportsektorn.
 Höghastighetsvurmarna talar sig också gärna varma om en tågkorridor ut i Europa.
@@ -86,7 +86,7 @@ Dessutom har det visat sig på sträckor där höghastighetsbanor har byggts, ex
 Visst, affärsresenärerna och EU- byråkraterna som tidigare flög har bytt till tåg och fortsätter sitt tokpendlande med gott klimatsamvete.
 Men frågan är om det var det som menades med ett snabbt och klimatsmart resande för alla?
 Far och flyg åt pipsvängen!
-Under några vackra vårnätter i april 2010 satt vi uppe i en Etherpad och utforskade flygets frihetsparadoxer, dess klimatpåverkan och relation till automobiliteten och höghastighetssamhället, när plötsligt något svindlande inträffade.
+Under några vackra vårnätter i april tjugohundratio satt vi uppe i en Etherpad och utforskade flygets frihetsparadoxer, dess klimatpåverkan och relation till automobiliteten och höghastighetssamhället, när plötsligt något svindlande inträffade.
 Ett nästan totalt flygstopp över Europa gick över en natt från att vara en vild fantasi till att bli en realitet, ett faktum.
 Det undantagstillstånd som de dagarnas flygstopp innebar visade på ett flertal saker, bland annat att det går att organisera samhällen bortom flyget.
 Att sluta nyttja de flygmaskiner som bör betraktas som en av transportålderns värsta skapelser visade sig inte alls vara en omöjlighet.
@@ -195,7 +195,7 @@ När vulkanen på Island helt sonika ställde oss inför nya förutsättningar s
 Undantagstillståndet innebar däremot en situation där nya idéer, lösningar och initiativ växte fram.
 Eyjafjallajökull visade att vi inte behöver se på den stundande omställningen som ett annalkande hot, utan att det faktiskt lika väl kan vara en möjlighet.
 Istället för att som flygliberalerna skrika oss blåa om miljötalibaner, kan vi dra lärdom av situationen som vulkanen försatte oss i och bli bättre rustade för den mobilitetsförskjutning som den kommande förbränningsomläggningen oundvikligen kommer att innebära.
-I Mexiko härleder man begreppet ”civilsamhället” till den enorma jordbävningen i Mexico City 1985.
+I Mexiko härleder man begreppet ”civilsamhället” till den enorma jordbävningen i Mexico City nittonhundraåttiofem.
 När militären beordrades ut för att skydda de rika enklaverna mot plundring vändes befolkningens ilska och frustration över den uteblivna hjälpen till ett enormt självorganiserat hjälparbete.
 Ett alternativ till statens trygghet växte fram underifrån.
 En glimt av denna potential kunde vi se i hur sociala medier användes för att organisera olika sorters samåkning för strandsatta flygresenärer.
