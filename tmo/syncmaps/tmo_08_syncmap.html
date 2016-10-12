@@ -1,0 +1,1974 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>finetuneas, an HTML interface for fine tuning aeneas sync maps</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <style>
+            html, body {
+                margin:0;
+                min-height:100%;
+            }
+            #container {
+                text-align:center;
+                min-height:100%;
+                position:absolute;
+            }
+            button, label, input, select {
+                margin:5px;
+            }
+            .tg {
+                table-layout:fixed;
+                width:100%;
+                border-spacing:0;
+                position:relative;
+                direction:ltr;
+                margin:100px 0;
+            }
+            .text {
+                margin-right:auto;
+                margin-left:auto;
+                font-size:22px;
+                line-height:125%;
+                font-family:Tahoma, Geneva, sans-serif;
+            }
+            .td {
+                vertical-align:middle;
+            }
+            .edit {
+                text-align:right;
+            }
+            .time, .increase, .decrease {
+                opacity:0.6;
+                position:relative;
+                margin:5px;
+                font-size:140%;
+                line-height:110%;
+                cursor:pointer;
+                font-weight:900;
+                border-style:solid;
+                border-color:#999;
+                border-width:1px 3px;
+                background-color:#333;
+                color:#fff;
+            }
+            .time {
+                padding:2px 5px 0px 5px;
+                margin-right:50px;
+            }
+            .increase {
+                padding:2px 8px 0px 8px;
+            }
+            .decrease {
+                padding:0px 8px 2px 8px;
+                bottom:2px;
+                margin-right:15px;
+            }
+            .increase, .decrease, .time, #stop {
+                -webkit-touch-callout:none;
+                -webkit-user-select:none;
+                -khtml-user-select:none;
+                -moz-user-select:none;
+                -ms-user-select:none;
+                user-select:none;
+            }
+            a:hover {
+                opacity:1;
+            }
+            td {
+                text-align:center;
+                height:80px;
+            }
+            #advancedcontrols{
+                position:fixed;
+                z-index:10;
+                bottom:30px;
+                left:25px;
+                text-align:left;
+                visibility:hidden;
+            }
+            #fileinput, #audioinput {
+                position:relative;
+                bottom:5px;
+            }
+            #step1, #step2, #fileinfo {
+                text-align:center;
+                margin:20px;
+                font-size:24px;
+                font-weight:900;
+            }
+            #directions {
+                margin:50px auto 150px auto;
+                font-size:24px;
+                max-width:700px;
+                border:1px solid black;
+                padding:20px;
+            }
+            .normal {
+                line-height:150%;
+                font-size:20px;
+                text-align:left;
+                margin:15px 50px;
+            }
+            .note {
+                font-size:16px;
+                margin:15px 80px;
+            }
+            #audiocontrols {
+                position:fixed;
+                z-index:10;
+                text-align:right;
+                top:30px;
+                left:25px;
+                display:none;
+                background-color:#fff;
+            }
+            #audioticker {
+                color:dimgrey;
+                font-size:14px;
+            }
+            #stop {
+                font-size:10px;
+                position:relative;
+                bottom:2px;
+                opacity:0.6;
+                padding:0 6px 3px 6px;
+                margin:2px;
+                cursor:pointer;
+                background-color:#333;
+                color:#fff;
+                font-weight:900;
+                font-family:Tahoma, Geneva, sans-serif;
+            }
+            #stop:hover {
+                opacity:1;
+            }
+            .footer {
+                font-size:12px;
+                text-align:center;
+                position:absolute;
+                bottom:10px;
+                left:0;
+                right:0;
+            }
+            .footer a {
+                color:#555;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- BEGIN container -->
+        <div id="container">
+            <!-- BEGIN directions -->
+            <div id="directions">
+                <p class="heading"><b>finetuneas</b></p>
+                <p class="normal"><b>1.</b> Before you start making adjustments, check several fragments at random to be sure that the sync map is mostly correct and it just needs fine tuning. If not, check your <i>aeneas</i> input files and parameters and run <i>aeneas</i> again.</p>
+                <p class="normal"><b>2.</b> To check the begin time of each fragment, click on the corresponding text or timestamp. If necessary, use the <b>+</b> and <b>−</b> buttons to adjust it.</p>
+                <p class="normal"><b>3.</b> When done, you can save the adjusted sync map to file. If the desired format is not available, choose JSON and then use the <i>aeneas.tools.convert_syncmap</i> tool to convert it.</p>
+
+                <!-- BEGIN loadbuttons -->
+                <!-- do not remove the next line -->
+                <!-- AENEAS_REPLACE_COMMENT_BEGIN
+                <div id="loadbuttons">
+                    <p class="normal"><b>4.</b> To start working, select your audio and JSON files:</p>
+                    <div id="step1">Audio file: <input type="file" id="audioinput" accept="audio/*" autocomplete="off"/></div>
+                    <div id="fileinfo"></div>
+                    <div id="step2">JSON file: <input type="file" id="fileinput" accept=".json" autocomplete="off"/></div>
+                </div>
+                AENEAS_REPLACE_COMMENT_END -->
+                <!-- do not remove the line above -->
+                <!-- END loadbuttons -->
+
+                <!-- BEGIN loadauto -->
+                <!-- do not remove the next line -->
+                <!-- AENEAS_REPLACE_UNCOMMENT_BEGIN -->
+                <div id="loadauto">
+                    <button id="buttonAutoLoad">Got it, let's start!</button>
+                </div>
+                <!-- AENEAS_REPLACE_UNCOMMENT_END -->
+                <!-- do not remove the line above -->
+                <!-- END loadauto -->
+
+            </div>
+            <!-- END directions -->
+
+            <!-- BEGIN player -->
+            <div id="player"> 
+                <audio id="audioplayer" src="" ontimeupdate="ticker(this.currentTime);"></audio>
+            </div>
+            <!-- END player -->
+
+            <div id="audiocontrols" >
+                <span id="audioticker"></span>
+                <span id="playpause"><a id="stop">ıı</a></span>
+            </div>
+
+            <div id="fragments">
+                <table id="tb" class="tg"></table>
+            </div>
+
+            <div id="advancedcontrols">
+                <label for="timeStep" style="display:block">Time increment (s):</label>
+                <input id="timeStep" type="number" min="0.010" step="0.010" value="0.100" style="display:block"/> 
+                <label for="buttonShowID" style="display:block">Show ID:</label>
+                <button id="buttonShowID" style="display:block">OFF</button>
+                <label for="alignText" style="display:block">Text alignment:</label>
+                <select name="alignText" id="alignText" style="display:block">
+                    <option value="left">Left</option>
+                    <option value="center" selected="selected">Center</option>
+                    <option value="right">Right</option>
+                    <option value="justify">Justify</option>
+                </select>
+                <hr style="display:block"/>
+                <label for="playbackRate" style="display:block">Playback rate:</label>
+                <input id="playbackRate" type="number" min="0.1" max="4.0" step="0.1" value="1.0" style="display:block"/> 
+                <label for="buttonContinuousPlay">Continuous play:</label>
+                <button id="buttonContinuousPlay" style="display:block">OFF</button>
+                <label for="buttonTimeFormat" style="display:block">Time format:</label>
+                <button id="buttonTimeFormat" style="display:block">DECIMAL</button>
+                <label for="transitionOffset" style="display:block">Transition offset (s):</label>
+                <input id="transitionOffset" type="number" min="0" max="0.400" step="0.010" value="0.100" style="display:block"/> 
+                <hr style="display:block"/>
+                <label for="outputFormat" style="display:block">Format:</label>
+                <select name="outputFormat" id="outputFormat" style="display:block">
+                    <option value="csv">CSV</option>
+                    <option value="json" selected="selected">JSON</option>
+                    <option value="smil">SMIL</option>
+                    <option value="srt">SRT</option>
+                    <option value="ssv">SSV</option>
+                    <option value="ttml">TTML</option>
+                    <option value="tsv">TSV</option>
+                    <option value="txt">TXT</option>
+                    <option value="vtt">VTT</option>
+                    <option value="xml">XML</option>
+                </select>
+                <input id="smilAudioRef" style="display:none" type="text" placeholder="audio_ref"/>
+                <input id="smilPageRef" style="display:none" type="text" placeholder="page_ref"/>
+                <button id="download" style="display:block">Save</button>
+            </div>
+
+            <div class="footer">
+                <a href="https://github.com/ozdefir/finetuneas">finetuneas v1.0.2</a><br/>© 2015 Firat Özdemir 
+            </div>
+        </div>
+        <!-- END container -->
+
+<!-- BEGIN script -->
+<script type="text/javascript">
+//
+//
+// global variables and constants
+//
+//
+var fragments = [];
+var currentIndex = 0;
+var audioElement = document.getElementById("audioplayer");
+var ainfo = "";
+var cinfo = "";
+var url;
+var COMPLETED = "lightgreen";
+var ACTIVE = "yellow";
+var CLEAR = "";
+var TRANSITION_TIMEOUT = 0.400;
+//
+//
+// variables that can be modified by the user at runtime
+//
+//
+// do not remove the following lines starting with AENEAS_REPLACE_
+//
+var timeStep = 0.1;
+// AENEAS_REPLACE_TIME_STEP
+var showID = false;
+showID = true;
+var alignText = "center";
+alignText = "left"
+var playbackRate = 1.0;
+// AENEAS_REPLACE_PLAYBACK_RATE
+var continuousPlay = false;
+continuousPlay = true;
+var timeFormatHHMMSSmmm = false;
+timeFormatHHMMSSmmm = true;
+var transitionOffset = 0.100;
+// AENEAS_REPLACE_TRANSITION_OFFSET
+var outputFormat = "json";
+// AENEAS_REPLACE_OUTPUT_FORMAT
+var audioref = "";
+// AENEAS_REPLACE_SMIL_AUDIOREF
+var pageref = "";
+// AENEAS_REPLACE_SMIL_PAGEREF
+//
+// do not remove the lines above starting with AENEAS_REPLACE_
+//
+//
+// BEGIN INIT CODE
+//
+//
+bindEssentialListeners();
+applyDefaults();
+//
+//
+// END INIT CODE
+//
+//
+function bindEssentialListeners() {
+    try {
+        document.getElementById("audioinput").addEventListener("change", buttonLoadAudio, false);
+    } catch(e) {
+        // pass
+    }
+    try {
+        document.getElementById("fileinput").addEventListener("change", buttonLoadJSON, false);
+    } catch(e) {
+        // pass
+    }
+    try {
+        document.getElementById("buttonAutoLoad").addEventListener("click", buttonAutoLoad, false);
+    } catch(e) {
+        // pass
+    }
+}
+function applyDefaults() {
+    try {
+        document.getElementById("timeStep").value = timeStep;
+        setButtonText("buttonShowID", showID, "ON", "OFF");
+        document.getElementById("alignText").value = alignText;
+        document.getElementById("playbackRate").value = playbackRate;
+        setButtonText("buttonContinuousPlay", continuousPlay, "ON", "OFF");
+        setButtonText("buttonTimeFormat", timeFormatHHMMSSmmm, "HH:MM:SS.mmm", "DECIMAL");
+        document.getElementById("transitionOffset").value = transitionOffset;
+        document.getElementById("outputFormat").value = outputFormat;
+        document.getElementById("smilAudioRef").value = audioref;
+        document.getElementById("smilPageRef").value = pageref;
+        changeOutputFormat();
+    } catch(e) {
+        // pass
+    }
+}
+function buttonAutoLoad() {
+    // fake
+    var audioFilePath = "file:///tmp/audio.mp3";
+    // do not remove the next line
+    audioFilePath = "file:///media/bigdisk/git_repos/trafikmaktordningen-audiobook/original_data/Trafikmaktordningen ljudbok/Trafikmaktordningen - Kapitel 8.mp3";
+    // do not remove the line above
+    loadAudio(audioFilePath);
+   
+    // fake
+    fragments = [
+      {"begin": "0.000",  "end": "2.680",  "id": "f000001", "language": "en", "lines": ["1"]}, 
+      {"begin": "2.680",  "end": "5.880",  "id": "f000002", "language": "en", "lines": ["From fairest creatures we desire increase,"]}, 
+      {"begin": "5.880",  "end": "9.240",  "id": "f000003", "language": "en", "lines": ["That thereby beauty's rose might never die,"]}, 
+      {"begin": "9.240",  "end": "11.760", "id": "f000004", "language": "en", "lines": ["But as the riper should by time decease,"]},
+      {"begin": "11.760", "end": "14.440", "id": "f000005", "language": "en", "lines": ["His tender heir might bear his memory:"]},
+      {"begin": "14.440", "end": "18.560", "id": "f000006", "language": "en", "lines": ["But thou contracted to thine own bright eyes,"]},
+      {"begin": "18.560", "end": "22.280", "id": "f000007", "language": "en", "lines": ["Feed'st thy light's flame with self-substantial fuel,"]},
+      {"begin": "22.280", "end": "25.480", "id": "f000008", "language": "en", "lines": ["Making a famine where abundance lies,"]},
+      {"begin": "25.480", "end": "31.200", "id": "f000009", "language": "en", "lines": ["Thy self thy foe, to thy sweet self too cruel:"]},
+      {"begin": "31.200", "end": "34.400", "id": "f000010", "language": "en", "lines": ["Thou that art now the world's fresh ornament,"]},
+      {"begin": "34.400", "end": "36.960", "id": "f000011", "language": "en", "lines": ["And only herald to the gaudy spring,"]},
+      {"begin": "36.960", "end": "40.640", "id": "f000012", "language": "en", "lines": ["Within thine own bud buriest thy content,"]},
+      {"begin": "40.640", "end": "43.640", "id": "f000013", "language": "en", "lines": ["And tender churl mak'st waste in niggarding:"]},
+      {"begin": "43.640", "end": "48.120", "id": "f000014", "language": "en", "lines": ["Pity the world, or else this glutton be,"]},
+      {"begin": "48.120", "end": "53.240", "id": "f000015", "language": "en", "lines": ["To eat the world's due, by the grave and thee."]}
+    ];
+    // do not remove the next line
+    fragments = ({
+ "fragments": [
+  {
+   "begin": "0.000", 
+   "children": [], 
+   "end": "2.320", 
+   "id": "f000001", 
+   "language": "swe", 
+   "lines": [
+    "Kapitel 8."
+   ]
+  }, 
+  {
+   "begin": "2.320", 
+   "children": [], 
+   "end": "6.760", 
+   "id": "f000002", 
+   "language": "swe", 
+   "lines": [
+    "VI VANTRIVS I TRAFIKEN."
+   ]
+  }, 
+  {
+   "begin": "6.760", 
+   "children": [], 
+   "end": "15.640", 
+   "id": "f000003", 
+   "language": "swe", 
+   "lines": [
+    "En stor del av diskussionerna i denna bok har kretsat kring hur vi kan bygga om v\u00e5ra samh\u00e4llen med tillg\u00e4nglighet som riktlinje."
+   ]
+  }, 
+  {
+   "begin": "15.640", 
+   "children": [], 
+   "end": "52.680", 
+   "id": "f000004", 
+   "language": "swe", 
+   "lines": [
+    "Vi har g\u00e5tt h\u00e5rt \u00e5t pendlingen, dels f\u00f6r att ett samh\u00e4lle som bygger p\u00e5 konstant r\u00f6relse av s\u00e5v\u00e4l varor som arbetskraft \u00e4r extremt energikr\u00e4vande, dels f\u00f6r att den infrastruktur som kr\u00e4vs f\u00f6r att h\u00e5lla allt i r\u00f6relse trasar s\u00f6nder v\u00e5ra st\u00e4der, och slutligen f\u00f6r att det \u00e4r s\u00e5 f\u00f6rbannat drygt att spendera en s\u00e5 stor del av sin arbetsdag med att pendla fram och tillbaka, utan att ens f\u00e5 l\u00f6n f\u00f6r m\u00f6dan."
+   ]
+  }, 
+  {
+   "begin": "52.680", 
+   "children": [], 
+   "end": "64.600", 
+   "id": "f000005", 
+   "language": "swe", 
+   "lines": [
+    "Ut\u00f6ver att pendling de facto \u00e4r en del av arbetsdagen utan att behandlas som s\u00e5dan \u00e4r det ofta \u00e4ven en k\u00e4lla till vantrivsel i trafiken."
+   ]
+  }, 
+  {
+   "begin": "64.600", 
+   "children": [], 
+   "end": "89.440", 
+   "id": "f000006", 
+   "language": "swe", 
+   "lines": [
+    "P\u00e5 sistone har forskning kring lycka och samh\u00e4llsomvandling f\u00e5tt en hel del uppm\u00e4rksamhet, och i New York Times kan vi l\u00e4sa om nya forskningsr\u00f6n som konstaterar att \u201dthe daily activities most associated with happiness are sex, socializing after work and having dinner with others."
+   ]
+  }, 
+  {
+   "begin": "89.440", 
+   "children": [], 
+   "end": "95.480", 
+   "id": "f000007", 
+   "language": "swe", 
+   "lines": [
+    "The daily activity most injurious to happiness is commuting.\u201d"
+   ]
+  }, 
+  {
+   "begin": "95.480", 
+   "children": [], 
+   "end": "113.560", 
+   "id": "f000008", 
+   "language": "swe", 
+   "lines": [
+    "En anledning till att pendlandet ofta upplevs som s\u00e5 fasansfullt \u2013 enligt studier den otrevligaste stunden p\u00e5 dagen f\u00f6r m\u00e5nga m\u00e4nniskor \u2013 \u00e4r att det \u00e4r en obehaglig ritual som vi aldrig riktigt v\u00e4njer oss vid."
+   ]
+  }, 
+  {
+   "begin": "113.560", 
+   "children": [], 
+   "end": "130.040", 
+   "id": "f000009", 
+   "language": "swe", 
+   "lines": [
+    "Eftersom trafikens fl\u00f6den \u00e4r delvis of\u00f6ruts\u00e4gbara kan vi aldrig helt v\u00e4nja oss vid dem, och kan s\u00e5ledes inte infoga pendlingen i det dagliga fl\u00f6det av saker som bara \u00e4r f\u00f6ruts\u00e4gbart tr\u00e5kiga."
+   ]
+  }, 
+  {
+   "begin": "130.040", 
+   "children": [], 
+   "end": "134.440", 
+   "id": "f000010", 
+   "language": "swe", 
+   "lines": [
+    "Med psykologen Daniel Gilberts ord:"
+   ]
+  }, 
+  {
+   "begin": "134.440", 
+   "children": [], 
+   "end": "139.960", 
+   "id": "f000011", 
+   "language": "swe", 
+   "lines": [
+    "\u201dTraffic is a different kind of hell every day.\u201d"
+   ]
+  }, 
+  {
+   "begin": "139.960", 
+   "children": [], 
+   "end": "152.440", 
+   "id": "f000012", 
+   "language": "swe", 
+   "lines": [
+    "Men pendlingen \u00e4r inte bara ett nytt helvete varje dag \u2013 den har ocks\u00e5, som redan Goethe konstaterade, vissa likheter med hasardspel:"
+   ]
+  }, 
+  {
+   "begin": "152.440", 
+   "children": [], 
+   "end": "157.840", 
+   "id": "f000013", 
+   "language": "swe", 
+   "lines": [
+    "pendlingen \u00e4r alltid f\u00f6rknippad med vinnare och f\u00f6rlorare."
+   ]
+  }, 
+  {
+   "begin": "157.840", 
+   "children": [], 
+   "end": "162.320", 
+   "id": "f000014", 
+   "language": "swe", 
+   "lines": [
+    "Detta konstaterande m\u00e5ste s\u00e5klart f\u00f6ljas av fr\u00e5gan:"
+   ]
+  }, 
+  {
+   "begin": "162.320", 
+   "children": [], 
+   "end": "168.240", 
+   "id": "f000015", 
+   "language": "swe", 
+   "lines": [
+    "Vem \u00e4r det som vinner, varf\u00f6r och p\u00e5 vems bekostnad?"
+   ]
+  }, 
+  {
+   "begin": "168.240", 
+   "children": [], 
+   "end": "180.440", 
+   "id": "f000016", 
+   "language": "swe", 
+   "lines": [
+    "Just detta g\u00f6r kulturgeografen Erika Sandow i avhandlingen On the Road: Social Aspects of Commuting Long Distances to Work."
+   ]
+  }, 
+  {
+   "begin": "180.440", 
+   "children": [], 
+   "end": "189.000", 
+   "id": "f000017", 
+   "language": "swe", 
+   "lines": [
+    "Sandows avhandling \u00e4r en djupdykning i arbetspendlingen och de konsekvenser den f\u00e5r f\u00f6r j\u00e4mst\u00e4lldheten."
+   ]
+  }, 
+  {
+   "begin": "189.000", 
+   "children": [], 
+   "end": "197.240", 
+   "id": "f000018", 
+   "language": "swe", 
+   "lines": [
+    "Det l\u00e5ngv\u00e4ga arbetspendlandet \u00f6kar \u00f6ver hela Europa, en trend som knappast ser ut att avta fram\u00f6ver."
+   ]
+  }, 
+  {
+   "begin": "197.240", 
+   "children": [], 
+   "end": "204.640", 
+   "id": "f000019", 
+   "language": "swe", 
+   "lines": [
+    "I dagsl\u00e4get pendlar \u00f6ver 15 procent av EU:s befolkning minst tv\u00e5 timmar per dag."
+   ]
+  }, 
+  {
+   "begin": "204.640", 
+   "children": [], 
+   "end": "211.360", 
+   "id": "f000020", 
+   "language": "swe", 
+   "lines": [
+    "I Sandows definition inneb\u00e4r l\u00e5ngpendling minst 45 minuters enkel resa."
+   ]
+  }, 
+  {
+   "begin": "211.360", 
+   "children": [], 
+   "end": "218.240", 
+   "id": "f000021", 
+   "language": "swe", 
+   "lines": [
+    "Att pendla l\u00e5nga str\u00e4ckor till sitt arbete kan ha flera positiva konsekvenser f\u00f6r individen."
+   ]
+  }, 
+  {
+   "begin": "218.240", 
+   "children": [], 
+   "end": "224.160", 
+   "id": "f000022", 
+   "language": "swe", 
+   "lines": [
+    "Det kan vara ett s\u00e4tt att f\u00e5 ett mer v\u00e4lbetalt jobb eller ett jobb man trivs b\u00e4ttre med."
+   ]
+  }, 
+  {
+   "begin": "224.160", 
+   "children": [], 
+   "end": "230.360", 
+   "id": "f000023", 
+   "language": "swe", 
+   "lines": [
+    "Det kan ocks\u00e5 vara ett s\u00e4tt att f\u00e5 bo kvar d\u00e4r man bor \u00e4ven om man m\u00e5ste byta jobb."
+   ]
+  }, 
+  {
+   "begin": "230.360", 
+   "children": [], 
+   "end": "235.280", 
+   "id": "f000024", 
+   "language": "swe", 
+   "lines": [
+    "Men pendlingen kr\u00e4ver tid, och den har ett pris."
+   ]
+  }, 
+  {
+   "begin": "235.280", 
+   "children": [], 
+   "end": "250.280", 
+   "id": "f000025", 
+   "language": "swe", 
+   "lines": [
+    "I de fall d\u00e4r pendlaren lever tillsammans med andra s\u00e5 b\u00e4r han (f\u00f6r det \u00e4r oftast en han) inte kostnaderna f\u00f6r pendlingen sj\u00e4lv \u2013 d\u00e4remot \u00e4r han ensam om att ta del av dess f\u00f6rdelar."
+   ]
+  }, 
+  {
+   "begin": "250.280", 
+   "children": [], 
+   "end": "258.800", 
+   "id": "f000026", 
+   "language": "swe", 
+   "lines": [
+    "I samborelationer \u00e4r det oftast parten som har kortast v\u00e4g till jobbet som f\u00e5r ta mest ansvar f\u00f6r hemarbetet."
+   ]
+  }, 
+  {
+   "begin": "258.800", 
+   "children": [], 
+   "end": "265.600", 
+   "id": "f000027", 
+   "language": "swe", 
+   "lines": [
+    "Sedan 1970 har antalet personer som pendlar \u00f6ver kommungr\u00e4nser f\u00f6rdubblats."
+   ]
+  }, 
+  {
+   "begin": "265.600", 
+   "children": [], 
+   "end": "276.520", 
+   "id": "f000028", 
+   "language": "swe", 
+   "lines": [
+    "Den genomsnittliga arbetspendlingen \u00e4r 16,6 kilometer enkel resa, men h\u00e4lften av alla som pendlar \u00e5ker mindre \u00e4n \u00e5tta kilometer."
+   ]
+  }, 
+  {
+   "begin": "276.520", 
+   "children": [], 
+   "end": "278.600", 
+   "id": "f000029", 
+   "language": "swe", 
+   "lines": [
+    "Trenden \u00e4r tydlig:"
+   ]
+  }, 
+  {
+   "begin": "278.600", 
+   "children": [], 
+   "end": "285.680", 
+   "id": "f000030", 
+   "language": "swe", 
+   "lines": [
+    "pendlingen \u00f6kar bland b\u00e5de m\u00e4n och kvinnor i s\u00e5v\u00e4l antal kilometer som i tid."
+   ]
+  }, 
+  {
+   "begin": "285.680", 
+   "children": [], 
+   "end": "302.000", 
+   "id": "f000031", 
+   "language": "swe", 
+   "lines": [
+    "M\u00e4n och kvinnor har likv\u00e4rdiga restider, men m\u00e4n \u00e5ker betydligt l\u00e4ngre (19,1 km j\u00e4mf\u00f6rt med 13,7 km) eftersom de oftare k\u00f6r bil \u00e4n kvinnor."
+   ]
+  }, 
+  {
+   "begin": "302.000", 
+   "children": [], 
+   "end": "307.280", 
+   "id": "f000032", 
+   "language": "swe", 
+   "lines": [
+    "Detta inneb\u00e4r att m\u00e4nnen har tillg\u00e5ng till en st\u00f6rre arbetsmarknad."
+   ]
+  }, 
+  {
+   "begin": "307.280", 
+   "children": [], 
+   "end": "315.280", 
+   "id": "f000033", 
+   "language": "swe", 
+   "lines": [
+    "\u00c4ven om skillnaderna mellan m\u00e4ns och kvinnors resande har minskat i Sverige s\u00e5 \u00e4r de fortfarande betydande."
+   ]
+  }, 
+  {
+   "begin": "315.280", 
+   "children": [], 
+   "end": "325.600", 
+   "id": "f000034", 
+   "language": "swe", 
+   "lines": [
+    "Enligt Sandow beror detta p\u00e5 att women have continued to be the primary caretakers of household and family obligations."
+   ]
+  }, 
+  {
+   "begin": "325.600", 
+   "children": [], 
+   "end": "334.920", 
+   "id": "f000035", 
+   "language": "swe", 
+   "lines": [
+    "For example, women make several stops and run errands on their way to work more often than men do."
+   ]
+  }, 
+  {
+   "begin": "334.920", 
+   "children": [], 
+   "end": "342.720", 
+   "id": "f000036", 
+   "language": "swe", 
+   "lines": [
+    "Men commute by driving a car more often than women do, while women use public transportation more often."
+   ]
+  }, 
+  {
+   "begin": "342.720", 
+   "children": [], 
+   "end": "359.960", 
+   "id": "f000037", 
+   "language": "swe", 
+   "lines": [
+    "Moreover, women are still mainly employed in low-income occupations, which make long-distance commuting less economically worthwhile and attractive than it is for men with their normally higher-income occupations."
+   ]
+  }, 
+  {
+   "begin": "359.960", 
+   "children": [], 
+   "end": "371.040", 
+   "id": "f000038", 
+   "language": "swe", 
+   "lines": [
+    "Moreover, many women are employed in the public-service sector, in which workplace location can allow a short commuting distance."
+   ]
+  }, 
+  {
+   "begin": "371.040", 
+   "children": [], 
+   "end": "379.880", 
+   "id": "f000039", 
+   "language": "swe", 
+   "lines": [
+    "I de fall d\u00e4r det \u00e4r kvinnan som l\u00e5ngpendlar tar ocks\u00e5 mannen mer ansvar f\u00f6r hem och barn \u00e4n genomsnittligt."
+   ]
+  }, 
+  {
+   "begin": "379.880", 
+   "children": [], 
+   "end": "388.880", 
+   "id": "f000040", 
+   "language": "swe", 
+   "lines": [
+    "Trots det \u00e4r det mycket vanligare att m\u00e4n som l\u00e5ngpendlar f\u00e5r extra st\u00f6d av sin partner \u00e4n kvinnor som g\u00f6r detsamma."
+   ]
+  }, 
+  {
+   "begin": "388.880", 
+   "children": [], 
+   "end": "396.960", 
+   "id": "f000041", 
+   "language": "swe", 
+   "lines": [
+    "Detta inneb\u00e4r allts\u00e5 att kvinnor oftare g\u00e5r ner i arbetstid f\u00f6r att kunna hantera de l\u00e5ngpendlande m\u00e4nnen:"
+   ]
+  }, 
+  {
+   "begin": "396.960", 
+   "children": [], 
+   "end": "416.160", 
+   "id": "f000042", 
+   "language": "swe", 
+   "lines": [
+    "As a consequence, the majority of long-distance commuting women do not feel they have enough support and therefore experience lower family satisfaction and less success in their work role than do short- distance commuting women."
+   ]
+  }, 
+  {
+   "begin": "416.160", 
+   "children": [], 
+   "end": "441.600", 
+   "id": "f000043", 
+   "language": "swe", 
+   "lines": [
+    "As longer commutes reduce the time left for other daily activities, this often results in altered divisions of labour between paid and unpaid work whereby the non-commuting partner (often the woman) reduces his or her working hours and instead shoulders more household-related work."
+   ]
+  }, 
+  {
+   "begin": "441.600", 
+   "children": [], 
+   "end": "450.400", 
+   "id": "f000044", 
+   "language": "swe", 
+   "lines": [
+    "The non-commuting partner thus experiences an economic loss."
+   ]
+  }, 
+  {
+   "begin": "450.400", 
+   "children": [], 
+   "end": "459.280", 
+   "id": "f000045", 
+   "language": "swe", 
+   "lines": [
+    "Allt \u00e4r dock inte frid och fr\u00f6jd f\u00f6r l\u00e5ngpendlaren bara f\u00f6r att han kan l\u00e4gga \u00f6ver en del av hemarbetet p\u00e5 sin partner."
+   ]
+  }, 
+  {
+   "begin": "459.280", 
+   "children": [], 
+   "end": "477.320", 
+   "id": "f000046", 
+   "language": "swe", 
+   "lines": [
+    "Studier visar att de som har en pendlingstid p\u00e5 \u00f6ver en timme ofta har s\u00f6mnsv\u00e5righeter, \u00e4r mer stressade och m\u00e5r allm\u00e4nt s\u00e4mre, b\u00e5de fysiskt och mentalt, \u00e4n de med kortare pendlingsavst\u00e5nd."
+   ]
+  }, 
+  {
+   "begin": "477.320", 
+   "children": [], 
+   "end": "495.160", 
+   "id": "f000047", 
+   "language": "swe", 
+   "lines": [
+    "\u00c4ven om kollektivtrafiken fungerar aningen b\u00e4ttre \u00e4n bilen som stimulantia f\u00f6r gl\u00e4djenerverna under den p\u00e5tvingade r\u00f6relse som pendlingen inneb\u00e4r, m\u00e5ste m\u00e5let vara att \u00f6verlag minska den samh\u00e4lleliga pendlingen."
+   ]
+  }, 
+  {
+   "begin": "495.160", 
+   "children": [], 
+   "end": "507.200", 
+   "id": "f000048", 
+   "language": "swe", 
+   "lines": [
+    "Ju mindre tid vi spenderar p\u00e5 att pendla fram och tillbaka, desto mer tid kan vi spendera p\u00e5 att \u00e5ka dit vi vill!"
+   ]
+  }, 
+  {
+   "begin": "507.200", 
+   "children": [], 
+   "end": "512.200", 
+   "id": "f000049", 
+   "language": "swe", 
+   "lines": [
+    "Till kritiken av lyckoforskningen"
+   ]
+  }, 
+  {
+   "begin": "512.200", 
+   "children": [], 
+   "end": "517.960", 
+   "id": "f000050", 
+   "language": "swe", 
+   "lines": [
+    "Forskare har allts\u00e5 kunnat konstatera ett samband mellan pendling och vantrivsel."
+   ]
+  }, 
+  {
+   "begin": "517.960", 
+   "children": [], 
+   "end": "525.600", 
+   "id": "f000051", 
+   "language": "swe", 
+   "lines": [
+    "Denna typ av \u201dlyckoforskning\u201d kan dock vara problematisk, och det \u00e4r viktigt att fr\u00e5ga sig vad den egentligen anv\u00e4nds till."
+   ]
+  }, 
+  {
+   "begin": "525.600", 
+   "children": [], 
+   "end": "540.800", 
+   "id": "f000052", 
+   "language": "swe", 
+   "lines": [
+    "Karl Palm\u00e5s beskriver hur lyckoforskningen springer ur den r\u00f6relse d\u00e4r psykologer fr\u00e5gat sig vad det \u00e4r som g\u00f6r att vi m\u00e5r bra, snarare \u00e4n d\u00e5ligt."
+   ]
+  }, 
+  {
+   "begin": "540.800", 
+   "children": [], 
+   "end": "556.400", 
+   "id": "f000053", 
+   "language": "swe", 
+   "lines": [
+    "Inom den kliniska psykologin har denna lett till en utbredning av s\u00e5 kallad kognitiv beteendeterapi (KBT), och en marginalisering av traditionella, l\u00e5ngsammare former av psykoterapi."
+   ]
+  }, 
+  {
+   "begin": "556.400", 
+   "children": [], 
+   "end": "566.160", 
+   "id": "f000054", 
+   "language": "swe", 
+   "lines": [
+    "Palm\u00e5s beskriver de problem som kan uppst\u00e5 i samband med framv\u00e4xten av en \u201dlyckoideologi\u201d, d\u00e4r vi befalls:"
+   ]
+  }, 
+  {
+   "begin": "566.160", 
+   "children": [], 
+   "end": "567.400", 
+   "id": "f000055", 
+   "language": "swe", 
+   "lines": [
+    "Njut!"
+   ]
+  }, 
+  {
+   "begin": "567.400", 
+   "children": [], 
+   "end": "570.120", 
+   "id": "f000056", 
+   "language": "swe", 
+   "lines": [
+    "Var fri och lycklig!"
+   ]
+  }, 
+  {
+   "begin": "570.120", 
+   "children": [], 
+   "end": "578.640", 
+   "id": "f000057", 
+   "language": "swe", 
+   "lines": [
+    "Han varnar f\u00f6r att \u201dvarken frihet eller lycka kan skapas genom en organiserad ofrihet att f\u00f6rnimma dess motsats\u201d."
+   ]
+  }, 
+  {
+   "begin": "578.640", 
+   "children": [], 
+   "end": "581.440", 
+   "id": "f000058", 
+   "language": "swe", 
+   "lines": [
+    "Kort och gott:"
+   ]
+  }, 
+  {
+   "begin": "581.440", 
+   "children": [], 
+   "end": "588.160", 
+   "id": "f000059", 
+   "language": "swe", 
+   "lines": [
+    "Bara f\u00f6r att vi st\u00e4ndigt hetsas till att m\u00e5 bra s\u00e5 f\u00f6rsvinner inte orsakerna till att vi m\u00e5r d\u00e5ligt."
+   ]
+  }, 
+  {
+   "begin": "588.160", 
+   "children": [], 
+   "end": "595.720", 
+   "id": "f000060", 
+   "language": "swe", 
+   "lines": [
+    "Vad vi ser h\u00e4r \u00e4r hur skillnaden mellan plikt och njutning suddas ut."
+   ]
+  }, 
+  {
+   "begin": "595.720", 
+   "children": [], 
+   "end": "612.920", 
+   "id": "f000061", 
+   "language": "swe", 
+   "lines": [
+    "Det \u00e4r inte s\u00e5, som det ofta h\u00e4vdas, att vi har \u201df\u00f6rlorat plikten\u201d och nu bara g\u00e5r runt och njuter p\u00e5 ett hedonistiskt och ickef\u00f6rpliktigande s\u00e4tt, utan snarare har njutningen blivit en plikt."
+   ]
+  }, 
+  {
+   "begin": "612.920", 
+   "children": [], 
+   "end": "630.040", 
+   "id": "f000062", 
+   "language": "swe", 
+   "lines": [
+    "Vi minns festsituationer d\u00e4r vi k\u00e4nt oss pressade att dansa med st\u00e4ngda \u00f6gon i n\u00e5got slags introvert njutning, eller att konstant \u201dha kul\u201d och aktivt interagera med folk."
+   ]
+  }, 
+  {
+   "begin": "630.040", 
+   "children": [], 
+   "end": "641.000", 
+   "id": "f000063", 
+   "language": "swe", 
+   "lines": [
+    "Eller varf\u00f6r inte de st\u00e4ndigt \u00e5terkommande situationerna d\u00e4r n\u00e5gon ber\u00e4ttar om ett \u201dnytt projekt\u201d och man k\u00e4nner sig tvingad att s\u00e4ga \u201dvad sp\u00e4nnande!\u201d."
+   ]
+  }, 
+  {
+   "begin": "641.000", 
+   "children": [], 
+   "end": "656.120", 
+   "id": "f000064", 
+   "language": "swe", 
+   "lines": [
+    "Problemet \u00e4r att vad som tidigare var en \u00f6nskan (\u201djag vill njuta!\u201d) i v\u00e5r samtid har b\u00f6rjat likna ett krav (\u201ddu m\u00e5ste njuta!\u201d)."
+   ]
+  }, 
+  {
+   "begin": "656.120", 
+   "children": [], 
+   "end": "676.960", 
+   "id": "f000065", 
+   "language": "swe", 
+   "lines": [
+    "Barbara Ehrenreich uppm\u00e4rksammar i boken Smile Or Die hur lyckoforskningen ofta verkar genom att bef\u00e4sta status quo, bland annat d\u00e4rf\u00f6r att de lyckotest som anv\u00e4nds framf\u00f6rallt m\u00e4ter personers tillfredsst\u00e4llelse med tillvaron som den ter sig."
+   ]
+  }, 
+  {
+   "begin": "676.960", 
+   "children": [], 
+   "end": "695.040", 
+   "id": "f000066", 
+   "language": "swe", 
+   "lines": [
+    "S\u00e5ledes fungerar lyckoforskning i m\u00e5ngt och mycket som ett slags positiv f\u00f6rst\u00e4rkning av de k\u00e4nslor som godtar v\u00e4rlden som den \u00e4r idag, ist\u00e4llet f\u00f6r att uppmuntra folk till att f\u00f6r\u00e4ndra den till det b\u00e4ttre."
+   ]
+  }, 
+  {
+   "begin": "695.040", 
+   "children": [], 
+   "end": "710.480", 
+   "id": "f000067", 
+   "language": "swe", 
+   "lines": [
+    "Dessa insikter om att lycka inte kan tvingas fram, och om de konservativa tendenserna i lyckoforskningen, b\u00f6r dock inte g\u00f6ra att vi struntar i att f\u00f6rs\u00f6ka utvinna det intressanta ur densamma."
+   ]
+  }, 
+  {
+   "begin": "710.480", 
+   "children": [], 
+   "end": "730.320", 
+   "id": "f000068", 
+   "language": "swe", 
+   "lines": [
+    "Ett s\u00e4tt att g\u00f6ra detta tror vi kan vara att mot den ensidiga individualiseringen av lycka \u2013 \u201dvar och en, sin egen lyckas smed\u201d \u2013 ordinera ett samh\u00e4lleligt projekt med udden riktad mot den infrastruktur och de institutioner som bygger olycka."
+   ]
+  }, 
+  {
+   "begin": "730.320", 
+   "children": [], 
+   "end": "746.600", 
+   "id": "f000069", 
+   "language": "swe", 
+   "lines": [
+    "Mot sj\u00e4lvhj\u00e4lpsprofeterna och livscoacherna kan vi inte st\u00e4lla n\u00e5got annat \u00e4n en organisering av oron, r\u00e4dslan och olyckan f\u00f6r att \u00f6verkomma dess strukturella bas."
+   ]
+  }, 
+  {
+   "begin": "746.600", 
+   "children": [], 
+   "end": "757.520", 
+   "id": "f000070", 
+   "language": "swe", 
+   "lines": [
+    "Ehrenreich t\u00e4nker sig en mer radikal version av lyckoforskning som grogrund f\u00f6r sociala r\u00f6relser f\u00f6r arbetsplatsdemokrati och minskade klyftor."
+   ]
+  }, 
+  {
+   "begin": "757.520", 
+   "children": [], 
+   "end": "779.920", 
+   "id": "f000071", 
+   "language": "swe", 
+   "lines": [
+    "Om vi st\u00e4ller upp p\u00e5 premissen att sociala aktiviteter \u00e4r n\u00e5got s\u00e5 pass positivt och gl\u00e4djebringande att det faktiskt \u00e4r v\u00e4rt att bygga v\u00e5ra st\u00e4der f\u00f6r att m\u00f6jligg\u00f6ra mer socialt liv s\u00e5 framst\u00e5r pendling i allm\u00e4nhet, och bilen i synnerhet, i \u00e4nnu s\u00e4mre dager."
+   ]
+  }, 
+  {
+   "begin": "779.920", 
+   "children": [], 
+   "end": "792.080", 
+   "id": "f000072", 
+   "language": "swe", 
+   "lines": [
+    "Inte nog med att bilpendlingen orsakar olycka hos den enskilde bilisten, den strukturerar \u00e4ven om samh\u00e4llet efter sin egen antisociala logik."
+   ]
+  }, 
+  {
+   "begin": "792.080", 
+   "children": [], 
+   "end": "801.800", 
+   "id": "f000073", 
+   "language": "swe", 
+   "lines": [
+    "Ett bostadsomr\u00e5de byggt f\u00f6r massbilism minimerar m\u00f6jligheterna att skapa sociala sammanhang och gemenskap."
+   ]
+  }, 
+  {
+   "begin": "801.800", 
+   "children": [], 
+   "end": "817.880", 
+   "id": "f000074", 
+   "language": "swe", 
+   "lines": [
+    "En studie som kanske tydligare \u00e4n n\u00e5got annat visar bilens antisociala tendenser utf\u00f6rdes av transportplaneraren Joshua Hart och ber\u00f6r tre gator i staden Bristol i syd\u00f6stra England."
+   ]
+  }, 
+  {
+   "begin": "817.880", 
+   "children": [], 
+   "end": "826.880", 
+   "id": "f000075", 
+   "language": "swe", 
+   "lines": [
+    "J\u00e4mf\u00f6relsen av den sociala interaktionen p\u00e5 dessa tre gator kan egentligen bara leda till en enda slutsats:"
+   ]
+  }, 
+  {
+   "begin": "826.880", 
+   "children": [], 
+   "end": "838.040", 
+   "id": "f000076", 
+   "language": "swe", 
+   "lines": [
+    "En bil kan inte k\u00f6ra in i ett samh\u00e4lle utan att samh\u00e4llet vittrar s\u00f6nder; de tv\u00e5 kan inte existera samtidigt."
+   ]
+  }, 
+  {
+   "begin": "838.040", 
+   "children": [], 
+   "end": "845.640", 
+   "id": "f000077", 
+   "language": "swe", 
+   "lines": [
+    "Hart best\u00e4mde sig f\u00f6r att unders\u00f6ka dessa tre gator d\u00e4rf\u00f6r att de har v\u00e4ldigt olika trafiksituationer."
+   ]
+  }, 
+  {
+   "begin": "845.640", 
+   "children": [], 
+   "end": "862.480", 
+   "id": "f000078", 
+   "language": "swe", 
+   "lines": [
+    "P\u00e5 Dovercourt road passerar 140 bilar om dagen, p\u00e5 Filton avenue 8 420 bilar om dagen och p\u00e5 Muller road 21 130 bilar om dagen."
+   ]
+  }, 
+  {
+   "begin": "862.480", 
+   "children": [], 
+   "end": "878.360", 
+   "id": "f000079", 
+   "language": "swe", 
+   "lines": [
+    "Efter grundliga studier och intervjuer med de boende p\u00e5 de tre gatorna konstruerade Hart ett fl\u00f6desschema som visar de sociala relationerna mellan boende p\u00e5 de olika gatorna."
+   ]
+  }, 
+  {
+   "begin": "878.360", 
+   "children": [], 
+   "end": "880.560", 
+   "id": "f000080", 
+   "language": "swe", 
+   "lines": [
+    "Resultaten var entydiga:"
+   ]
+  }, 
+  {
+   "begin": "880.560", 
+   "children": [], 
+   "end": "908.560", 
+   "id": "f000081", 
+   "language": "swe", 
+   "lines": [
+    "P\u00e5 den minst trafikerade v\u00e4gen hade de boende i snitt 5,35 v\u00e4nner och 6,1 bekanta, p\u00e5 den mellantrafikerade v\u00e4gen 2,45 v\u00e4nner och 3,65 bekanta och p\u00e5 den h\u00e5rdast trafikerade v\u00e4gen 1,15 v\u00e4nner och 2,8 bekanta."
+   ]
+  }, 
+  {
+   "begin": "908.560", 
+   "children": [], 
+   "end": "912.440", 
+   "id": "f000082", 
+   "language": "swe", 
+   "lines": [
+    "Eller som de boende sj\u00e4lva beskriver det:"
+   ]
+  }, 
+  {
+   "begin": "912.440", 
+   "children": [], 
+   "end": "915.640", 
+   "id": "f000083", 
+   "language": "swe", 
+   "lines": [
+    "Dovercourt Road, en s\u00e5 gott som bilfri gata:"
+   ]
+  }, 
+  {
+   "begin": "915.640", 
+   "children": [], 
+   "end": "922.480", 
+   "id": "f000084", 
+   "language": "swe", 
+   "lines": [
+    "\u201dThere is really a sense of community, we look after each other.\u201d"
+   ]
+  }, 
+  {
+   "begin": "922.480", 
+   "children": [], 
+   "end": "926.040", 
+   "id": "f000085", 
+   "language": "swe", 
+   "lines": [
+    "Filton Avenue, en medeltrafikerad gata:"
+   ]
+  }, 
+  {
+   "begin": "926.040", 
+   "children": [], 
+   "end": "931.520", 
+   "id": "f000086", 
+   "language": "swe", 
+   "lines": [
+    "\u201dIt\u2019s not so friendly, you barely see anyone.\u201d"
+   ]
+  }, 
+  {
+   "begin": "931.520", 
+   "children": [], 
+   "end": "935.320", 
+   "id": "f000087", 
+   "language": "swe", 
+   "lines": [
+    "Muller Road, en h\u00e5rt trafikerad gata:"
+   ]
+  }, 
+  {
+   "begin": "935.320", 
+   "children": [], 
+   "end": "939.040", 
+   "id": "f000088", 
+   "language": "swe", 
+   "lines": [
+    "\u201dPeople just go from their cars to their houses.\u201d"
+   ]
+  }, 
+  {
+   "begin": "939.040", 
+   "children": [], 
+   "end": "948.080", 
+   "id": "f000089", 
+   "language": "swe", 
+   "lines": [
+    "En lycklig infrastruktur \u00e4r en lyckad infrastruktur"
+   ]
+  }, 
+  {
+   "begin": "948.080", 
+   "children": [], 
+   "end": "953.280", 
+   "id": "f000090", 
+   "language": "swe", 
+   "lines": [
+    "Visst b\u00f6r vi vara f\u00f6rsiktiga n\u00e4r lyckofr\u00e4mjande insatser diskuteras."
+   ]
+  }, 
+  {
+   "begin": "953.280", 
+   "children": [], 
+   "end": "960.520", 
+   "id": "f000091", 
+   "language": "swe", 
+   "lines": [
+    "Bakgrunden till v\u00e5r f\u00f6rnimmelse av lycka \u00e4r som tur \u00e4r inte exakt densamma f\u00f6r oss alla."
+   ]
+  }, 
+  {
+   "begin": "960.520", 
+   "children": [], 
+   "end": "977.200", 
+   "id": "f000092", 
+   "language": "swe", 
+   "lines": [
+    "Dock kan vi konstatera att det verkar finnas vissa saker som g\u00f6r de flesta av oss olyckliga, varav flera \u00e4r bil- och pendlingsrelaterade, vilket borde leda till en vilja att bygga bort denna olyckliga infrastruktur."
+   ]
+  }, 
+  {
+   "begin": "977.200", 
+   "children": [], 
+   "end": "986.560", 
+   "id": "f000093", 
+   "language": "swe", 
+   "lines": [
+    "I kritiken av den moderna staden anas ofta en l\u00e4ngtan tillbaka till n\u00e5got ursprungligt."
+   ]
+  }, 
+  {
+   "begin": "986.560", 
+   "children": [], 
+   "end": "991.320", 
+   "id": "f000094", 
+   "language": "swe", 
+   "lines": [
+    "N\u00e5got innan rivningarna, n\u00e5got genuint m\u00e4nskligt."
+   ]
+  }, 
+  {
+   "begin": "991.320", 
+   "children": [], 
+   "end": "999.400", 
+   "id": "f000095", 
+   "language": "swe", 
+   "lines": [
+    "Denna position ska vi se upp f\u00f6r, \u00e4ven om den p\u00e5 m\u00e5nga s\u00e4tt kan vara f\u00f6rst\u00e5elig."
+   ]
+  }, 
+  {
+   "begin": "999.400", 
+   "children": [], 
+   "end": "1012.160", 
+   "id": "f000096", 
+   "language": "swe", 
+   "lines": [
+    "Vi tror att grogrunden f\u00f6r denna l\u00e4ngtan tillbaka inte fr\u00e4mst \u00e4r det faktum att st\u00e4der f\u00f6r\u00e4ndras, utan att dessa f\u00f6r\u00e4ndringar best\u00e4ms och utf\u00f6rs \u00f6ver v\u00e5ra huvuden."
+   ]
+  }, 
+  {
+   "begin": "1012.160", 
+   "children": [], 
+   "end": "1032.000", 
+   "id": "f000097", 
+   "language": "swe", 
+   "lines": [
+    "Den chock som stat och kapital uts\u00e4tter folk f\u00f6r n\u00e4r de river och bygger nytt kan av begripliga sk\u00e4l leda till den typ av tillbakablickande som Anna-Lena L\u00f6fgren sj\u00f6ng om i den gamla d\u00e4ngan Lyckliga gatan:"
+   ]
+  }, 
+  {
+   "begin": "1032.000", 
+   "children": [], 
+   "end": "1037.440", 
+   "id": "f000098", 
+   "language": "swe", 
+   "lines": [
+    "Lyckliga gatan, du finns inte mer du har f\u00f6rsvunnit med hela kvarter."
+   ]
+  }, 
+  {
+   "begin": "1037.440", 
+   "children": [], 
+   "end": "1045.680", 
+   "id": "f000099", 
+   "language": "swe", 
+   "lines": [
+    "Tystnat har leken, tystnat har s\u00e5ngen, h\u00f6gt \u00f6ver marken sv\u00e4var betongen."
+   ]
+  }, 
+  {
+   "begin": "1045.680", 
+   "children": [], 
+   "end": "1064.440", 
+   "id": "f000100", 
+   "language": "swe", 
+   "lines": [
+    "Denna nostalgiska h\u00e5llning kritiseras ofta av diverse stadsv\u00e4nner, och visst kan den kritiken i m\u00e5nga fall vara befogad, men den kan ocks\u00e5 v\u00e4ldigt enkelt sl\u00e5 tillbaka och bli kontraproduktiv."
+   ]
+  }, 
+  {
+   "begin": "1064.440", 
+   "children": [], 
+   "end": "1071.480", 
+   "id": "f000101", 
+   "language": "swe", 
+   "lines": [
+    "Anledningen till detta \u00e4r att man ist\u00e4llet f\u00f6r att g\u00e5 till roten med problemet angriper dess symptom."
+   ]
+  }, 
+  {
+   "begin": "1071.480", 
+   "children": [], 
+   "end": "1091.520", 
+   "id": "f000102", 
+   "language": "swe", 
+   "lines": [
+    "Ist\u00e4llet f\u00f6r att peka p\u00e5 den strukturella maktl\u00f6shet som m\u00e5nga m\u00e4nniskor k\u00e4nner inf\u00f6r de stadsomvandlingar som sker s\u00e5 v\u00e4ljer man ofta att klaga p\u00e5 de som, i brist p\u00e5 andra s\u00e4tt att hantera sin maktl\u00f6shet, f\u00f6rs\u00f6ker f\u00f6rsvara staden som den \u00e4r."
+   ]
+  }, 
+  {
+   "begin": "1091.520", 
+   "children": [], 
+   "end": "1104.960", 
+   "id": "f000103", 
+   "language": "swe", 
+   "lines": [
+    "F\u00f6r att r\u00e5da bot p\u00e5 modernismens h\u00e4rjningar f\u00f6respr\u00e5kar man sedan \u00e4nnu mer planbeslut f\u00f6r f\u00f6r\u00e4ndring och \u201dstadsutveckling\u201d, och p\u00e5 s\u00e5 s\u00e4tt faller man i samma f\u00e4lla:"
+   ]
+  }, 
+  {
+   "begin": "1104.960", 
+   "children": [], 
+   "end": "1113.880", 
+   "id": "f000104", 
+   "language": "swe", 
+   "lines": [
+    "n\u00e4mligen att inte l\u00e5ta de som p\u00e5verkas av f\u00f6r\u00e4ndringen p\u00e5 allvar vara med och best\u00e4mma \u00f6ver den."
+   ]
+  }, 
+  {
+   "begin": "1113.880", 
+   "children": [], 
+   "end": "1119.600", 
+   "id": "f000105", 
+   "language": "swe", 
+   "lines": [
+    "Samtidigt m\u00e5ste \u00e4ven det ekonomiska egenintresset tas i beaktning."
+   ]
+  }, 
+  {
+   "begin": "1119.600", 
+   "children": [], 
+   "end": "1133.440", 
+   "id": "f000106", 
+   "language": "swe", 
+   "lines": [
+    "N\u00e4r innerstadens hyresr\u00e4tter har s\u00e5lts ut f\u00f6r en billig penning, har vi f\u00e5tt inv\u00e5nare som inte bryr sig om ny arkitektur eller nya hus om det minskar v\u00e4rdet p\u00e5 den egna l\u00e4genheten."
+   ]
+  }, 
+  {
+   "begin": "1133.440", 
+   "children": [], 
+   "end": "1146.120", 
+   "id": "f000107", 
+   "language": "swe", 
+   "lines": [
+    "Kn\u00e4ckfr\u00e5gan blir allts\u00e5 hur vi ska kunna kombinera sj\u00e4lvbest\u00e4mmande och lokal demokrati med en stadsutveckling som gynnar det stora flertalet."
+   ]
+  }, 
+  {
+   "begin": "1146.120", 
+   "children": [], 
+   "end": "1172.040", 
+   "id": "f000108", 
+   "language": "swe", 
+   "lines": [
+    "\u00c4ven om vi inte har n\u00e5got enkelt svar p\u00e5 den fr\u00e5gan s\u00e5 \u00e4r vi ganska s\u00e4kra p\u00e5 att om vi vill ha en framtid d\u00e4r det mellan dessa h\u00f6ga hus en dag stiga en s\u00e5ng, \u00e4n mer f\u00f6runderlig och sk\u00f6n \u00e4n den vi h\u00f6rt en g\u00e5ng ... s\u00e5 m\u00e5ste vi l\u00e5ta m\u00e4nniskor sj\u00e4lva f\u00e5 ta mer ansvar f\u00f6r sina kvarter!"
+   ]
+  }, 
+  {
+   "begin": "1172.040", 
+   "children": [], 
+   "end": "1196.200", 
+   "id": "f000109", 
+   "language": "swe", 
+   "lines": [
+    "Ist\u00e4llet f\u00f6r att se lycka som n\u00e5got som kan f\u00f6reskrivas eller regleras fram, kan vi se den som en inneboende m\u00f6jlighet, en m\u00f6jlighet vars existens \u2013 men inte inneh\u00e5ll \u2013 kan f\u00f6rebyggas eller fr\u00e4mjas med hj\u00e4lp av infrastruktur f\u00f6r gemenskap, sj\u00e4lvf\u00f6rvaltning och medbest\u00e4mmande."
+   ]
+  }, 
+  {
+   "begin": "1196.200", 
+   "children": [], 
+   "end": "1220.160", 
+   "id": "f000110", 
+   "language": "swe", 
+   "lines": [
+    "Kontentan blir s\u00e5ledes att om vi bygger en infrastruktur som gynnar uppkomsten av s\u00e5v\u00e4l spontana som mer planerade sociala sammanhang s\u00e5 bygger vi en infrastruktur som ocks\u00e5 gynnar m\u00e4nniskors v\u00e4lm\u00e5ende, utan att beh\u00f6va skriva ut n\u00e5gra recept p\u00e5 vad lycka \u00e4r."
+   ]
+  }
+ ]
+}).fragments;
+    // do not remove the line above
+    roundTimeValues();
+    prepareTable();
+    prepareControls();
+}
+function buttonLoadAudio(evt) {
+    var audioFile = evt.target.files[0];
+    if (audioFile) {
+        var audioFilePath = URL.createObjectURL(audioFile);
+        loadAudio(audioFilePath);
+        ainfo = "[Audio file: \"" + audioFile.name + "\"]";
+        document.getElementById("fileinfo").innerHTML = ainfo + " " + cinfo;
+        document.getElementById("step1").style.display = "none";
+    } else {
+        alert("Failed to load the audio file.");
+    }
+}
+function loadAudio(audioFilePath) {
+    audioElement.setAttribute("src", audioFilePath);
+}
+function buttonLoadJSON(evt) {
+     var jsonFile = evt.target.files[0];
+     if (jsonFile) {
+        loadJSON(jsonFile);
+     } else {
+        alert("Failed to load the JSON file.");
+     }
+}
+function loadJSON(jsonFile) {
+    var reader = new FileReader();
+    reader.onload = function(e) { 
+        try {
+            fragments = JSON.parse(e.target.result).fragments;
+        } catch (e) {
+            alert("Unable to parse the given JSON file.");
+            return;
+        }
+        roundTimeValues();
+        prepareTable();
+        prepareControls();
+        cinfo = "[JSON file: \"" + jsonFile.name + "\"]";
+        document.getElementById("step2").style.display = "none";
+        document.getElementById("fileinfo").innerHTML = ainfo + " " + cinfo;
+    }
+    reader.readAsText(jsonFile);
+}   
+function prepareControls() {
+    // add event listeners
+    for (var i = 0; i < fragments.length; i++) {
+        if (showID) {
+            document.getElementById(getStringID(i, "id")).addEventListener("click", fragmentClick);
+        }
+        document.getElementById(getStringID(i, "cell")).addEventListener("click", fragmentClick);
+        document.getElementById(getStringID(i, "text")).addEventListener("click", fragmentClick);
+        document.getElementById(getStringID(i, "time")).addEventListener("click", fragmentClick);
+        document.getElementById(getStringID(i, "increase")).addEventListener("click", increaseClick);
+        document.getElementById(getStringID(i, "decrease")).addEventListener("click", decreaseClick);
+    }
+    document.getElementById("stop").addEventListener("click", stopOverlay);
+    document.getElementById("buttonShowID").addEventListener("click", changeShowID);
+    document.getElementById("alignText").addEventListener("change", changeAlignText);
+    document.getElementById("buttonContinuousPlay").addEventListener("click", changeContinuousPlay);
+    document.getElementById("buttonTimeFormat").addEventListener("click", changeTimeFormat);
+    document.getElementById("timeStep").addEventListener("change", changeTimeStep);
+    document.getElementById("transitionOffset").addEventListener("change", changeTransitionOffset);
+    document.getElementById("playbackRate").addEventListener("change", changePlaybackRate);
+    document.getElementById("outputFormat").addEventListener("change", changeOutputFormat, false);
+    document.getElementById("download").addEventListener("click", downloadClick);
+    document.getElementById("advancedcontrols").style.visibility = "visible";
+}
+function changeShowID() {
+    showID = !showID;
+    setButtonText("buttonShowID", showID, "ON", "OFF");
+    prepareTable();
+    prepareControls();
+}
+function changeAlignText() {
+    alignText = document.getElementById("alignText").value;
+    applyAlignment();
+}
+function applyAlignment() {
+    for (var i = 0; i < fragments.length; i++) {
+        document.getElementById(getStringID(i, "cell")).style.textAlign = alignText;
+    }
+}
+function changeOutputFormat() {
+    var outputFormat = document.getElementById("outputFormat").value;
+    var disp = "none";
+    if (outputFormat == "smil") {
+        disp = "block";
+    }
+    document.getElementById("smilAudioRef").style.display = disp;
+    document.getElementById("smilPageRef").style.display = disp;
+}
+function changeTimeStep() {
+    timeStep = parseFloat(document.getElementById("timeStep").value);
+}
+function changeTransitionOffset() {
+    transitionOffset = parseFloat(document.getElementById("transitionOffset").value);
+}
+function changePlaybackRate() {
+    audioElement.playbackRate = parseFloat(document.getElementById("playbackRate").value);
+}
+function changeContinuousPlay() {
+    continuousPlay = !continuousPlay;
+    setButtonText("buttonContinuousPlay", continuousPlay, "ON", "OFF");
+}
+function changeTimeFormat() {
+    timeFormatHHMMSSmmm = !timeFormatHHMMSSmmm;
+    setButtonText("buttonTimeFormat", timeFormatHHMMSSmmm, "HH:MM:SS.mmm", "DECIMAL");
+    updateTime();
+}
+function setButtonText(element, variable, true_text, false_text) {
+    var text = false_text;
+    if (variable) {
+        text = true_text;
+    }
+    document.getElementById(element).innerHTML = text;
+}
+function updateTime(i) {
+    if (i == null) {
+        for (var i = 0; i < fragments.length; i++) {
+            var begin = fragments[i].begin;
+            document.getElementById(getStringID(i, "time")).innerHTML =  formatTime(begin);
+        }
+    } else {
+        var begin = fragments[i].begin;
+        document.getElementById(getStringID(i, "time")).innerHTML =  formatTime(begin);
+    }
+}
+function formatTime(time_value) {
+    if (timeFormatHHMMSSmmm) {
+        return timeHHMMSSmmm(time_value, ".");
+    }
+    return time_value.toFixed(3);
+}
+function getStringID(i, element) {
+    if (element == "id") {
+        return ("id" + i);
+    }
+    if (element == "cell") {
+        return ("c" + i);
+    }
+    if (element == "text") {
+        return ("f" + i);
+    }
+    if (element == "time") {
+        return ("t" + i);
+    }
+    if (element == "increase") {
+        return ("t" + i + "inc");
+    }
+    if (element == "decrease") {
+        return ("t" + i + "dec");
+    }
+    return ("" + i);
+}
+function getID(idstring) {
+    var s = idstring;
+    s = s.replace("inc", "");
+    s = s.replace("dec", "");
+    s = s.replace("id", "");
+    s = s.replace("c", "");
+    s = s.replace("t", "");
+    s = s.replace("f", "");
+    return parseInt(s);
+}
+function roundTimeValues() {
+    for (var i = 0; i < fragments.length; i++) {
+        fragments[i].begin = roundTimeValue(fragments[i].begin);
+        fragments[i].end = roundTimeValue(fragments[i].end);
+    }
+}
+function prepareTable() {
+    var rows = [];
+    for (var i = 0; i < fragments.length; ++i) {
+        var id = fragments[i].id;
+        var text = fragments[i].lines.join("<br/>");
+        var begin = fragments[i].begin;
+        var end = fragments[i].end;
+        var row = "";
+        row += "<tr>";
+        row += "<\/tr>";
+        row += "<td><\/td>";
+        if (showID) {
+            row += '<td id="' + getStringID(i, "id") + '">' + id + '<\/td>';
+        }
+        row += '<td id="' + getStringID(i, "cell") + '"><a class="text" id="' + getStringID(i, "text") + '">' + text + '<\/a><\/td>';
+        row += '<td class="edit">';
+        row += '<a class="time" id="' + getStringID(i, "time") + '">' + formatTime(begin) + '<\/a>';
+        row += '<a class="increase" id="' + getStringID(i, "increase") + '">+<\/a>';
+        row += '<a class="decrease" id="' + getStringID(i, "decrease") + '">−<\/a>';
+        row += "<\/td>";
+        row += "<\/tr>";
+        rows[i] = row;
+    }
+    var colID = "";
+    if (showID) {
+        colID = '<col width="100">';
+    }
+    document.getElementById("tb").innerHTML = '<col width="250px">' + colID + '<col><col width="300px"><tbody>' + rows.join("") + "<\/tbody>";
+    applyAlignment();
+}
+function roundTimeValue(time) {
+    return Math.round(time * 1000) / 1000;
+}
+function highlight(style) {
+    try {
+        document.getElementById(getStringID(currentIndex, "cell")).style.backgroundColor = style;
+    } catch (e) {
+        // pass 
+    }
+}
+function fragmentClick(evt) {
+    highlight(CLEAR);
+    currentIndex = getID(evt.target.id);
+    playOverlay(0);
+}
+function increaseClick(evt) {
+    changeTime(evt, timeStep);
+}
+function decreaseClick(evt) {
+    changeTime(evt, -timeStep);
+}
+function changeTime(evt, step) {
+    var i = getID(evt.target.id);
+    fragments[i].begin = roundTimeValue(fragments[i].begin + step);
+    if (fragments[i].begin < 0) {
+        fragments[i].begin = 0.00;
+    }
+    if (i > 0) {
+        fragments[i-1].end = fragments[i].begin;
+    }
+    updateTime(i);
+    highlight(CLEAR);
+    currentIndex = i;
+    playOverlay(0);
+}
+function downloadData() {
+    var aElement = document.createElement("a");
+    aElement.style = "display: none";
+    document.body.appendChild(aElement);
+    return function (data, fileName) {
+        blob = new Blob([data], { type: "octet/stream" }),
+        url = window.URL.createObjectURL(blob);
+        aElement.href = url;
+        aElement.download = fileName;
+        aElement.click();
+    };
+}
+function triggerDownload(data, fileName) {
+    setTimeout(function() {
+        var df = downloadData();
+        df(data, fileName);
+    }, 500);
+    window.URL.revokeObjectURL(url);
+}
+function downloadClick() {
+    var outputFormat = document.getElementById("outputFormat").value;
+    var data = null;
+    switch(outputFormat) {
+        case "csv":
+            data = downloadCSV();
+            break;
+        case "json":
+            data = downloadJSON();
+            break;
+        case "smil":
+            data = downloadSMIL();
+            break;
+        case "srt":
+            data = downloadSRT();
+            break;
+        case "ssv":
+            data = downloadSSV();
+            break;
+        case "ttml":
+            data = downloadTTML();
+            break;
+        case "tsv":
+            data = downloadTSV();
+            break;
+        case "txt":
+            data = downloadTXT();
+            break;
+        case "vtt":
+            data = downloadVTT();
+            break;
+        case "xml":
+            data = downloadXML();
+            break;
+        default:
+            data = downloadJSON();
+    }
+    var message = "The modified " + outputFormat.toUpperCase() + " file will be saved in your default Download directory. Please enter a file name:";
+    var suggestedFileName = "tuned." + outputFormat;
+    var fileName = prompt(message, suggestedFileName);
+    triggerDownload(data, fileName);
+}
+function downloadCSV() {
+    var lines = [];
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[i] = fragments[i].id + "," + fragments[i].begin + "," + fragments[i].end + ',"' + fragments[i].lines.join(" ") + '"';
+    };
+    return lines.join("\n");
+}
+function downloadJSON() {
+    var jsonData = {};
+    jsonData.fragments = fragments;
+    // convert the numbers to strings (as in the original JSON)
+    function numberToString(key, value) {
+        if (typeof value === "number") {
+            value = value.toString();
+        }
+        return value;
+    }
+    return JSON.stringify(jsonData, numberToString, " ");
+}
+function downloadSMIL() {
+    var audioref = document.getElementById("smilAudioRef").value;
+    var pageref = document.getElementById("smilPageRef").value;
+    var lines = [];
+    var j = 0;
+    lines[j++] = '<smil xmlns:epub="http://www.idpf.org/2007/ops" xmlns="http://www.w3.org/ns/SMIL" version="3.0">';
+    lines[j++] = '  <body>';
+    lines[j++] = '    <seq id="s000001" epub:textref="' + pageref + '">';
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[j++] = '      <par id="p' + pad(i+1, 6) + '">';
+        lines[j++] = '        <text src="' + pageref + '#' + fragments[i].id + '"/>';
+        lines[j++] = '        <audio src="' + audioref + '" clipBegin="' + timeSMIL(fragments[i].begin) + '" clipEnd="' + timeSMIL(fragments[i].end)+ '"/>';
+        lines[j++] = '      <\/par>';
+    };
+    lines[j++] = '    <\/seq>';
+    lines[j++] = '  <\/body>';
+    lines[j++] = '<\/smil>';
+    return lines.join("\n");
+}
+function downloadSRT() {
+    var lines = [];
+    var j = 0;
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[j++] = "" + (i+1);
+        lines[j++] = timeSRT(fragments[i].begin) + " --> " + timeSRT(fragments[i].end);
+        var f_lines = fragments[i].lines;
+        for (var k = 0; k < f_lines.length; ++k) {
+            lines[j++] = f_lines[k];
+        }
+        lines[j++] = ""
+    };
+    return lines.join("\n") + "\n";
+}
+function downloadSSV() {
+    var lines = [];
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[i] = fragments[i].begin + " " + fragments[i].end + " " + fragments[i].id + ' "' + fragments[i].lines.join(" ") + '"';
+    };
+    return lines.join("\n");
+}
+function downloadTTML() {
+    var lines = [];
+    var j = 0;
+    lines[j++] = "<?xml version='1.0' encoding='UTF-8'?>";
+    lines[j++] = '<tt xmlns="http://www.w3.org/ns/ttml" xml:lang="">';
+    lines[j++] = '  <body>';
+    lines[j++] = '    <div>';
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[j++] = '      <p xml:id="' + fragments[i].id + '" begin="' + fragments[i].begin + 's" end="' + fragments[i].end + 's">' + fragments[i].lines.join("<br/>") + '<\/p>';
+    };
+    lines[j++] = '    <\/div>';
+    lines[j++] = '  <\/body>';
+    lines[j++] = '<\/tt>';
+    return lines.join("\n");
+}
+function downloadTSV() {
+    var lines = [];
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[i] = fragments[i].begin + "\t" + fragments[i].end + "\t" + fragments[i].id;
+    };
+    return lines.join("\n");
+}
+function downloadTXT() {
+    var lines = [];
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[i] = fragments[i].id + " " + fragments[i].begin + " " + fragments[i].end + ' "' + fragments[i].lines.join(" ") + '"';
+    };
+    return lines.join("\n");
+}
+function downloadVTT() {
+    var lines = [];
+    var j = 0;
+    lines[j++] = "WEBVTT\n"
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[j++] = "" + (i+1);
+        lines[j++] = timeVTT(fragments[i].begin) + " --> " + timeVTT(fragments[i].end);
+        var f_lines = fragments[i].lines;
+        for (var k = 0; k < f_lines.length; ++k) {
+            lines[j++] = f_lines[k];
+        }
+        lines[j++] = ""
+    };
+    return lines.join("\n") + "\n";
+}
+function downloadXML() {
+    var lines = [];
+    var j = 0;
+    lines[j++] = "<?xml version='1.0' encoding='UTF-8'?>";
+    lines[j++] = '<map>';
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[j++] = '  <fragment id="' + fragments[i].id + '" begin="' + fragments[i].begin + '" end="' + fragments[i].end + '">';
+        var f_lines = fragments[i].lines;
+        for (var k = 0; k < f_lines.length; ++k) {
+            lines[j++] = '    <line>' + f_lines[k] + '<\/line>';
+        }
+        lines[j++] = '  <\/fragment>';
+    };
+    lines[j++] = '<\/map>';
+    return lines.join("\n");
+}
+function pad(num, size) {
+    var s = num + "";
+    while (s.length < size) {
+        s = "0" + s;
+    }
+    return s;
+}
+function timeHHMMSSmmm(time_value, decimal_separator) {
+    var tmp = parseFloat(time_value);
+    var hours = parseInt(Math.floor(tmp / 3600));
+    tmp -= (hours * 3600);
+    var minutes = parseInt(Math.floor(tmp / 60));
+    tmp -= minutes * 60;
+    var seconds = parseInt(Math.floor(tmp));
+    tmp -= seconds;
+    var milliseconds = parseInt(Math.floor(tmp * 1000));
+    return pad(hours, 2) + ":" + pad(minutes, 2) + ":" + pad(seconds, 2) + decimal_separator + pad(milliseconds, 3); 
+}
+function timeSMIL(time_value) { 
+    return timeHHMMSSmmm(time_value, ".");
+}
+function timeSRT(time_value) { 
+    return timeHHMMSSmmm(time_value, ",");
+}
+function timeVTT(time_value) { 
+    return timeHHMMSSmmm(time_value, ".");
+}
+function ticker(cTime){
+    
+    // TODO ALPE use a global stopwatch object
+    
+    // "timeupdate" alone isn't accurate enough
+    // to pause exactly at the end of the fragment.
+    // Another option is to use temporal dimensions
+    // for audio source but Chrome doesn't support it with blobs.
+    // If in the last TRANSITION_TIMEOUT seconds, calculate the time left,
+    // and set a corresponding timeout to pause the fragment.
+    if(cTime > fragments[currentIndex].end - TRANSITION_TIMEOUT) {
+        // subtract transitionOffset seconds to account for the delay introduced by this code
+        var timeLeft = (fragments[currentIndex].end - cTime - transitionOffset) * 1000 / audioElement.playbackRate;
+        var index = currentIndex;
+        setTimeout(function() {
+            // do not perform action if the user
+            // jumped to another fragment
+            if (index == currentIndex) {
+                if (continuousPlay) {
+                    playOverlay(1);
+                } else {
+                    highlight(COMPLETED);
+                    stopOverlay();
+                }
+            }
+        }, timeLeft)
+    }
+    // display current time
+    document.getElementById("audioticker").innerHTML = cTime.toFixed(3);
+}
+function stopOverlay() {
+    audioElement.pause();
+    document.getElementById("stop").style.display = "none";
+}
+function playOverlay(inc) {
+    highlight(CLEAR);
+    if (currentIndex + inc < fragments.length) { 
+        currentIndex += inc;
+        highlight(ACTIVE);
+        audioElement.currentTime = fragments[currentIndex].begin;
+        audioElement.play();
+        document.getElementById("audiocontrols").style.display = "block";
+        document.getElementById("stop").style.display = "inline";
+    } else {
+        stopOverlay();
+    }
+}   
+</script>
+<!-- END script -->
+
+    </body>
+</html>

@@ -1,0 +1,2344 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>finetuneas, an HTML interface for fine tuning aeneas sync maps</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <style>
+            html, body {
+                margin:0;
+                min-height:100%;
+            }
+            #container {
+                text-align:center;
+                min-height:100%;
+                position:absolute;
+            }
+            button, label, input, select {
+                margin:5px;
+            }
+            .tg {
+                table-layout:fixed;
+                width:100%;
+                border-spacing:0;
+                position:relative;
+                direction:ltr;
+                margin:100px 0;
+            }
+            .text {
+                margin-right:auto;
+                margin-left:auto;
+                font-size:22px;
+                line-height:125%;
+                font-family:Tahoma, Geneva, sans-serif;
+            }
+            .td {
+                vertical-align:middle;
+            }
+            .edit {
+                text-align:right;
+            }
+            .time, .increase, .decrease {
+                opacity:0.6;
+                position:relative;
+                margin:5px;
+                font-size:140%;
+                line-height:110%;
+                cursor:pointer;
+                font-weight:900;
+                border-style:solid;
+                border-color:#999;
+                border-width:1px 3px;
+                background-color:#333;
+                color:#fff;
+            }
+            .time {
+                padding:2px 5px 0px 5px;
+                margin-right:50px;
+            }
+            .increase {
+                padding:2px 8px 0px 8px;
+            }
+            .decrease {
+                padding:0px 8px 2px 8px;
+                bottom:2px;
+                margin-right:15px;
+            }
+            .increase, .decrease, .time, #stop {
+                -webkit-touch-callout:none;
+                -webkit-user-select:none;
+                -khtml-user-select:none;
+                -moz-user-select:none;
+                -ms-user-select:none;
+                user-select:none;
+            }
+            a:hover {
+                opacity:1;
+            }
+            td {
+                text-align:center;
+                height:80px;
+            }
+            #advancedcontrols{
+                position:fixed;
+                z-index:10;
+                bottom:30px;
+                left:25px;
+                text-align:left;
+                visibility:hidden;
+            }
+            #fileinput, #audioinput {
+                position:relative;
+                bottom:5px;
+            }
+            #step1, #step2, #fileinfo {
+                text-align:center;
+                margin:20px;
+                font-size:24px;
+                font-weight:900;
+            }
+            #directions {
+                margin:50px auto 150px auto;
+                font-size:24px;
+                max-width:700px;
+                border:1px solid black;
+                padding:20px;
+            }
+            .normal {
+                line-height:150%;
+                font-size:20px;
+                text-align:left;
+                margin:15px 50px;
+            }
+            .note {
+                font-size:16px;
+                margin:15px 80px;
+            }
+            #audiocontrols {
+                position:fixed;
+                z-index:10;
+                text-align:right;
+                top:30px;
+                left:25px;
+                display:none;
+                background-color:#fff;
+            }
+            #audioticker {
+                color:dimgrey;
+                font-size:14px;
+            }
+            #stop {
+                font-size:10px;
+                position:relative;
+                bottom:2px;
+                opacity:0.6;
+                padding:0 6px 3px 6px;
+                margin:2px;
+                cursor:pointer;
+                background-color:#333;
+                color:#fff;
+                font-weight:900;
+                font-family:Tahoma, Geneva, sans-serif;
+            }
+            #stop:hover {
+                opacity:1;
+            }
+            .footer {
+                font-size:12px;
+                text-align:center;
+                position:absolute;
+                bottom:10px;
+                left:0;
+                right:0;
+            }
+            .footer a {
+                color:#555;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- BEGIN container -->
+        <div id="container">
+            <!-- BEGIN directions -->
+            <div id="directions">
+                <p class="heading"><b>finetuneas</b></p>
+                <p class="normal"><b>1.</b> Before you start making adjustments, check several fragments at random to be sure that the sync map is mostly correct and it just needs fine tuning. If not, check your <i>aeneas</i> input files and parameters and run <i>aeneas</i> again.</p>
+                <p class="normal"><b>2.</b> To check the begin time of each fragment, click on the corresponding text or timestamp. If necessary, use the <b>+</b> and <b>−</b> buttons to adjust it.</p>
+                <p class="normal"><b>3.</b> When done, you can save the adjusted sync map to file. If the desired format is not available, choose JSON and then use the <i>aeneas.tools.convert_syncmap</i> tool to convert it.</p>
+
+                <!-- BEGIN loadbuttons -->
+                <!-- do not remove the next line -->
+                <!-- AENEAS_REPLACE_COMMENT_BEGIN
+                <div id="loadbuttons">
+                    <p class="normal"><b>4.</b> To start working, select your audio and JSON files:</p>
+                    <div id="step1">Audio file: <input type="file" id="audioinput" accept="audio/*" autocomplete="off"/></div>
+                    <div id="fileinfo"></div>
+                    <div id="step2">JSON file: <input type="file" id="fileinput" accept=".json" autocomplete="off"/></div>
+                </div>
+                AENEAS_REPLACE_COMMENT_END -->
+                <!-- do not remove the line above -->
+                <!-- END loadbuttons -->
+
+                <!-- BEGIN loadauto -->
+                <!-- do not remove the next line -->
+                <!-- AENEAS_REPLACE_UNCOMMENT_BEGIN -->
+                <div id="loadauto">
+                    <button id="buttonAutoLoad">Got it, let's start!</button>
+                </div>
+                <!-- AENEAS_REPLACE_UNCOMMENT_END -->
+                <!-- do not remove the line above -->
+                <!-- END loadauto -->
+
+            </div>
+            <!-- END directions -->
+
+            <!-- BEGIN player -->
+            <div id="player"> 
+                <audio id="audioplayer" src="" ontimeupdate="ticker(this.currentTime);"></audio>
+            </div>
+            <!-- END player -->
+
+            <div id="audiocontrols" >
+                <span id="audioticker"></span>
+                <span id="playpause"><a id="stop">ıı</a></span>
+            </div>
+
+            <div id="fragments">
+                <table id="tb" class="tg"></table>
+            </div>
+
+            <div id="advancedcontrols">
+                <label for="timeStep" style="display:block">Time increment (s):</label>
+                <input id="timeStep" type="number" min="0.010" step="0.010" value="0.100" style="display:block"/> 
+                <label for="buttonShowID" style="display:block">Show ID:</label>
+                <button id="buttonShowID" style="display:block">OFF</button>
+                <label for="alignText" style="display:block">Text alignment:</label>
+                <select name="alignText" id="alignText" style="display:block">
+                    <option value="left">Left</option>
+                    <option value="center" selected="selected">Center</option>
+                    <option value="right">Right</option>
+                    <option value="justify">Justify</option>
+                </select>
+                <hr style="display:block"/>
+                <label for="playbackRate" style="display:block">Playback rate:</label>
+                <input id="playbackRate" type="number" min="0.1" max="4.0" step="0.1" value="1.0" style="display:block"/> 
+                <label for="buttonContinuousPlay">Continuous play:</label>
+                <button id="buttonContinuousPlay" style="display:block">OFF</button>
+                <label for="buttonTimeFormat" style="display:block">Time format:</label>
+                <button id="buttonTimeFormat" style="display:block">DECIMAL</button>
+                <label for="transitionOffset" style="display:block">Transition offset (s):</label>
+                <input id="transitionOffset" type="number" min="0" max="0.400" step="0.010" value="0.100" style="display:block"/> 
+                <hr style="display:block"/>
+                <label for="outputFormat" style="display:block">Format:</label>
+                <select name="outputFormat" id="outputFormat" style="display:block">
+                    <option value="csv">CSV</option>
+                    <option value="json" selected="selected">JSON</option>
+                    <option value="smil">SMIL</option>
+                    <option value="srt">SRT</option>
+                    <option value="ssv">SSV</option>
+                    <option value="ttml">TTML</option>
+                    <option value="tsv">TSV</option>
+                    <option value="txt">TXT</option>
+                    <option value="vtt">VTT</option>
+                    <option value="xml">XML</option>
+                </select>
+                <input id="smilAudioRef" style="display:none" type="text" placeholder="audio_ref"/>
+                <input id="smilPageRef" style="display:none" type="text" placeholder="page_ref"/>
+                <button id="download" style="display:block">Save</button>
+            </div>
+
+            <div class="footer">
+                <a href="https://github.com/ozdefir/finetuneas">finetuneas v1.0.2</a><br/>© 2015 Firat Özdemir 
+            </div>
+        </div>
+        <!-- END container -->
+
+<!-- BEGIN script -->
+<script type="text/javascript">
+//
+//
+// global variables and constants
+//
+//
+var fragments = [];
+var currentIndex = 0;
+var audioElement = document.getElementById("audioplayer");
+var ainfo = "";
+var cinfo = "";
+var url;
+var COMPLETED = "lightgreen";
+var ACTIVE = "yellow";
+var CLEAR = "";
+var TRANSITION_TIMEOUT = 0.400;
+//
+//
+// variables that can be modified by the user at runtime
+//
+//
+// do not remove the following lines starting with AENEAS_REPLACE_
+//
+var timeStep = 0.1;
+// AENEAS_REPLACE_TIME_STEP
+var showID = false;
+showID = true;
+var alignText = "center";
+alignText = "left"
+var playbackRate = 1.0;
+// AENEAS_REPLACE_PLAYBACK_RATE
+var continuousPlay = false;
+continuousPlay = true;
+var timeFormatHHMMSSmmm = false;
+timeFormatHHMMSSmmm = true;
+var transitionOffset = 0.100;
+// AENEAS_REPLACE_TRANSITION_OFFSET
+var outputFormat = "json";
+// AENEAS_REPLACE_OUTPUT_FORMAT
+var audioref = "";
+// AENEAS_REPLACE_SMIL_AUDIOREF
+var pageref = "";
+// AENEAS_REPLACE_SMIL_PAGEREF
+//
+// do not remove the lines above starting with AENEAS_REPLACE_
+//
+//
+// BEGIN INIT CODE
+//
+//
+bindEssentialListeners();
+applyDefaults();
+//
+//
+// END INIT CODE
+//
+//
+function bindEssentialListeners() {
+    try {
+        document.getElementById("audioinput").addEventListener("change", buttonLoadAudio, false);
+    } catch(e) {
+        // pass
+    }
+    try {
+        document.getElementById("fileinput").addEventListener("change", buttonLoadJSON, false);
+    } catch(e) {
+        // pass
+    }
+    try {
+        document.getElementById("buttonAutoLoad").addEventListener("click", buttonAutoLoad, false);
+    } catch(e) {
+        // pass
+    }
+}
+function applyDefaults() {
+    try {
+        document.getElementById("timeStep").value = timeStep;
+        setButtonText("buttonShowID", showID, "ON", "OFF");
+        document.getElementById("alignText").value = alignText;
+        document.getElementById("playbackRate").value = playbackRate;
+        setButtonText("buttonContinuousPlay", continuousPlay, "ON", "OFF");
+        setButtonText("buttonTimeFormat", timeFormatHHMMSSmmm, "HH:MM:SS.mmm", "DECIMAL");
+        document.getElementById("transitionOffset").value = transitionOffset;
+        document.getElementById("outputFormat").value = outputFormat;
+        document.getElementById("smilAudioRef").value = audioref;
+        document.getElementById("smilPageRef").value = pageref;
+        changeOutputFormat();
+    } catch(e) {
+        // pass
+    }
+}
+function buttonAutoLoad() {
+    // fake
+    var audioFilePath = "file:///tmp/audio.mp3";
+    // do not remove the next line
+    audioFilePath = "file:///media/bigdisk/git_repos/trafikmaktordningen-audiobook/original_data/Trafikmaktordningen ljudbok/Trafikmaktordningen - Kapitel 3.mp3";
+    // do not remove the line above
+    loadAudio(audioFilePath);
+   
+    // fake
+    fragments = [
+      {"begin": "0.000",  "end": "2.680",  "id": "f000001", "language": "en", "lines": ["1"]}, 
+      {"begin": "2.680",  "end": "5.880",  "id": "f000002", "language": "en", "lines": ["From fairest creatures we desire increase,"]}, 
+      {"begin": "5.880",  "end": "9.240",  "id": "f000003", "language": "en", "lines": ["That thereby beauty's rose might never die,"]}, 
+      {"begin": "9.240",  "end": "11.760", "id": "f000004", "language": "en", "lines": ["But as the riper should by time decease,"]},
+      {"begin": "11.760", "end": "14.440", "id": "f000005", "language": "en", "lines": ["His tender heir might bear his memory:"]},
+      {"begin": "14.440", "end": "18.560", "id": "f000006", "language": "en", "lines": ["But thou contracted to thine own bright eyes,"]},
+      {"begin": "18.560", "end": "22.280", "id": "f000007", "language": "en", "lines": ["Feed'st thy light's flame with self-substantial fuel,"]},
+      {"begin": "22.280", "end": "25.480", "id": "f000008", "language": "en", "lines": ["Making a famine where abundance lies,"]},
+      {"begin": "25.480", "end": "31.200", "id": "f000009", "language": "en", "lines": ["Thy self thy foe, to thy sweet self too cruel:"]},
+      {"begin": "31.200", "end": "34.400", "id": "f000010", "language": "en", "lines": ["Thou that art now the world's fresh ornament,"]},
+      {"begin": "34.400", "end": "36.960", "id": "f000011", "language": "en", "lines": ["And only herald to the gaudy spring,"]},
+      {"begin": "36.960", "end": "40.640", "id": "f000012", "language": "en", "lines": ["Within thine own bud buriest thy content,"]},
+      {"begin": "40.640", "end": "43.640", "id": "f000013", "language": "en", "lines": ["And tender churl mak'st waste in niggarding:"]},
+      {"begin": "43.640", "end": "48.120", "id": "f000014", "language": "en", "lines": ["Pity the world, or else this glutton be,"]},
+      {"begin": "48.120", "end": "53.240", "id": "f000015", "language": "en", "lines": ["To eat the world's due, by the grave and thee."]}
+    ];
+    // do not remove the next line
+    fragments = ({
+ "fragments": [
+  {
+   "begin": "0.000", 
+   "children": [], 
+   "end": "3.000", 
+   "id": "f000001", 
+   "language": "swe", 
+   "lines": [
+    "Kapitel 3."
+   ]
+  }, 
+  {
+   "begin": "3.000", 
+   "children": [], 
+   "end": "5.920", 
+   "id": "f000002", 
+   "language": "swe", 
+   "lines": [
+    "METROPOLEN."
+   ]
+  }, 
+  {
+   "begin": "5.920", 
+   "children": [], 
+   "end": "15.560", 
+   "id": "f000003", 
+   "language": "swe", 
+   "lines": [
+    "Trafikmaktordningen i den moderna metropolen framtr\u00e4der s\u00e4llan s\u00e5 tydligt som morgonen efter ett rej\u00e4lt sn\u00f6fall."
+   ]
+  }, 
+  {
+   "begin": "15.560", 
+   "children": [], 
+   "end": "28.400", 
+   "id": "f000004", 
+   "language": "swe", 
+   "lines": [
+    "Medan bilarna rullar p\u00e5 i n\u00e5gots\u00e5n\u00e4r vanlig takt s\u00e5 tr\u00e4ngs fotg\u00e4ngare, barnvagnar och rollatorer p\u00e5 glashala trottoarer \u2013 i b\u00e4sta fall."
+   ]
+  }, 
+  {
+   "begin": "28.400", 
+   "children": [], 
+   "end": "36.160", 
+   "id": "f000005", 
+   "language": "swe", 
+   "lines": [
+    "Lika vanligt \u00e4r dock att trottoaren \u00e4r avsp\u00e4rrad p\u00e5 grund av risk f\u00f6r sn\u00f6ras och istappar:"
+   ]
+  }, 
+  {
+   "begin": "36.160", 
+   "children": [], 
+   "end": "47.240", 
+   "id": "f000006", 
+   "language": "swe", 
+   "lines": [
+    "fotg\u00e4ngarna tvingas ut p\u00e5 bilv\u00e4gen, men bilisterna visar knappast n\u00e5gon st\u00f6rre acceptans f\u00f6r det faktum att de m\u00e5ste dela v\u00e4g med andra."
+   ]
+  }, 
+  {
+   "begin": "47.240", 
+   "children": [], 
+   "end": "53.920", 
+   "id": "f000007", 
+   "language": "swe", 
+   "lines": [
+    "Reglerna f\u00f6r vem som \u00e4r ansvarig f\u00f6r sn\u00f6r\u00f6jningen \u00e4r mycket tydliga n\u00e4r det kommer till bilv\u00e4gar."
+   ]
+  }, 
+  {
+   "begin": "53.920", 
+   "children": [], 
+   "end": "60.360", 
+   "id": "f000008", 
+   "language": "swe", 
+   "lines": [
+    "Staten och Trafikverket ansvarar f\u00f6r sina v\u00e4gar och kommunen f\u00f6r sina."
+   ]
+  }, 
+  {
+   "begin": "60.360", 
+   "children": [], 
+   "end": "75.520", 
+   "id": "f000009", 
+   "language": "swe", 
+   "lines": [
+    "N\u00e4r det g\u00e4ller trottoarer \u00e4r det oftast kommunen som har ansvar, men p\u00e5 vissa st\u00e4llen har ansvaret lagts p\u00e5 fastighets\u00e4garna som ocks\u00e5 \u00e4r ansvariga f\u00f6r innerg\u00e5rdar, trappor, uppfarter och tak."
+   ]
+  }, 
+  {
+   "begin": "75.520", 
+   "children": [], 
+   "end": "80.880", 
+   "id": "f000010", 
+   "language": "swe", 
+   "lines": [
+    "F\u00f6rvirringen kring vem som ska ta ansvar \u00e4r uppenbarligen stor:"
+   ]
+  }, 
+  {
+   "begin": "80.880", 
+   "children": [], 
+   "end": "87.200", 
+   "id": "f000011", 
+   "language": "swe", 
+   "lines": [
+    "endast en tredjedel av Stockholms l\u00e4ns inv\u00e5nare vet vad som g\u00e4ller."
+   ]
+  }, 
+  {
+   "begin": "87.200", 
+   "children": [], 
+   "end": "101.360", 
+   "id": "f000012", 
+   "language": "swe", 
+   "lines": [
+    "Vid en j\u00e4mf\u00f6relse mellan bilv\u00e4gar, trottoarer och cykelv\u00e4gar f\u00e5r man l\u00e4tt intrycket att ingen ansvarar f\u00f6r att fotg\u00e4ngare och cyklister ska kunna ta sig fram snabbt och s\u00e4kert."
+   ]
+  }, 
+  {
+   "begin": "101.360", 
+   "children": [], 
+   "end": "112.040", 
+   "id": "f000013", 
+   "language": "swe", 
+   "lines": [
+    "F\u00f6r att inte tala om de med barnvagnar och rollatorer \u2013 f\u00f6r dem blir det n\u00e4stan om\u00f6jligt att ta sig fram n\u00e4r sn\u00f6n plogas upp p\u00e5 trottoarerna."
+   ]
+  }, 
+  {
+   "begin": "112.040", 
+   "children": [], 
+   "end": "127.520", 
+   "id": "f000014", 
+   "language": "swe", 
+   "lines": [
+    "Sn\u00f6r\u00f6jningen \u00e4r ett i raden av exempel p\u00e5 hur bilismen prioriteras p\u00e5 andra trafikslags bekostnad och en logisk konsekvens av ett samh\u00e4lle byggt p\u00e5 automobilitet."
+   ]
+  }, 
+  {
+   "begin": "127.520", 
+   "children": [], 
+   "end": "132.280", 
+   "id": "f000015", 
+   "language": "swe", 
+   "lines": [
+    "Den r\u00e5dande trafikmaktordningen blir sj\u00e4lvuppfyllande:"
+   ]
+  }, 
+  {
+   "begin": "132.280", 
+   "children": [], 
+   "end": "151.600", 
+   "id": "f000016", 
+   "language": "swe", 
+   "lines": [
+    "vi sn\u00f6r\u00f6jer bilv\u00e4garna f\u00f6rst eftersom vi \u00e4r fast i id\u00e9n att bilismen alltid m\u00e5ste ges h\u00f6gsta prioritet, vilket blir ett incitament f\u00f6r folk att \u00e5ka mer bil och leder till att bilismens herrav\u00e4lde bef\u00e4sts ytterligare."
+   ]
+  }, 
+  {
+   "begin": "151.600", 
+   "children": [], 
+   "end": "160.200", 
+   "id": "f000017", 
+   "language": "swe", 
+   "lines": [
+    "Vi ser inte bara skillnad i hur olika trafikslag prioriteras; \u00e4ven inom bilismen finns en rangordning."
+   ]
+  }, 
+  {
+   "begin": "160.200", 
+   "children": [], 
+   "end": "171.720", 
+   "id": "f000018", 
+   "language": "swe", 
+   "lines": [
+    "Ett samh\u00e4lle som anpassar sin industri efter \u201djust in time\u201d-produktion g\u00f6r sig beroende av en armada av lastbilar i st\u00e4ndig r\u00f6relse."
+   ]
+  }, 
+  {
+   "begin": "171.720", 
+   "children": [], 
+   "end": "186.880", 
+   "id": "f000019", 
+   "language": "swe", 
+   "lines": [
+    "Kommersiellt viktiga v\u00e4gstr\u00e4ckor g\u00f6rs tillg\u00e4ngliga omedelbart, medan den vanliga bilisten inte kan g\u00f6ra mer \u00e4n att hoppas p\u00e5 viss framkomlighet i sitt bostadsomr\u00e5de."
+   ]
+  }, 
+  {
+   "begin": "186.880", 
+   "children": [], 
+   "end": "196.920", 
+   "id": "f000020", 
+   "language": "swe", 
+   "lines": [
+    "Det g\u00e4ller b\u00e5de inne i st\u00e4derna och p\u00e5 landsbygden, d\u00e4r bilens faktiska n\u00f6dv\u00e4ndighet \u00e4r avsev\u00e4rt st\u00f6rre."
+   ]
+  }, 
+  {
+   "begin": "196.920", 
+   "children": [], 
+   "end": "201.320", 
+   "id": "f000021", 
+   "language": "swe", 
+   "lines": [
+    "Felparkerare och plankare"
+   ]
+  }, 
+  {
+   "begin": "201.320", 
+   "children": [], 
+   "end": "216.440", 
+   "id": "f000022", 
+   "language": "swe", 
+   "lines": [
+    "En kall och gr\u00e5mulen februarivecka 2010 sammanf\u00f6ll tv\u00e5 h\u00e4ndelser som, sedda tillsammans, utg\u00f6r en \u00f6vertydlig illustration av den r\u00e5dande trafikmaktordningen."
+   ]
+  }, 
+  {
+   "begin": "216.440", 
+   "children": [], 
+   "end": "230.960", 
+   "id": "f000023", 
+   "language": "swe", 
+   "lines": [
+    "Den f\u00f6rsta var vad som senare kom att kallas f\u00f6r Gategate, d\u00e5 Jesper Nilsson fotograferade ett par civilpoliser som extrakn\u00e4ckte som biljettkontrollanter i Stockholms tunnelbana."
+   ]
+  }, 
+  {
+   "begin": "230.960", 
+   "children": [], 
+   "end": "239.680", 
+   "id": "f000024", 
+   "language": "swe", 
+   "lines": [
+    "Den andra var en dom i Malm\u00f6 tingsr\u00e4tt mot en felparkerare som angrep och hotade en parkeringsvakt."
+   ]
+  }, 
+  {
+   "begin": "239.680", 
+   "children": [], 
+   "end": "252.800", 
+   "id": "f000025", 
+   "language": "swe", 
+   "lines": [
+    "N\u00e4r Jesper Nilsson s\u00e5g tv\u00e5 civilpoliser som stoppade en grupp ungdomar vid sp\u00e4rrarna p\u00e5 Hornstulls tunnelbanestation valde han att dokumentera det hela med sin mobilkamera."
+   ]
+  }, 
+  {
+   "begin": "252.800", 
+   "children": [], 
+   "end": "267.120", 
+   "id": "f000026", 
+   "language": "swe", 
+   "lines": [
+    "Detta ogillades av poliserna, som trots att det \u00e4r till\u00e5tet att fotografera i tunnelbanan hotade Nilsson med att ta in honom p\u00e5 station f\u00f6r urinprov om han inte raderade bilderna."
+   ]
+  }, 
+  {
+   "begin": "267.120", 
+   "children": [], 
+   "end": "274.280", 
+   "id": "f000027", 
+   "language": "swe", 
+   "lines": [
+    "Fallet fick stor uppm\u00e4rksamhet och polisernas metoder fick utst\u00e5 h\u00e5rd kritik."
+   ]
+  }, 
+  {
+   "begin": "274.280", 
+   "children": [], 
+   "end": "291.040", 
+   "id": "f000028", 
+   "language": "swe", 
+   "lines": [
+    "Men vad som fr\u00e4mst kritiserades var att poliserna gav sig p\u00e5 Nilsson efter att han hade fotograferat dem \u2013 inte det faktum att polisen v\u00e4ljer att l\u00e4gga sina resurser p\u00e5 att st\u00e5 och vakta sp\u00e4rrarna i kollektivtrafiken."
+   ]
+  }, 
+  {
+   "begin": "291.040", 
+   "children": [], 
+   "end": "305.800", 
+   "id": "f000029", 
+   "language": "swe", 
+   "lines": [
+    "Den mesta av kritiken var befogad och riktades mot problemet med gummiparagrafer i lagen (i detta fall relaterade till narkotikabruk) som till\u00e5ter polisen att hota m\u00e4nniskor."
+   ]
+  }, 
+  {
+   "begin": "305.800", 
+   "children": [], 
+   "end": "322.280", 
+   "id": "f000030", 
+   "language": "swe", 
+   "lines": [
+    "Men h\u00e4ndelsen b\u00f6r ocks\u00e5 ses i ljuset av problemen med att polisen \u00e4gnar sina begr\u00e4nsade resurser \u00e5t att leka skattefinansierade biljettkontrollanter \u00e5t privata f\u00f6retag som MTR."
+   ]
+  }, 
+  {
+   "begin": "322.280", 
+   "children": [], 
+   "end": "325.800", 
+   "id": "f000031", 
+   "language": "swe", 
+   "lines": [
+    "Samma vecka f\u00f6ll en dom i Malm\u00f6 tingsr\u00e4tt."
+   ]
+  }, 
+  {
+   "begin": "325.800", 
+   "children": [], 
+   "end": "330.240", 
+   "id": "f000032", 
+   "language": "swe", 
+   "lines": [
+    "Fallet g\u00e4llde en parkeringsvakt som angripits av en felparkerare."
+   ]
+  }, 
+  {
+   "begin": "330.240", 
+   "children": [], 
+   "end": "340.680", 
+   "id": "f000033", 
+   "language": "swe", 
+   "lines": [
+    "Parkeringsvakten fick utst\u00e5 ett grepp om halsen och fick h\u00f6ra att hon skulle jagas intill \u201dd\u00f6ddagar\u201d."
+   ]
+  }, 
+  {
+   "begin": "340.680", 
+   "children": [], 
+   "end": "354.440", 
+   "id": "f000034", 
+   "language": "swe", 
+   "lines": [
+    "Hon fick dock inget skadest\u00e5nd eftersom Malm\u00f6 tingsr\u00e4tt ans\u00e5g att \u201dvissa utsatta yrkesgrupper m\u00e5ste ha st\u00f6rre mental beredskap f\u00f6r hot och angrepp\u201d."
+   ]
+  }, 
+  {
+   "begin": "354.440", 
+   "children": [], 
+   "end": "372.640", 
+   "id": "f000035", 
+   "language": "swe", 
+   "lines": [
+    "Ist\u00e4llet f\u00f6r att ifr\u00e5gas\u00e4tta de mekanismer som orsakar denna form av v\u00e4gvrede och d\u00f6ma de personer som v\u00e5llar andra m\u00e4nniskor skada, s\u00e5 tyckte allts\u00e5 Malm\u00f6tingsr\u00e4tt att vi ska ha \u00f6verseende med v\u00e4gvredgade felparkerare."
+   ]
+  }, 
+  {
+   "begin": "372.640", 
+   "children": [], 
+   "end": "388.600", 
+   "id": "f000036", 
+   "language": "swe", 
+   "lines": [
+    "Detta b\u00f6r ocks\u00e5 f\u00f6rst\u00e5s i samband med att v\u00e5r nuvarande borgerliga regering till och med g\u00e5r s\u00e5 l\u00e5ngt att de medvetet l\u00e4gger ner forskning som handlar om att f\u00f6rb\u00e4ttra parkeringsvakters arbetsmilj\u00f6 och vardag."
+   ]
+  }, 
+  {
+   "begin": "388.600", 
+   "children": [], 
+   "end": "397.560", 
+   "id": "f000037", 
+   "language": "swe", 
+   "lines": [
+    "Vad vi ser \u00e4r ett kn\u00e4b\u00f6jande f\u00f6r bilismen och konsekvenserna av bilisters ageranden."
+   ]
+  }, 
+  {
+   "begin": "397.560", 
+   "children": [], 
+   "end": "406.080", 
+   "id": "f000038", 
+   "language": "swe", 
+   "lines": [
+    "Samh\u00e4llets \u00f6verseende med felparkerare kan ses som en naturlig ytterlighet av den r\u00e5dande trafikmaktordningen."
+   ]
+  }, 
+  {
+   "begin": "406.080", 
+   "children": [], 
+   "end": "424.120", 
+   "id": "f000039", 
+   "language": "swe", 
+   "lines": [
+    "Att vi uppl\u00e5ter en s\u00e5 stor del av v\u00e5rt offentliga rum till parkeringsplatser \u00e4r liksom inte nog \u2013 vi ska \u00e4ven se mellan fingrarna med de bilister som olagligen ockuperar \u00e4ven de f\u00e5 platser de inte f\u00e5r vara p\u00e5."
+   ]
+  }, 
+  {
+   "begin": "424.120", 
+   "children": [], 
+   "end": "436.040", 
+   "id": "f000040", 
+   "language": "swe", 
+   "lines": [
+    "S\u00e5, hur kommer det sig att polisen anser sig ha resurser att leka biljettkontrollanter i kollektivtrafiken men ignorerar felparkerare?"
+   ]
+  }, 
+  {
+   "begin": "436.040", 
+   "children": [], 
+   "end": "439.600", 
+   "id": "f000041", 
+   "language": "swe", 
+   "lines": [
+    "Det \u00e4r en fr\u00e5ga v\u00e4l v\u00e4rd att st\u00e4lla."
+   ]
+  }, 
+  {
+   "begin": "439.600", 
+   "children": [], 
+   "end": "454.800", 
+   "id": "f000042", 
+   "language": "swe", 
+   "lines": [
+    "Dock \u00e4r det inte bara poliserna vi ska skylla p\u00e5, \u00e4ven om det \u00e4r mycket provocerande att de jagar kollektivtrafikanter ist\u00e4llet f\u00f6r att st\u00e4vja felparkering eller l\u00e4gga sina resurser p\u00e5 andra saker."
+   ]
+  }, 
+  {
+   "begin": "454.800", 
+   "children": [], 
+   "end": "463.640", 
+   "id": "f000043", 
+   "language": "swe", 
+   "lines": [
+    "Som synes i fallet i Malm\u00f6 tingsr\u00e4tt s\u00e5 \u00e4r polisen knappast ensam i sin f\u00f6rl\u00e5tande syn p\u00e5 bilisters lagbrott."
+   ]
+  }, 
+  {
+   "begin": "463.640", 
+   "children": [], 
+   "end": "468.920", 
+   "id": "f000044", 
+   "language": "swe", 
+   "lines": [
+    "\u00c4ven politikerna \u00e4r med och underst\u00f6djer bilismens herrav\u00e4lde."
+   ]
+  }, 
+  {
+   "begin": "468.920", 
+   "children": [], 
+   "end": "486.320", 
+   "id": "f000045", 
+   "language": "swe", 
+   "lines": [
+    "Att det bara kostar mellan 475 och 900 kronor att felparkera i j\u00e4mf\u00f6relse med 1 200 kronor f\u00f6r att \u00e5ka kollektivtrafik utan biljett \u00e4r inget annat \u00e4n en subventionering av bilismen."
+   ]
+  }, 
+  {
+   "begin": "486.320", 
+   "children": [], 
+   "end": "499.680", 
+   "id": "f000046", 
+   "language": "swe", 
+   "lines": [
+    "\u00c4ven den som mots\u00e4tter sig plankning kan inte med n\u00e5got slags intellektuell heder i beh\u00e5ll h\u00e4vda att det skulle vara v\u00e4rre att planka i kollektivtrafiken \u00e4n att felparkera."
+   ]
+  }, 
+  {
+   "begin": "499.680", 
+   "children": [], 
+   "end": "523.600", 
+   "id": "f000047", 
+   "language": "swe", 
+   "lines": [
+    "D\u00e4r plankaren oftast tillh\u00f6r en ekonomiskt svag grupp och plankar f\u00f6r att m\u00f6jligg\u00f6ra sin f\u00f6rflyttning inom staden \u00e4r felparkeraren ofta en rik man i medel\u00e5ldern som anser sig f\u00e5 st\u00e4lla sin Mercedes var han vill, och knappt verkar tveka att misshandla eller kr\u00e4nka den som f\u00f6rs\u00f6ker stoppa honom."
+   ]
+  }, 
+  {
+   "begin": "523.600", 
+   "children": [], 
+   "end": "542.160", 
+   "id": "f000048", 
+   "language": "swe", 
+   "lines": [
+    "Felparkeraren riskerar dessutom att uts\u00e4tta m\u00e4nniskor f\u00f6r andra faror, ut\u00f6ver sin egen v\u00e4gvrede, genom att parkera p\u00e5 trottoarer och p\u00e5 s\u00e5 s\u00e4tt tvinga ut fotg\u00e4ngare i gatan, eller genom att blockera utryckningsv\u00e4gar."
+   ]
+  }, 
+  {
+   "begin": "542.160", 
+   "children": [], 
+   "end": "558.480", 
+   "id": "f000049", 
+   "language": "swe", 
+   "lines": [
+    "Om vi j\u00e4mf\u00f6r de hundratals miljoner som satsas p\u00e5 nya sp\u00e4rrar och olika s\u00e4tt att kontrollera kollektivtrafikanter med daltandet med felparkerare, blir trafikmaktordningen n\u00e4stan pinsamt uppenbar."
+   ]
+  }, 
+  {
+   "begin": "558.480", 
+   "children": [], 
+   "end": "582.760", 
+   "id": "f000050", 
+   "language": "swe", 
+   "lines": [
+    "Hade det idoga arbetet mot plankare \u00f6versatts till felparkerare s\u00e5 skulle politikerna idag, bland mycket annat, inf\u00f6ra strategiskt l\u00e5ga stolpar f\u00f6r att skydda cykelv\u00e4gar och trottoarer samt hjull\u00e5s och bortforsling av alla bilar som parkerat vid stoppf\u00f6rbud."
+   ]
+  }, 
+  {
+   "begin": "582.760", 
+   "children": [], 
+   "end": "587.480", 
+   "id": "f000051", 
+   "language": "swe", 
+   "lines": [
+    "Detta verkar emellertid inga politiker vara intresserade av:"
+   ]
+  }, 
+  {
+   "begin": "587.480", 
+   "children": [], 
+   "end": "592.960", 
+   "id": "f000052", 
+   "language": "swe", 
+   "lines": [
+    "det bilindustriella komplexet st\u00f6ter man sig inte med i f\u00f6rsta hand."
+   ]
+  }, 
+  {
+   "begin": "592.960", 
+   "children": [], 
+   "end": "607.360", 
+   "id": "f000053", 
+   "language": "swe", 
+   "lines": [
+    "Ist\u00e4llet blir kollektivtrafikanter som inte har r\u00e5d med resan kallade parasiter och trakasseras av kontrollanter, v\u00e4ktare och poliser."
+   ]
+  }, 
+  {
+   "begin": "607.360", 
+   "children": [], 
+   "end": "609.760", 
+   "id": "f000054", 
+   "language": "swe", 
+   "lines": [
+    "V\u00e4gvrede"
+   ]
+  }, 
+  {
+   "begin": "609.760", 
+   "children": [], 
+   "end": "617.720", 
+   "id": "f000055", 
+   "language": "swe", 
+   "lines": [
+    "V\u00e4gvrede kan \u00e4ven det s\u00e4gas vara en logisk konsekvens av det beteende som bilismen tvingar in oss i."
+   ]
+  }, 
+  {
+   "begin": "617.720", 
+   "children": [], 
+   "end": "624.680", 
+   "id": "f000056", 
+   "language": "swe", 
+   "lines": [
+    "N\u00e4stan all vrede som utspelar sig och utageras i bilar b\u00f6r betecknas som v\u00e4gvrede."
+   ]
+  }, 
+  {
+   "begin": "624.680", 
+   "children": [], 
+   "end": "635.720", 
+   "id": "f000057", 
+   "language": "swe", 
+   "lines": [
+    "D\u00e4remot ska vi dra en gr\u00e4ns mot den vrede som icke-bilister riktar mot bilar, vilket snarare b\u00f6r betecknas bilhat."
+   ]
+  }, 
+  {
+   "begin": "635.720", 
+   "children": [], 
+   "end": "653.640", 
+   "id": "f000058", 
+   "language": "swe", 
+   "lines": [
+    "En SUV-f\u00f6rare som tutar och skriker p\u00e5 en pension\u00e4r som enligt honom g\u00e5r f\u00f6r l\u00e5ngsamt \u00f6ver gatan \u00e4r n\u00e5got kvalitativt annorlunda \u00e4n n\u00e4r pension\u00e4ren smyger ut p\u00e5 natten f\u00f6r att stoppa grus i ventilerna p\u00e5 stadsjeepen."
+   ]
+  }, 
+  {
+   "begin": "653.640", 
+   "children": [], 
+   "end": "676.280", 
+   "id": "f000059", 
+   "language": "swe", 
+   "lines": [
+    "Enligt Mette M\u00f8ller, verksam vid Institut for Transport p\u00e5 Danmarks Tekniske Universitet, \u00e4r de vanligaste orsakerna till v\u00e4gvrede \u201dtr\u00e4ngsel och trafikstockningar, f\u00f6rdr\u00f6jningar p\u00e5 grund av trafikljus och f\u00f6rseningar som beror p\u00e5 andra trafikanters f\u00f6rseelser i trafiken\u201d."
+   ]
+  }, 
+  {
+   "begin": "676.280", 
+   "children": [], 
+   "end": "683.080", 
+   "id": "f000060", 
+   "language": "swe", 
+   "lines": [
+    "Allts\u00e5 saker som vi redan har konstaterat h\u00f6r till det normala i ett system av massbilism."
+   ]
+  }, 
+  {
+   "begin": "683.080", 
+   "children": [], 
+   "end": "698.040", 
+   "id": "f000061", 
+   "language": "swe", 
+   "lines": [
+    "I Danmark, d\u00e4r det har forskats en del om v\u00e4gvrede, verkar fenomenet vara vanligt f\u00f6rekommande och m\u00f6rkertalet antas vara v\u00e4ldigt stort:"
+   ]
+  }, 
+  {
+   "begin": "698.040", 
+   "children": [], 
+   "end": "717.760", 
+   "id": "f000062", 
+   "language": "swe", 
+   "lines": [
+    "Ett stort antal m\u00e4nniskor har under en tolvm\u00e5nadersperiod blivit slagna (19 550 personer) eller hotade (169 334 personer) av en medtrafikant."
+   ]
+  }, 
+  {
+   "begin": "717.760", 
+   "children": [], 
+   "end": "729.040", 
+   "id": "f000063", 
+   "language": "swe", 
+   "lines": [
+    "I Australien uppskattar man att upp till 91 procent av alla allvarliga fall av v\u00e4gvrede aldrig polisanm\u00e4ls."
+   ]
+  }, 
+  {
+   "begin": "729.040", 
+   "children": [], 
+   "end": "740.040", 
+   "id": "f000064", 
+   "language": "swe", 
+   "lines": [
+    "Enligt de internationella studier som M\u00f8ller diskuterar p\u00e5verkar v\u00e4gvreden b\u00e5de den bilist som drabbas av den och de bilister som \u00e4r i n\u00e4rheten."
+   ]
+  }, 
+  {
+   "begin": "740.040", 
+   "children": [], 
+   "end": "752.120", 
+   "id": "f000065", 
+   "language": "swe", 
+   "lines": [
+    "Det \u00e4r inte bara st\u00f6rre risk att v\u00e4gvredgade personer sp\u00f6ar upp sina medtrafikanter, utan \u00e4ven att de \u00e4r inblandade i krockar och andra olyckor."
+   ]
+  }, 
+  {
+   "begin": "752.120", 
+   "children": [], 
+   "end": "762.120", 
+   "id": "f000066", 
+   "language": "swe", 
+   "lines": [
+    "V\u00e4gvreden har enligt M\u00f8ller sin upprinnelse i det f\u00f6rtingligande av andra m\u00e4nniskor som bilismen inneb\u00e4r:"
+   ]
+  }, 
+  {
+   "begin": "762.120", 
+   "children": [], 
+   "end": "772.840", 
+   "id": "f000067", 
+   "language": "swe", 
+   "lines": [
+    "Bilk\u00f6rning \u00e4r en speciell situation, och man m\u00e5ste ta i beaktning att den sociala interaktionen i trafiken skiljer sig fr\u00e5n m\u00e5nga andra situationer."
+   ]
+  }, 
+  {
+   "begin": "772.840", 
+   "children": [], 
+   "end": "783.000", 
+   "id": "f000068", 
+   "language": "swe", 
+   "lines": [
+    "Till skillnad fr\u00e5n n\u00e4r n\u00e5gon tr\u00e4nger sig f\u00f6re i k\u00f6n i en matbutik s\u00e5 \u00e4r det i biltrafiken sv\u00e5rt att se n\u00e5gons ansiktsuttryck och dylikt."
+   ]
+  }, 
+  {
+   "begin": "783.000", 
+   "children": [], 
+   "end": "792.840", 
+   "id": "f000069", 
+   "language": "swe", 
+   "lines": [
+    "Det \u00e4r d\u00e4rf\u00f6r sv\u00e5rt att avg\u00f6ra vilken avsikt som ligger bakom ett visst beteende och om det beteendet var medvetet eller ej."
+   ]
+  }, 
+  {
+   "begin": "792.840", 
+   "children": [], 
+   "end": "794.800", 
+   "id": "f000070", 
+   "language": "swe", 
+   "lines": [
+    "Detta f\u00e5r tv\u00e5 konsekvenser."
+   ]
+  }, 
+  {
+   "begin": "794.800", 
+   "children": [], 
+   "end": "819.280", 
+   "id": "f000071", 
+   "language": "swe", 
+   "lines": [
+    "F\u00f6r det f\u00f6rsta att det l\u00e4tt uppst\u00e5r missf\u00f6rst\u00e5nd, och f\u00f6r det andra att bilister tenderar att uppfatta sina medtrafikanter som ting, som saker (kvinna som k\u00f6r r\u00f6d Ford) ist\u00e4llet f\u00f6r m\u00e4nniskor i ett sammanhang (tr\u00f6tt, \u00e4ldre kvinna p\u00e5 v\u00e4g f\u00f6r att bes\u00f6ka sin sjuka mor p\u00e5 sjukhuset)."
+   ]
+  }, 
+  {
+   "begin": "819.280", 
+   "children": [], 
+   "end": "834.000", 
+   "id": "f000072", 
+   "language": "swe", 
+   "lines": [
+    "Dessutom \u00e4r det l\u00e4ttare att komma undan med att vara aggressiv mot andra trafikanter, eftersom den man uts\u00e4tter f\u00f6r aggressionen har sv\u00e5rt att ge igen."
+   ]
+  }, 
+  {
+   "begin": "834.000", 
+   "children": [], 
+   "end": "850.200", 
+   "id": "f000073", 
+   "language": "swe", 
+   "lines": [
+    "Det finns forskare, politiker och andra tyckare som p\u00e5st\u00e5r att v\u00e4gvrede skulle ha n\u00e5gon form av \u201dgenetisk\u201d f\u00f6rklaring, det vill s\u00e4ga att vissa personer \u00e4r predisponerade till v\u00e4gvrede."
+   ]
+  }, 
+  {
+   "begin": "850.200", 
+   "children": [], 
+   "end": "864.080", 
+   "id": "f000074", 
+   "language": "swe", 
+   "lines": [
+    "Vi \u00e4r dock inte s\u00e4rskilt intresserade av hobbypsykologi och vulg\u00e4rgenetik, utan tycker det \u00e4r mer relevant att diskutera de omst\u00e4ndigheter och det samh\u00e4lle som framkallar v\u00e4gvrede."
+   ]
+  }, 
+  {
+   "begin": "864.080", 
+   "children": [], 
+   "end": "871.000", 
+   "id": "f000075", 
+   "language": "swe", 
+   "lines": [
+    "Att m\u00e5nga t\u00e4nker att v\u00e4gvreden fr\u00e4mst har individuella orsaker \u00e4r inte s\u00e4rskilt f\u00f6rv\u00e5nansv\u00e4rt."
+   ]
+  }, 
+  {
+   "begin": "871.000", 
+   "children": [], 
+   "end": "885.240", 
+   "id": "f000076", 
+   "language": "swe", 
+   "lines": [
+    "Med den utg\u00e5ngspunkten kan de koncentrera sig p\u00e5 pseudo\u00e5tg\u00e4rder som att skilja ut \u201dr\u00f6t\u00e4ggen i trafiken\u201d och ge dem behandling ist\u00e4llet f\u00f6r att g\u00e5 till botten med problemet."
+   ]
+  }, 
+  {
+   "begin": "885.240", 
+   "children": [], 
+   "end": "893.240", 
+   "id": "f000077", 
+   "language": "swe", 
+   "lines": [
+    "Den h\u00e4r typen av skygglappar \u00e4r vanligt f\u00f6rekommande f\u00f6r att slippa handskas med det politiska problem som massbilismen \u00e4r."
+   ]
+  }, 
+  {
+   "begin": "893.240", 
+   "children": [], 
+   "end": "900.640", 
+   "id": "f000078", 
+   "language": "swe", 
+   "lines": [
+    "F\u00f6r att f\u00f6rst\u00e5 v\u00e4gvreden m\u00e5ste den s\u00e4ttas i sitt r\u00e4tta sammanhang:"
+   ]
+  }, 
+  {
+   "begin": "900.640", 
+   "children": [], 
+   "end": "906.400", 
+   "id": "f000079", 
+   "language": "swe", 
+   "lines": [
+    "bilismen och det egoistiska beteendem\u00f6nster som den tvingar in oss i."
+   ]
+  }, 
+  {
+   "begin": "906.400", 
+   "children": [], 
+   "end": "922.400", 
+   "id": "f000080", 
+   "language": "swe", 
+   "lines": [
+    "Precis som tr\u00e4ngsel och k\u00f6er inte kan ses som avarter till ett annars v\u00e4l fungerande system kan inte v\u00e4gvrede f\u00f6rst\u00e5s enbart som n\u00e5gra galna personers d\u00e5liga beteenden."
+   ]
+  }, 
+  {
+   "begin": "922.400", 
+   "children": [], 
+   "end": "933.240", 
+   "id": "f000081", 
+   "language": "swe", 
+   "lines": [
+    "En s\u00e5dan tolkning vore lika vulg\u00e4r som att p\u00e5st\u00e5 att den senaste ekonomiska krisen endast berodde p\u00e5 enskilda bankchefers girighet."
+   ]
+  }, 
+  {
+   "begin": "933.240", 
+   "children": [], 
+   "end": "950.600", 
+   "id": "f000082", 
+   "language": "swe", 
+   "lines": [
+    "Man kan inte annat \u00e4n h\u00e5lla med M\u00f8ller n\u00e4r hon lakoniskt konstaterar att \u201dlindring av tr\u00e4ngselproblemen skulle sj\u00e4lvfallet ocks\u00e5 ge effekt, men \u00e4r en mer komplicerad \u00e5tg\u00e4rd\u201d."
+   ]
+  }, 
+  {
+   "begin": "950.600", 
+   "children": [], 
+   "end": "952.840", 
+   "id": "f000083", 
+   "language": "swe", 
+   "lines": [
+    "Det finns inga parkeringsplatser"
+   ]
+  }, 
+  {
+   "begin": "952.840", 
+   "children": [], 
+   "end": "966.040", 
+   "id": "f000084", 
+   "language": "swe", 
+   "lines": [
+    "De tidigare n\u00e4mnda problemen med felparkerare b\u00f6r inte tas som int\u00e4kt f\u00f6r att det bara \u00e4r felparkeringen som utg\u00f6r ett parkeringsproblem i staden."
+   ]
+  }, 
+  {
+   "begin": "966.040", 
+   "children": [], 
+   "end": "980.320", 
+   "id": "f000085", 
+   "language": "swe", 
+   "lines": [
+    "\u00c4ven de tusen och \u00e5ter tusen trottoarkanter, garage och f\u00e4lt som t\u00f6ms p\u00e5 inneh\u00e5ll f\u00f6r att formas efter bilens logik m\u00e5ste belysas och f\u00f6rst\u00e5s i relation till trafikmaktordningen."
+   ]
+  }, 
+  {
+   "begin": "980.320", 
+   "children": [], 
+   "end": "992.320", 
+   "id": "f000086", 
+   "language": "swe", 
+   "lines": [
+    "Parkeringsplatserna tydligg\u00f6r b\u00e5de de konfliktlinjer som dras mellan brukare av skilda trafikslag och trafikslagens egna hierarkier."
+   ]
+  }, 
+  {
+   "begin": "992.320", 
+   "children": [], 
+   "end": "1008.160", 
+   "id": "f000087", 
+   "language": "swe", 
+   "lines": [
+    "En bilist tar upp 1 000 g\u00e5nger s\u00e5 stor tidsyta (den tid en viss yta anv\u00e4nds) som en kollektivtrafikant och den allra st\u00f6rsta delen av denna tidsyta best\u00e5r av parkering."
+   ]
+  }, 
+  {
+   "begin": "1008.160", 
+   "children": [], 
+   "end": "1013.080", 
+   "id": "f000088", 
+   "language": "swe", 
+   "lines": [
+    "Bilen \u00e4r unik i sina parkeringsbehov."
+   ]
+  }, 
+  {
+   "begin": "1013.080", 
+   "children": [], 
+   "end": "1032.520", 
+   "id": "f000089", 
+   "language": "swe", 
+   "lines": [
+    "Fotg\u00e4ngare beh\u00f6ver ingen parkering, cyklister minimal parkering och kollektivtrafikanter beh\u00f6ver inte parkering d\u00e4rf\u00f6r att det terminalbehov som varje resa kr\u00e4ver, det vill s\u00e4ga d\u00e4r du startar eller slutar, uppfylls av stationerna."
+   ]
+  }, 
+  {
+   "begin": "1032.520", 
+   "children": [], 
+   "end": "1038.800", 
+   "id": "f000090", 
+   "language": "swe", 
+   "lines": [
+    "Sj\u00e4lvfallet beh\u00f6ver kollektivtrafiken avst\u00e4llningsplatser f\u00f6r fordonen."
+   ]
+  }, 
+  {
+   "begin": "1038.800", 
+   "children": [], 
+   "end": "1048.680", 
+   "id": "f000091", 
+   "language": "swe", 
+   "lines": [
+    "Dessa har dock f\u00f6rdelen att de kan bel\u00e4ggas strategiskt och \u00e4r minimalt utrymmeskr\u00e4vande j\u00e4mf\u00f6rt med bilens."
+   ]
+  }, 
+  {
+   "begin": "1048.680", 
+   "children": [], 
+   "end": "1061.720", 
+   "id": "f000092", 
+   "language": "swe", 
+   "lines": [
+    "Bilen \u00e4r inte bara unik i sitt utrymmeskrav, utan som herre p\u00e5 trafikmaktordningens t\u00e4ppa \u00e4ven unik i hur mycket utrymme den faktiskt tilldelas."
+   ]
+  }, 
+  {
+   "begin": "1061.720", 
+   "children": [], 
+   "end": "1074.920", 
+   "id": "f000093", 
+   "language": "swe", 
+   "lines": [
+    "Problemen med att bygga ut systemet med l\u00e5necyklar i Stockholm visar tydligt hur helig bilen fortfarande \u00e4r i politiska planeringssammanhang."
+   ]
+  }, 
+  {
+   "begin": "1074.920", 
+   "children": [], 
+   "end": "1089.480", 
+   "id": "f000094", 
+   "language": "swe", 
+   "lines": [
+    "Det har redan inf\u00f6rskaffats stationer och cyklar f\u00f6r att f\u00f6rdubbla l\u00e5necykelsystemet \u2013 vad som saknas \u00e4r att tre promille av stadens bilparkering g\u00f6rs om till stationer f\u00f6r l\u00e5necyklarna."
+   ]
+  }, 
+  {
+   "begin": "1089.480", 
+   "children": [], 
+   "end": "1093.080", 
+   "id": "f000095", 
+   "language": "swe", 
+   "lines": [
+    "Tre promille!"
+   ]
+  }, 
+  {
+   "begin": "1093.080", 
+   "children": [], 
+   "end": "1096.560", 
+   "id": "f000096", 
+   "language": "swe", 
+   "lines": [
+    "Men nej, bilen \u00e4r oantastlig."
+   ]
+  }, 
+  {
+   "begin": "1096.560", 
+   "children": [], 
+   "end": "1103.280", 
+   "id": "f000097", 
+   "language": "swe", 
+   "lines": [
+    "Dess parkering r\u00f6r man inte i f\u00f6rsta taget."
+   ]
+  }, 
+  {
+   "begin": "1103.280", 
+   "children": [], 
+   "end": "1111.280", 
+   "id": "f000098", 
+   "language": "swe", 
+   "lines": [
+    "En vanlig dag \u00e4r bilen i bruk p\u00e5 v\u00e4g till och fr\u00e5n jobbet, kanske med en avstickare till k\u00f6pcentret eller gymmet."
+   ]
+  }, 
+  {
+   "begin": "1111.280", 
+   "children": [], 
+   "end": "1119.800", 
+   "id": "f000099", 
+   "language": "swe", 
+   "lines": [
+    "F\u00f6r bilistens skull f\u00e5r vi hoppas att det inte \u00e4r mer \u00e4n tv\u00e5, tre timmar per dag som bilen anv\u00e4nds."
+   ]
+  }, 
+  {
+   "begin": "1119.800", 
+   "children": [], 
+   "end": "1127.120", 
+   "id": "f000100", 
+   "language": "swe", 
+   "lines": [
+    "Resterande tid, allts\u00e5 cirka 20 timmar per dygn, \u00e4r bilen parkerad och tar plats."
+   ]
+  }, 
+  {
+   "begin": "1127.120", 
+   "children": [], 
+   "end": "1136.720", 
+   "id": "f000101", 
+   "language": "swe", 
+   "lines": [
+    "F\u00f6r till skillnad fr\u00e5n kollektivtrafiken s\u00e5 tar bilen inte bara plats n\u00e4r den f\u00f6rflyttar sig, utan \u00e4ven n\u00e4r den st\u00e5r stilla."
+   ]
+  }, 
+  {
+   "begin": "1136.720", 
+   "children": [], 
+   "end": "1149.960", 
+   "id": "f000102", 
+   "language": "swe", 
+   "lines": [
+    "Bilen \u00e5samkar skada dygnet runt, men dess stillast\u00e5ende \u00e4r en skada som inte alls \u00e4r lika uppm\u00e4rksammad som skadan den v\u00e5llar n\u00e4r den \u00e4r i drift."
+   ]
+  }, 
+  {
+   "begin": "1149.960", 
+   "children": [], 
+   "end": "1158.840", 
+   "id": "f000103", 
+   "language": "swe", 
+   "lines": [
+    "Bara f\u00f6r att en parkerad bil inte sl\u00e4pper ut n\u00e5gra avgaser betyder det inte att den \u00e4r ofarlig."
+   ]
+  }, 
+  {
+   "begin": "1158.840", 
+   "children": [], 
+   "end": "1171.440", 
+   "id": "f000104", 
+   "language": "swe", 
+   "lines": [
+    "En parkerad bil \u00e4r precis som en bil i r\u00f6relse ett direkt hot mot staden och dess potentiella m\u00e5ngfald av mellanm\u00e4nskliga relationer och situationer."
+   ]
+  }, 
+  {
+   "begin": "1171.440", 
+   "children": [], 
+   "end": "1189.760", 
+   "id": "f000105", 
+   "language": "swe", 
+   "lines": [
+    "Parkering som urbant tomrum I boken Lots of Parking beskriver John A. Jakle och Keith A. Sculle hur parkering f\u00f6rvandlar platser till icke-platser:"
+   ]
+  }, 
+  {
+   "begin": "1189.760", 
+   "children": [], 
+   "end": "1201.960", 
+   "id": "f000106", 
+   "language": "swe", 
+   "lines": [
+    "Visually exciting landscapes with temporal depth, as architectural historian James Marston Fitch argued, offered residents and visitors a strong sense of place. ..."
+   ]
+  }, 
+  {
+   "begin": "1201.960", 
+   "children": [], 
+   "end": "1213.120", 
+   "id": "f000107", 
+   "language": "swe", 
+   "lines": [
+    "Certainly, widened streets and new city freeways broke up traditional cityscapes and hastened the decline of the pedestrian-orientation of cities."
+   ]
+  }, 
+  {
+   "begin": "1213.120", 
+   "children": [], 
+   "end": "1217.880", 
+   "id": "f000108", 
+   "language": "swe", 
+   "lines": [
+    "But nothing fragmented urban space more than the parking lot."
+   ]
+  }, 
+  {
+   "begin": "1217.880", 
+   "children": [], 
+   "end": "1234.400", 
+   "id": "f000109", 
+   "language": "swe", 
+   "lines": [
+    "In the half century between 1920 and 1970, most traditional big city downtowns substantially unraveled \u2013 disemboweled, building by building, by expanses of parking lot asphalt."
+   ]
+  }, 
+  {
+   "begin": "1234.400", 
+   "children": [], 
+   "end": "1248.760", 
+   "id": "f000110", 
+   "language": "swe", 
+   "lines": [
+    "Parkeringen fungerar h\u00e4r n\u00e4rmast som en antibyggnad, en konstruktion som inte skapar n\u00e5gon ny plats, men kr\u00e4ver f\u00f6rst\u00f6relsen av redan existerande platser."
+   ]
+  }, 
+  {
+   "begin": "1248.760", 
+   "children": [], 
+   "end": "1263.320", 
+   "id": "f000111", 
+   "language": "swe", 
+   "lines": [
+    "Parkeringar sk\u00e4r s\u00f6nder st\u00e4der, och fungerar enligt en ensidig och utj\u00e4mnande logik d\u00e4r varje ny parkering g\u00f6r stadsrummet mer och mer homogent."
+   ]
+  }, 
+  {
+   "begin": "1263.320", 
+   "children": [], 
+   "end": "1269.280", 
+   "id": "f000112", 
+   "language": "swe", 
+   "lines": [
+    "En logik som d\u00f6dar olikhet och p\u00e5 s\u00e5 s\u00e4tt skapar en form av icke-platser."
+   ]
+  }, 
+  {
+   "begin": "1269.280", 
+   "children": [], 
+   "end": "1280.800", 
+   "id": "f000113", 
+   "language": "swe", 
+   "lines": [
+    "Geografen Edward Relph beskriver i boken Place and Placelessness de omr\u00e5den som parkeringen skapar som simpla landskap:"
+   ]
+  }, 
+  {
+   "begin": "1280.800", 
+   "children": [], 
+   "end": "1315.040", 
+   "id": "f000114", 
+   "language": "swe", 
+   "lines": [
+    "The simple landscape declares itself openly, presents not problems or surprises, lacks subtlety; there are none of the ambiguities and contradictions and complexities that ... lend meaning to building and man-made environments; there are no deep significances, only a turning to the obvious and a separation of different functions into distinct units."
+   ]
+  }, 
+  {
+   "begin": "1315.040", 
+   "children": [], 
+   "end": "1324.120", 
+   "id": "f000115", 
+   "language": "swe", 
+   "lines": [
+    "Parkeringsplatsen kan allts\u00e5 betraktas som den yttersta formen av funktionsseparering:"
+   ]
+  }, 
+  {
+   "begin": "1324.120", 
+   "children": [], 
+   "end": "1332.640", 
+   "id": "f000116", 
+   "language": "swe", 
+   "lines": [
+    "n\u00e4r den anv\u00e4nds till n\u00e5got annat \u00e4n parkering f\u00f6rlorar den direkt sin t\u00e4nkta funktion."
+   ]
+  }, 
+  {
+   "begin": "1332.640", 
+   "children": [], 
+   "end": "1343.880", 
+   "id": "f000117", 
+   "language": "swe", 
+   "lines": [
+    "Ordet parkering har sin etymologiska bakgrund i det medeltida latinska ordet parricus som betyder inh\u00e4gnande."
+   ]
+  }, 
+  {
+   "begin": "1343.880", 
+   "children": [], 
+   "end": "1348.240", 
+   "id": "f000118", 
+   "language": "swe", 
+   "lines": [
+    "Att det \u00e4r samma ord som park \u00e4r n\u00e5got av en \u00f6dets ironi:"
+   ]
+  }, 
+  {
+   "begin": "1348.240", 
+   "children": [], 
+   "end": "1357.480", 
+   "id": "f000119", 
+   "language": "swe", 
+   "lines": [
+    "ett ord som kan beskriva antingen en plats full av tr\u00e4d, liv och gr\u00f6nska eller dess totala motsats."
+   ]
+  }, 
+  {
+   "begin": "1357.480", 
+   "children": [], 
+   "end": "1367.760", 
+   "id": "f000120", 
+   "language": "swe", 
+   "lines": [
+    "Parkeringen har ett h\u00f6gt pris, inte bara som f\u00f6rg\u00f6rare av rum, utan \u00e4ven rent ekonomiskt."
+   ]
+  }, 
+  {
+   "begin": "1367.760", 
+   "children": [], 
+   "end": "1381.800", 
+   "id": "f000121", 
+   "language": "swe", 
+   "lines": [
+    "Det framg\u00e5r oftast inte vid det enskilda parkeringstillf\u00e4llet, f\u00f6r \u00e4ven om parkering ofta framst\u00e5r som billigt eller gratis f\u00f6r den enskilde bilisten \u00e4r s\u00e5 aldrig fallet."
+   ]
+  }, 
+  {
+   "begin": "1381.800", 
+   "children": [], 
+   "end": "1396.000", 
+   "id": "f000122", 
+   "language": "swe", 
+   "lines": [
+    "Parkeringskostnaderna externaliseras och packas in i h\u00f6gre hyror och huspriser, h\u00f6gre priser p\u00e5 varor i aff\u00e4rer, l\u00e4gre urban densitet och l\u00e4gre markv\u00e4rde."
+   ]
+  }, 
+  {
+   "begin": "1396.000", 
+   "children": [], 
+   "end": "1406.080", 
+   "id": "f000123", 
+   "language": "swe", 
+   "lines": [
+    "Det \u00e4r n\u00e4stan s\u00e5 att vi alla, vid alla tidpunkter f\u00f6rutom just d\u00e5 n\u00e5gon parkerar, betalar f\u00f6r parkeringen!"
+   ]
+  }, 
+  {
+   "begin": "1406.080", 
+   "children": [], 
+   "end": "1414.480", 
+   "id": "f000124", 
+   "language": "swe", 
+   "lines": [
+    "Att parkeringen \u00e4r s\u00e5 ofantligt subventionerad \u00e4r ett av v\u00e5ra st\u00e4ders st\u00f6rsta problem."
+   ]
+  }, 
+  {
+   "begin": "1414.480", 
+   "children": [], 
+   "end": "1425.000", 
+   "id": "f000125", 
+   "language": "swe", 
+   "lines": [
+    "Inte bara d\u00e4rf\u00f6r att det \u00e4r ett veritabelt g\u00f6dsel f\u00f6r stadsbilismen, utan \u00e4ven d\u00e4rf\u00f6r att det f\u00f6rdyrar tillvaron f\u00f6r icke-bilister."
+   ]
+  }, 
+  {
+   "begin": "1425.000", 
+   "children": [], 
+   "end": "1431.280", 
+   "id": "f000126", 
+   "language": "swe", 
+   "lines": [
+    "I Stockholm betalar bara en av 20 bilister som pendlar till innerstan fullt parkeringspris."
+   ]
+  }, 
+  {
+   "begin": "1431.280", 
+   "children": [], 
+   "end": "1447.720", 
+   "id": "f000127", 
+   "language": "swe", 
+   "lines": [
+    "Fri parkering motsvarar fem procent av en genomsnittlig nettol\u00f6n och enligt ber\u00e4kningar skulle rusningstrafiken till innerstan minska med mellan 10 och 20 procent om parkeringen bar sina egna kostnader."
+   ]
+  }, 
+  {
+   "begin": "1447.720", 
+   "children": [], 
+   "end": "1462.720", 
+   "id": "f000128", 
+   "language": "swe", 
+   "lines": [
+    "Parkeringsnormen, som \u00e5l\u00e4gger byggherrar att vid nybyggnationer tillhandah\u00e5lla ett visst antal parkeringsplatser beroende p\u00e5 nybyggets storlek och funktion sk\u00e4rptes \u00e5r 2008."
+   ]
+  }, 
+  {
+   "begin": "1462.720", 
+   "children": [], 
+   "end": "1468.200", 
+   "id": "f000129", 
+   "language": "swe", 
+   "lines": [
+    "\u201dMer parkering per bygge!\u201d tyckte politikerna i Stockholm."
+   ]
+  }, 
+  {
+   "begin": "1468.200", 
+   "children": [], 
+   "end": "1479.800", 
+   "id": "f000130", 
+   "language": "swe", 
+   "lines": [
+    "Vad det inneb\u00e4r i praktiken, f\u00f6rutom \u00e4nnu mer parkeringsytor och bilar, \u00e4r att nya l\u00e4genheter blir dyrare."
+   ]
+  }, 
+  {
+   "begin": "1479.800", 
+   "children": [], 
+   "end": "1500.720", 
+   "id": "f000131", 
+   "language": "swe", 
+   "lines": [
+    "Eftersom det kostar upp till 400 000 kronor att bygga en (1) parkeringsplats i garage och bilisterna inte betalar det fulla priset f\u00f6r sin parkering s\u00e5 sl\u00e5s priset ut p\u00e5 alla l\u00e4genheter, oavsett om l\u00e4genhetsinnehavaren har bil eller ej."
+   ]
+  }, 
+  {
+   "begin": "1500.720", 
+   "children": [], 
+   "end": "1507.400", 
+   "id": "f000132", 
+   "language": "swe", 
+   "lines": [
+    "Parkeringar fyller s\u00e5 sm\u00e4rtsamt tydligt bara en funktion."
+   ]
+  }, 
+  {
+   "begin": "1507.400", 
+   "children": [], 
+   "end": "1525.680", 
+   "id": "f000133", 
+   "language": "swe", 
+   "lines": [
+    "Oavsett om det f\u00f6r tillf\u00e4llet st\u00e5r n\u00e5gon bil parkerad eller ej \u00e4r parkeringen ett omr\u00e5de i staden som inte f\u00e5r ha n\u00e5gon potentialitet f\u00f6r of\u00f6rutsedda h\u00e4ndelser \u2013 d\u00e5 f\u00f6rsvinner n\u00e4mligen dess funktion som parkering."
+   ]
+  }, 
+  {
+   "begin": "1525.680", 
+   "children": [], 
+   "end": "1533.320", 
+   "id": "f000134", 
+   "language": "swe", 
+   "lines": [
+    "En parkering \u00e4r ledig eller upptagen, aldrig n\u00e5got annat."
+   ]
+  }, 
+  {
+   "begin": "1533.320", 
+   "children": [], 
+   "end": "1541.000", 
+   "id": "f000135", 
+   "language": "swe", 
+   "lines": [
+    "Och den anv\u00e4nds aldrig av n\u00e5got annat \u00e4n en bil, f\u00f6r d\u00e5 \u00e4r den \u00e5terigen inte l\u00e4ngre en parkering."
+   ]
+  }, 
+  {
+   "begin": "1541.000", 
+   "children": [], 
+   "end": "1550.680", 
+   "id": "f000136", 
+   "language": "swe", 
+   "lines": [
+    "Men levande och m\u00e4nskliga st\u00e4der kr\u00e4ver rum som inte \u00e4r specifikt vigda \u00e5t n\u00e5gon viss aktivitet."
+   ]
+  }, 
+  {
+   "begin": "1550.680", 
+   "children": [], 
+   "end": "1555.120", 
+   "id": "f000137", 
+   "language": "swe", 
+   "lines": [
+    "Det \u00e4r just i dessa rum som nya saker kan uppst\u00e5."
+   ]
+  }, 
+  {
+   "begin": "1555.120", 
+   "children": [], 
+   "end": "1564.280", 
+   "id": "f000138", 
+   "language": "swe", 
+   "lines": [
+    "I en modern, ekonomiskt v\u00e4lm\u00e5ende, f\u00f6rt\u00e4tad och renoverad stad r\u00e5der det en akut brist p\u00e5 rum av den h\u00e4r typen:"
+   ]
+  }, 
+  {
+   "begin": "1564.280", 
+   "children": [], 
+   "end": "1569.520", 
+   "id": "f000139", 
+   "language": "swe", 
+   "lines": [
+    "rum som bryter av fr\u00e5n den uppstyrdhet som pr\u00e4glar staden."
+   ]
+  }, 
+  {
+   "begin": "1569.520", 
+   "children": [], 
+   "end": "1584.520", 
+   "id": "f000140", 
+   "language": "swe", 
+   "lines": [
+    "Rum som i sig sj\u00e4lva kan verka stimulerande, bara genom att vara ov\u00e4ntade eller ge utrymme f\u00f6r det ov\u00e4ntade, och som inte ger n\u00e5gon entydig f\u00f6rklaring till vad de ska anv\u00e4ndas till."
+   ]
+  }, 
+  {
+   "begin": "1584.520", 
+   "children": [], 
+   "end": "1595.640", 
+   "id": "f000141", 
+   "language": "swe", 
+   "lines": [
+    "Med det i \u00e5tanke \u00e4r det inget annat \u00e4n ett h\u00e5n mot staden att viga en s\u00e5 stor del av det utrymme som inte tas upp av hus och v\u00e4gar \u00e5t stillast\u00e5ende bilar."
+   ]
+  }, 
+  {
+   "begin": "1595.640", 
+   "children": [], 
+   "end": "1611.520", 
+   "id": "f000142", 
+   "language": "swe", 
+   "lines": [
+    "I m\u00e5nga st\u00e4der runtom i v\u00e4rlden firas PARK(erings)-dagen, d\u00e5 lokalbor g\u00e5r ut p\u00e5 gatorna och tar \u00f6ver bilarnas utrymme p\u00e5 parkeringarna."
+   ]
+  }, 
+  {
+   "begin": "1611.520", 
+   "children": [], 
+   "end": "1616.080", 
+   "id": "f000143", 
+   "language": "swe", 
+   "lines": [
+    "Ist\u00e4llet f\u00f6r parkering skapas parker och platser."
+   ]
+  }, 
+  {
+   "begin": "1616.080", 
+   "children": [], 
+   "end": "1625.360", 
+   "id": "f000144", 
+   "language": "swe", 
+   "lines": [
+    "Det geniala ligger inte bara i ordvitsen och i det faktum att bilarna jagas bort, utan \u00e4ven i resultatet:"
+   ]
+  }, 
+  {
+   "begin": "1625.360", 
+   "children": [], 
+   "end": "1636.480", 
+   "id": "f000145", 
+   "language": "swe", 
+   "lines": [
+    "P\u00e5 vissa platser v\u00e4ljer folk att plantera, p\u00e5 andra att spela musik eller ligga i h\u00e4ngmattor och p\u00e5 en del n\u00f6jer sig folk med att dricka \u00f6l eller \u00e4ta mat."
+   ]
+  }, 
+  {
+   "begin": "1636.480", 
+   "children": [], 
+   "end": "1656.360", 
+   "id": "f000146", 
+   "language": "swe", 
+   "lines": [
+    "Det fina \u00e4r att n\u00e4r m\u00e4nniskor g\u00f6r platser av bilarnas parkeringar s\u00e5 tydligg\u00f6rs hur tr\u00e5kigt det \u00e4r med dessa monotona icke-platser, och samtidigt hur fina de har potential att bli n\u00e4r de till\u00e5ts vara dysfunktionella."
+   ]
+  }, 
+  {
+   "begin": "1656.360", 
+   "children": [], 
+   "end": "1662.840", 
+   "id": "f000147", 
+   "language": "swe", 
+   "lines": [
+    "Under parkeringen: staden!"
+   ]
+  }
+ ]
+}).fragments;
+    // do not remove the line above
+    roundTimeValues();
+    prepareTable();
+    prepareControls();
+}
+function buttonLoadAudio(evt) {
+    var audioFile = evt.target.files[0];
+    if (audioFile) {
+        var audioFilePath = URL.createObjectURL(audioFile);
+        loadAudio(audioFilePath);
+        ainfo = "[Audio file: \"" + audioFile.name + "\"]";
+        document.getElementById("fileinfo").innerHTML = ainfo + " " + cinfo;
+        document.getElementById("step1").style.display = "none";
+    } else {
+        alert("Failed to load the audio file.");
+    }
+}
+function loadAudio(audioFilePath) {
+    audioElement.setAttribute("src", audioFilePath);
+}
+function buttonLoadJSON(evt) {
+     var jsonFile = evt.target.files[0];
+     if (jsonFile) {
+        loadJSON(jsonFile);
+     } else {
+        alert("Failed to load the JSON file.");
+     }
+}
+function loadJSON(jsonFile) {
+    var reader = new FileReader();
+    reader.onload = function(e) { 
+        try {
+            fragments = JSON.parse(e.target.result).fragments;
+        } catch (e) {
+            alert("Unable to parse the given JSON file.");
+            return;
+        }
+        roundTimeValues();
+        prepareTable();
+        prepareControls();
+        cinfo = "[JSON file: \"" + jsonFile.name + "\"]";
+        document.getElementById("step2").style.display = "none";
+        document.getElementById("fileinfo").innerHTML = ainfo + " " + cinfo;
+    }
+    reader.readAsText(jsonFile);
+}   
+function prepareControls() {
+    // add event listeners
+    for (var i = 0; i < fragments.length; i++) {
+        if (showID) {
+            document.getElementById(getStringID(i, "id")).addEventListener("click", fragmentClick);
+        }
+        document.getElementById(getStringID(i, "cell")).addEventListener("click", fragmentClick);
+        document.getElementById(getStringID(i, "text")).addEventListener("click", fragmentClick);
+        document.getElementById(getStringID(i, "time")).addEventListener("click", fragmentClick);
+        document.getElementById(getStringID(i, "increase")).addEventListener("click", increaseClick);
+        document.getElementById(getStringID(i, "decrease")).addEventListener("click", decreaseClick);
+    }
+    document.getElementById("stop").addEventListener("click", stopOverlay);
+    document.getElementById("buttonShowID").addEventListener("click", changeShowID);
+    document.getElementById("alignText").addEventListener("change", changeAlignText);
+    document.getElementById("buttonContinuousPlay").addEventListener("click", changeContinuousPlay);
+    document.getElementById("buttonTimeFormat").addEventListener("click", changeTimeFormat);
+    document.getElementById("timeStep").addEventListener("change", changeTimeStep);
+    document.getElementById("transitionOffset").addEventListener("change", changeTransitionOffset);
+    document.getElementById("playbackRate").addEventListener("change", changePlaybackRate);
+    document.getElementById("outputFormat").addEventListener("change", changeOutputFormat, false);
+    document.getElementById("download").addEventListener("click", downloadClick);
+    document.getElementById("advancedcontrols").style.visibility = "visible";
+}
+function changeShowID() {
+    showID = !showID;
+    setButtonText("buttonShowID", showID, "ON", "OFF");
+    prepareTable();
+    prepareControls();
+}
+function changeAlignText() {
+    alignText = document.getElementById("alignText").value;
+    applyAlignment();
+}
+function applyAlignment() {
+    for (var i = 0; i < fragments.length; i++) {
+        document.getElementById(getStringID(i, "cell")).style.textAlign = alignText;
+    }
+}
+function changeOutputFormat() {
+    var outputFormat = document.getElementById("outputFormat").value;
+    var disp = "none";
+    if (outputFormat == "smil") {
+        disp = "block";
+    }
+    document.getElementById("smilAudioRef").style.display = disp;
+    document.getElementById("smilPageRef").style.display = disp;
+}
+function changeTimeStep() {
+    timeStep = parseFloat(document.getElementById("timeStep").value);
+}
+function changeTransitionOffset() {
+    transitionOffset = parseFloat(document.getElementById("transitionOffset").value);
+}
+function changePlaybackRate() {
+    audioElement.playbackRate = parseFloat(document.getElementById("playbackRate").value);
+}
+function changeContinuousPlay() {
+    continuousPlay = !continuousPlay;
+    setButtonText("buttonContinuousPlay", continuousPlay, "ON", "OFF");
+}
+function changeTimeFormat() {
+    timeFormatHHMMSSmmm = !timeFormatHHMMSSmmm;
+    setButtonText("buttonTimeFormat", timeFormatHHMMSSmmm, "HH:MM:SS.mmm", "DECIMAL");
+    updateTime();
+}
+function setButtonText(element, variable, true_text, false_text) {
+    var text = false_text;
+    if (variable) {
+        text = true_text;
+    }
+    document.getElementById(element).innerHTML = text;
+}
+function updateTime(i) {
+    if (i == null) {
+        for (var i = 0; i < fragments.length; i++) {
+            var begin = fragments[i].begin;
+            document.getElementById(getStringID(i, "time")).innerHTML =  formatTime(begin);
+        }
+    } else {
+        var begin = fragments[i].begin;
+        document.getElementById(getStringID(i, "time")).innerHTML =  formatTime(begin);
+    }
+}
+function formatTime(time_value) {
+    if (timeFormatHHMMSSmmm) {
+        return timeHHMMSSmmm(time_value, ".");
+    }
+    return time_value.toFixed(3);
+}
+function getStringID(i, element) {
+    if (element == "id") {
+        return ("id" + i);
+    }
+    if (element == "cell") {
+        return ("c" + i);
+    }
+    if (element == "text") {
+        return ("f" + i);
+    }
+    if (element == "time") {
+        return ("t" + i);
+    }
+    if (element == "increase") {
+        return ("t" + i + "inc");
+    }
+    if (element == "decrease") {
+        return ("t" + i + "dec");
+    }
+    return ("" + i);
+}
+function getID(idstring) {
+    var s = idstring;
+    s = s.replace("inc", "");
+    s = s.replace("dec", "");
+    s = s.replace("id", "");
+    s = s.replace("c", "");
+    s = s.replace("t", "");
+    s = s.replace("f", "");
+    return parseInt(s);
+}
+function roundTimeValues() {
+    for (var i = 0; i < fragments.length; i++) {
+        fragments[i].begin = roundTimeValue(fragments[i].begin);
+        fragments[i].end = roundTimeValue(fragments[i].end);
+    }
+}
+function prepareTable() {
+    var rows = [];
+    for (var i = 0; i < fragments.length; ++i) {
+        var id = fragments[i].id;
+        var text = fragments[i].lines.join("<br/>");
+        var begin = fragments[i].begin;
+        var end = fragments[i].end;
+        var row = "";
+        row += "<tr>";
+        row += "<\/tr>";
+        row += "<td><\/td>";
+        if (showID) {
+            row += '<td id="' + getStringID(i, "id") + '">' + id + '<\/td>';
+        }
+        row += '<td id="' + getStringID(i, "cell") + '"><a class="text" id="' + getStringID(i, "text") + '">' + text + '<\/a><\/td>';
+        row += '<td class="edit">';
+        row += '<a class="time" id="' + getStringID(i, "time") + '">' + formatTime(begin) + '<\/a>';
+        row += '<a class="increase" id="' + getStringID(i, "increase") + '">+<\/a>';
+        row += '<a class="decrease" id="' + getStringID(i, "decrease") + '">−<\/a>';
+        row += "<\/td>";
+        row += "<\/tr>";
+        rows[i] = row;
+    }
+    var colID = "";
+    if (showID) {
+        colID = '<col width="100">';
+    }
+    document.getElementById("tb").innerHTML = '<col width="250px">' + colID + '<col><col width="300px"><tbody>' + rows.join("") + "<\/tbody>";
+    applyAlignment();
+}
+function roundTimeValue(time) {
+    return Math.round(time * 1000) / 1000;
+}
+function highlight(style) {
+    try {
+        document.getElementById(getStringID(currentIndex, "cell")).style.backgroundColor = style;
+    } catch (e) {
+        // pass 
+    }
+}
+function fragmentClick(evt) {
+    highlight(CLEAR);
+    currentIndex = getID(evt.target.id);
+    playOverlay(0);
+}
+function increaseClick(evt) {
+    changeTime(evt, timeStep);
+}
+function decreaseClick(evt) {
+    changeTime(evt, -timeStep);
+}
+function changeTime(evt, step) {
+    var i = getID(evt.target.id);
+    fragments[i].begin = roundTimeValue(fragments[i].begin + step);
+    if (fragments[i].begin < 0) {
+        fragments[i].begin = 0.00;
+    }
+    if (i > 0) {
+        fragments[i-1].end = fragments[i].begin;
+    }
+    updateTime(i);
+    highlight(CLEAR);
+    currentIndex = i;
+    playOverlay(0);
+}
+function downloadData() {
+    var aElement = document.createElement("a");
+    aElement.style = "display: none";
+    document.body.appendChild(aElement);
+    return function (data, fileName) {
+        blob = new Blob([data], { type: "octet/stream" }),
+        url = window.URL.createObjectURL(blob);
+        aElement.href = url;
+        aElement.download = fileName;
+        aElement.click();
+    };
+}
+function triggerDownload(data, fileName) {
+    setTimeout(function() {
+        var df = downloadData();
+        df(data, fileName);
+    }, 500);
+    window.URL.revokeObjectURL(url);
+}
+function downloadClick() {
+    var outputFormat = document.getElementById("outputFormat").value;
+    var data = null;
+    switch(outputFormat) {
+        case "csv":
+            data = downloadCSV();
+            break;
+        case "json":
+            data = downloadJSON();
+            break;
+        case "smil":
+            data = downloadSMIL();
+            break;
+        case "srt":
+            data = downloadSRT();
+            break;
+        case "ssv":
+            data = downloadSSV();
+            break;
+        case "ttml":
+            data = downloadTTML();
+            break;
+        case "tsv":
+            data = downloadTSV();
+            break;
+        case "txt":
+            data = downloadTXT();
+            break;
+        case "vtt":
+            data = downloadVTT();
+            break;
+        case "xml":
+            data = downloadXML();
+            break;
+        default:
+            data = downloadJSON();
+    }
+    var message = "The modified " + outputFormat.toUpperCase() + " file will be saved in your default Download directory. Please enter a file name:";
+    var suggestedFileName = "tuned." + outputFormat;
+    var fileName = prompt(message, suggestedFileName);
+    triggerDownload(data, fileName);
+}
+function downloadCSV() {
+    var lines = [];
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[i] = fragments[i].id + "," + fragments[i].begin + "," + fragments[i].end + ',"' + fragments[i].lines.join(" ") + '"';
+    };
+    return lines.join("\n");
+}
+function downloadJSON() {
+    var jsonData = {};
+    jsonData.fragments = fragments;
+    // convert the numbers to strings (as in the original JSON)
+    function numberToString(key, value) {
+        if (typeof value === "number") {
+            value = value.toString();
+        }
+        return value;
+    }
+    return JSON.stringify(jsonData, numberToString, " ");
+}
+function downloadSMIL() {
+    var audioref = document.getElementById("smilAudioRef").value;
+    var pageref = document.getElementById("smilPageRef").value;
+    var lines = [];
+    var j = 0;
+    lines[j++] = '<smil xmlns:epub="http://www.idpf.org/2007/ops" xmlns="http://www.w3.org/ns/SMIL" version="3.0">';
+    lines[j++] = '  <body>';
+    lines[j++] = '    <seq id="s000001" epub:textref="' + pageref + '">';
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[j++] = '      <par id="p' + pad(i+1, 6) + '">';
+        lines[j++] = '        <text src="' + pageref + '#' + fragments[i].id + '"/>';
+        lines[j++] = '        <audio src="' + audioref + '" clipBegin="' + timeSMIL(fragments[i].begin) + '" clipEnd="' + timeSMIL(fragments[i].end)+ '"/>';
+        lines[j++] = '      <\/par>';
+    };
+    lines[j++] = '    <\/seq>';
+    lines[j++] = '  <\/body>';
+    lines[j++] = '<\/smil>';
+    return lines.join("\n");
+}
+function downloadSRT() {
+    var lines = [];
+    var j = 0;
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[j++] = "" + (i+1);
+        lines[j++] = timeSRT(fragments[i].begin) + " --> " + timeSRT(fragments[i].end);
+        var f_lines = fragments[i].lines;
+        for (var k = 0; k < f_lines.length; ++k) {
+            lines[j++] = f_lines[k];
+        }
+        lines[j++] = ""
+    };
+    return lines.join("\n") + "\n";
+}
+function downloadSSV() {
+    var lines = [];
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[i] = fragments[i].begin + " " + fragments[i].end + " " + fragments[i].id + ' "' + fragments[i].lines.join(" ") + '"';
+    };
+    return lines.join("\n");
+}
+function downloadTTML() {
+    var lines = [];
+    var j = 0;
+    lines[j++] = "<?xml version='1.0' encoding='UTF-8'?>";
+    lines[j++] = '<tt xmlns="http://www.w3.org/ns/ttml" xml:lang="">';
+    lines[j++] = '  <body>';
+    lines[j++] = '    <div>';
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[j++] = '      <p xml:id="' + fragments[i].id + '" begin="' + fragments[i].begin + 's" end="' + fragments[i].end + 's">' + fragments[i].lines.join("<br/>") + '<\/p>';
+    };
+    lines[j++] = '    <\/div>';
+    lines[j++] = '  <\/body>';
+    lines[j++] = '<\/tt>';
+    return lines.join("\n");
+}
+function downloadTSV() {
+    var lines = [];
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[i] = fragments[i].begin + "\t" + fragments[i].end + "\t" + fragments[i].id;
+    };
+    return lines.join("\n");
+}
+function downloadTXT() {
+    var lines = [];
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[i] = fragments[i].id + " " + fragments[i].begin + " " + fragments[i].end + ' "' + fragments[i].lines.join(" ") + '"';
+    };
+    return lines.join("\n");
+}
+function downloadVTT() {
+    var lines = [];
+    var j = 0;
+    lines[j++] = "WEBVTT\n"
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[j++] = "" + (i+1);
+        lines[j++] = timeVTT(fragments[i].begin) + " --> " + timeVTT(fragments[i].end);
+        var f_lines = fragments[i].lines;
+        for (var k = 0; k < f_lines.length; ++k) {
+            lines[j++] = f_lines[k];
+        }
+        lines[j++] = ""
+    };
+    return lines.join("\n") + "\n";
+}
+function downloadXML() {
+    var lines = [];
+    var j = 0;
+    lines[j++] = "<?xml version='1.0' encoding='UTF-8'?>";
+    lines[j++] = '<map>';
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[j++] = '  <fragment id="' + fragments[i].id + '" begin="' + fragments[i].begin + '" end="' + fragments[i].end + '">';
+        var f_lines = fragments[i].lines;
+        for (var k = 0; k < f_lines.length; ++k) {
+            lines[j++] = '    <line>' + f_lines[k] + '<\/line>';
+        }
+        lines[j++] = '  <\/fragment>';
+    };
+    lines[j++] = '<\/map>';
+    return lines.join("\n");
+}
+function pad(num, size) {
+    var s = num + "";
+    while (s.length < size) {
+        s = "0" + s;
+    }
+    return s;
+}
+function timeHHMMSSmmm(time_value, decimal_separator) {
+    var tmp = parseFloat(time_value);
+    var hours = parseInt(Math.floor(tmp / 3600));
+    tmp -= (hours * 3600);
+    var minutes = parseInt(Math.floor(tmp / 60));
+    tmp -= minutes * 60;
+    var seconds = parseInt(Math.floor(tmp));
+    tmp -= seconds;
+    var milliseconds = parseInt(Math.floor(tmp * 1000));
+    return pad(hours, 2) + ":" + pad(minutes, 2) + ":" + pad(seconds, 2) + decimal_separator + pad(milliseconds, 3); 
+}
+function timeSMIL(time_value) { 
+    return timeHHMMSSmmm(time_value, ".");
+}
+function timeSRT(time_value) { 
+    return timeHHMMSSmmm(time_value, ",");
+}
+function timeVTT(time_value) { 
+    return timeHHMMSSmmm(time_value, ".");
+}
+function ticker(cTime){
+    
+    // TODO ALPE use a global stopwatch object
+    
+    // "timeupdate" alone isn't accurate enough
+    // to pause exactly at the end of the fragment.
+    // Another option is to use temporal dimensions
+    // for audio source but Chrome doesn't support it with blobs.
+    // If in the last TRANSITION_TIMEOUT seconds, calculate the time left,
+    // and set a corresponding timeout to pause the fragment.
+    if(cTime > fragments[currentIndex].end - TRANSITION_TIMEOUT) {
+        // subtract transitionOffset seconds to account for the delay introduced by this code
+        var timeLeft = (fragments[currentIndex].end - cTime - transitionOffset) * 1000 / audioElement.playbackRate;
+        var index = currentIndex;
+        setTimeout(function() {
+            // do not perform action if the user
+            // jumped to another fragment
+            if (index == currentIndex) {
+                if (continuousPlay) {
+                    playOverlay(1);
+                } else {
+                    highlight(COMPLETED);
+                    stopOverlay();
+                }
+            }
+        }, timeLeft)
+    }
+    // display current time
+    document.getElementById("audioticker").innerHTML = cTime.toFixed(3);
+}
+function stopOverlay() {
+    audioElement.pause();
+    document.getElementById("stop").style.display = "none";
+}
+function playOverlay(inc) {
+    highlight(CLEAR);
+    if (currentIndex + inc < fragments.length) { 
+        currentIndex += inc;
+        highlight(ACTIVE);
+        audioElement.currentTime = fragments[currentIndex].begin;
+        audioElement.play();
+        document.getElementById("audiocontrols").style.display = "block";
+        document.getElementById("stop").style.display = "inline";
+    } else {
+        stopOverlay();
+    }
+}   
+</script>
+<!-- END script -->
+
+    </body>
+</html>

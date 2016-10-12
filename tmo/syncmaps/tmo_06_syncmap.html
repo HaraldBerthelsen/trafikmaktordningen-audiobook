@@ -1,0 +1,2914 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>finetuneas, an HTML interface for fine tuning aeneas sync maps</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <style>
+            html, body {
+                margin:0;
+                min-height:100%;
+            }
+            #container {
+                text-align:center;
+                min-height:100%;
+                position:absolute;
+            }
+            button, label, input, select {
+                margin:5px;
+            }
+            .tg {
+                table-layout:fixed;
+                width:100%;
+                border-spacing:0;
+                position:relative;
+                direction:ltr;
+                margin:100px 0;
+            }
+            .text {
+                margin-right:auto;
+                margin-left:auto;
+                font-size:22px;
+                line-height:125%;
+                font-family:Tahoma, Geneva, sans-serif;
+            }
+            .td {
+                vertical-align:middle;
+            }
+            .edit {
+                text-align:right;
+            }
+            .time, .increase, .decrease {
+                opacity:0.6;
+                position:relative;
+                margin:5px;
+                font-size:140%;
+                line-height:110%;
+                cursor:pointer;
+                font-weight:900;
+                border-style:solid;
+                border-color:#999;
+                border-width:1px 3px;
+                background-color:#333;
+                color:#fff;
+            }
+            .time {
+                padding:2px 5px 0px 5px;
+                margin-right:50px;
+            }
+            .increase {
+                padding:2px 8px 0px 8px;
+            }
+            .decrease {
+                padding:0px 8px 2px 8px;
+                bottom:2px;
+                margin-right:15px;
+            }
+            .increase, .decrease, .time, #stop {
+                -webkit-touch-callout:none;
+                -webkit-user-select:none;
+                -khtml-user-select:none;
+                -moz-user-select:none;
+                -ms-user-select:none;
+                user-select:none;
+            }
+            a:hover {
+                opacity:1;
+            }
+            td {
+                text-align:center;
+                height:80px;
+            }
+            #advancedcontrols{
+                position:fixed;
+                z-index:10;
+                bottom:30px;
+                left:25px;
+                text-align:left;
+                visibility:hidden;
+            }
+            #fileinput, #audioinput {
+                position:relative;
+                bottom:5px;
+            }
+            #step1, #step2, #fileinfo {
+                text-align:center;
+                margin:20px;
+                font-size:24px;
+                font-weight:900;
+            }
+            #directions {
+                margin:50px auto 150px auto;
+                font-size:24px;
+                max-width:700px;
+                border:1px solid black;
+                padding:20px;
+            }
+            .normal {
+                line-height:150%;
+                font-size:20px;
+                text-align:left;
+                margin:15px 50px;
+            }
+            .note {
+                font-size:16px;
+                margin:15px 80px;
+            }
+            #audiocontrols {
+                position:fixed;
+                z-index:10;
+                text-align:right;
+                top:30px;
+                left:25px;
+                display:none;
+                background-color:#fff;
+            }
+            #audioticker {
+                color:dimgrey;
+                font-size:14px;
+            }
+            #stop {
+                font-size:10px;
+                position:relative;
+                bottom:2px;
+                opacity:0.6;
+                padding:0 6px 3px 6px;
+                margin:2px;
+                cursor:pointer;
+                background-color:#333;
+                color:#fff;
+                font-weight:900;
+                font-family:Tahoma, Geneva, sans-serif;
+            }
+            #stop:hover {
+                opacity:1;
+            }
+            .footer {
+                font-size:12px;
+                text-align:center;
+                position:absolute;
+                bottom:10px;
+                left:0;
+                right:0;
+            }
+            .footer a {
+                color:#555;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- BEGIN container -->
+        <div id="container">
+            <!-- BEGIN directions -->
+            <div id="directions">
+                <p class="heading"><b>finetuneas</b></p>
+                <p class="normal"><b>1.</b> Before you start making adjustments, check several fragments at random to be sure that the sync map is mostly correct and it just needs fine tuning. If not, check your <i>aeneas</i> input files and parameters and run <i>aeneas</i> again.</p>
+                <p class="normal"><b>2.</b> To check the begin time of each fragment, click on the corresponding text or timestamp. If necessary, use the <b>+</b> and <b>−</b> buttons to adjust it.</p>
+                <p class="normal"><b>3.</b> When done, you can save the adjusted sync map to file. If the desired format is not available, choose JSON and then use the <i>aeneas.tools.convert_syncmap</i> tool to convert it.</p>
+
+                <!-- BEGIN loadbuttons -->
+                <!-- do not remove the next line -->
+                <!-- AENEAS_REPLACE_COMMENT_BEGIN
+                <div id="loadbuttons">
+                    <p class="normal"><b>4.</b> To start working, select your audio and JSON files:</p>
+                    <div id="step1">Audio file: <input type="file" id="audioinput" accept="audio/*" autocomplete="off"/></div>
+                    <div id="fileinfo"></div>
+                    <div id="step2">JSON file: <input type="file" id="fileinput" accept=".json" autocomplete="off"/></div>
+                </div>
+                AENEAS_REPLACE_COMMENT_END -->
+                <!-- do not remove the line above -->
+                <!-- END loadbuttons -->
+
+                <!-- BEGIN loadauto -->
+                <!-- do not remove the next line -->
+                <!-- AENEAS_REPLACE_UNCOMMENT_BEGIN -->
+                <div id="loadauto">
+                    <button id="buttonAutoLoad">Got it, let's start!</button>
+                </div>
+                <!-- AENEAS_REPLACE_UNCOMMENT_END -->
+                <!-- do not remove the line above -->
+                <!-- END loadauto -->
+
+            </div>
+            <!-- END directions -->
+
+            <!-- BEGIN player -->
+            <div id="player"> 
+                <audio id="audioplayer" src="" ontimeupdate="ticker(this.currentTime);"></audio>
+            </div>
+            <!-- END player -->
+
+            <div id="audiocontrols" >
+                <span id="audioticker"></span>
+                <span id="playpause"><a id="stop">ıı</a></span>
+            </div>
+
+            <div id="fragments">
+                <table id="tb" class="tg"></table>
+            </div>
+
+            <div id="advancedcontrols">
+                <label for="timeStep" style="display:block">Time increment (s):</label>
+                <input id="timeStep" type="number" min="0.010" step="0.010" value="0.100" style="display:block"/> 
+                <label for="buttonShowID" style="display:block">Show ID:</label>
+                <button id="buttonShowID" style="display:block">OFF</button>
+                <label for="alignText" style="display:block">Text alignment:</label>
+                <select name="alignText" id="alignText" style="display:block">
+                    <option value="left">Left</option>
+                    <option value="center" selected="selected">Center</option>
+                    <option value="right">Right</option>
+                    <option value="justify">Justify</option>
+                </select>
+                <hr style="display:block"/>
+                <label for="playbackRate" style="display:block">Playback rate:</label>
+                <input id="playbackRate" type="number" min="0.1" max="4.0" step="0.1" value="1.0" style="display:block"/> 
+                <label for="buttonContinuousPlay">Continuous play:</label>
+                <button id="buttonContinuousPlay" style="display:block">OFF</button>
+                <label for="buttonTimeFormat" style="display:block">Time format:</label>
+                <button id="buttonTimeFormat" style="display:block">DECIMAL</button>
+                <label for="transitionOffset" style="display:block">Transition offset (s):</label>
+                <input id="transitionOffset" type="number" min="0" max="0.400" step="0.010" value="0.100" style="display:block"/> 
+                <hr style="display:block"/>
+                <label for="outputFormat" style="display:block">Format:</label>
+                <select name="outputFormat" id="outputFormat" style="display:block">
+                    <option value="csv">CSV</option>
+                    <option value="json" selected="selected">JSON</option>
+                    <option value="smil">SMIL</option>
+                    <option value="srt">SRT</option>
+                    <option value="ssv">SSV</option>
+                    <option value="ttml">TTML</option>
+                    <option value="tsv">TSV</option>
+                    <option value="txt">TXT</option>
+                    <option value="vtt">VTT</option>
+                    <option value="xml">XML</option>
+                </select>
+                <input id="smilAudioRef" style="display:none" type="text" placeholder="audio_ref"/>
+                <input id="smilPageRef" style="display:none" type="text" placeholder="page_ref"/>
+                <button id="download" style="display:block">Save</button>
+            </div>
+
+            <div class="footer">
+                <a href="https://github.com/ozdefir/finetuneas">finetuneas v1.0.2</a><br/>© 2015 Firat Özdemir 
+            </div>
+        </div>
+        <!-- END container -->
+
+<!-- BEGIN script -->
+<script type="text/javascript">
+//
+//
+// global variables and constants
+//
+//
+var fragments = [];
+var currentIndex = 0;
+var audioElement = document.getElementById("audioplayer");
+var ainfo = "";
+var cinfo = "";
+var url;
+var COMPLETED = "lightgreen";
+var ACTIVE = "yellow";
+var CLEAR = "";
+var TRANSITION_TIMEOUT = 0.400;
+//
+//
+// variables that can be modified by the user at runtime
+//
+//
+// do not remove the following lines starting with AENEAS_REPLACE_
+//
+var timeStep = 0.1;
+// AENEAS_REPLACE_TIME_STEP
+var showID = false;
+showID = true;
+var alignText = "center";
+alignText = "left"
+var playbackRate = 1.0;
+// AENEAS_REPLACE_PLAYBACK_RATE
+var continuousPlay = false;
+continuousPlay = true;
+var timeFormatHHMMSSmmm = false;
+timeFormatHHMMSSmmm = true;
+var transitionOffset = 0.100;
+// AENEAS_REPLACE_TRANSITION_OFFSET
+var outputFormat = "json";
+// AENEAS_REPLACE_OUTPUT_FORMAT
+var audioref = "";
+// AENEAS_REPLACE_SMIL_AUDIOREF
+var pageref = "";
+// AENEAS_REPLACE_SMIL_PAGEREF
+//
+// do not remove the lines above starting with AENEAS_REPLACE_
+//
+//
+// BEGIN INIT CODE
+//
+//
+bindEssentialListeners();
+applyDefaults();
+//
+//
+// END INIT CODE
+//
+//
+function bindEssentialListeners() {
+    try {
+        document.getElementById("audioinput").addEventListener("change", buttonLoadAudio, false);
+    } catch(e) {
+        // pass
+    }
+    try {
+        document.getElementById("fileinput").addEventListener("change", buttonLoadJSON, false);
+    } catch(e) {
+        // pass
+    }
+    try {
+        document.getElementById("buttonAutoLoad").addEventListener("click", buttonAutoLoad, false);
+    } catch(e) {
+        // pass
+    }
+}
+function applyDefaults() {
+    try {
+        document.getElementById("timeStep").value = timeStep;
+        setButtonText("buttonShowID", showID, "ON", "OFF");
+        document.getElementById("alignText").value = alignText;
+        document.getElementById("playbackRate").value = playbackRate;
+        setButtonText("buttonContinuousPlay", continuousPlay, "ON", "OFF");
+        setButtonText("buttonTimeFormat", timeFormatHHMMSSmmm, "HH:MM:SS.mmm", "DECIMAL");
+        document.getElementById("transitionOffset").value = transitionOffset;
+        document.getElementById("outputFormat").value = outputFormat;
+        document.getElementById("smilAudioRef").value = audioref;
+        document.getElementById("smilPageRef").value = pageref;
+        changeOutputFormat();
+    } catch(e) {
+        // pass
+    }
+}
+function buttonAutoLoad() {
+    // fake
+    var audioFilePath = "file:///tmp/audio.mp3";
+    // do not remove the next line
+    audioFilePath = "file:///media/bigdisk/git_repos/trafikmaktordningen-audiobook/original_data/Trafikmaktordningen ljudbok/Trafikmaktordningen - Kapitel 6.mp3";
+    // do not remove the line above
+    loadAudio(audioFilePath);
+   
+    // fake
+    fragments = [
+      {"begin": "0.000",  "end": "2.680",  "id": "f000001", "language": "en", "lines": ["1"]}, 
+      {"begin": "2.680",  "end": "5.880",  "id": "f000002", "language": "en", "lines": ["From fairest creatures we desire increase,"]}, 
+      {"begin": "5.880",  "end": "9.240",  "id": "f000003", "language": "en", "lines": ["That thereby beauty's rose might never die,"]}, 
+      {"begin": "9.240",  "end": "11.760", "id": "f000004", "language": "en", "lines": ["But as the riper should by time decease,"]},
+      {"begin": "11.760", "end": "14.440", "id": "f000005", "language": "en", "lines": ["His tender heir might bear his memory:"]},
+      {"begin": "14.440", "end": "18.560", "id": "f000006", "language": "en", "lines": ["But thou contracted to thine own bright eyes,"]},
+      {"begin": "18.560", "end": "22.280", "id": "f000007", "language": "en", "lines": ["Feed'st thy light's flame with self-substantial fuel,"]},
+      {"begin": "22.280", "end": "25.480", "id": "f000008", "language": "en", "lines": ["Making a famine where abundance lies,"]},
+      {"begin": "25.480", "end": "31.200", "id": "f000009", "language": "en", "lines": ["Thy self thy foe, to thy sweet self too cruel:"]},
+      {"begin": "31.200", "end": "34.400", "id": "f000010", "language": "en", "lines": ["Thou that art now the world's fresh ornament,"]},
+      {"begin": "34.400", "end": "36.960", "id": "f000011", "language": "en", "lines": ["And only herald to the gaudy spring,"]},
+      {"begin": "36.960", "end": "40.640", "id": "f000012", "language": "en", "lines": ["Within thine own bud buriest thy content,"]},
+      {"begin": "40.640", "end": "43.640", "id": "f000013", "language": "en", "lines": ["And tender churl mak'st waste in niggarding:"]},
+      {"begin": "43.640", "end": "48.120", "id": "f000014", "language": "en", "lines": ["Pity the world, or else this glutton be,"]},
+      {"begin": "48.120", "end": "53.240", "id": "f000015", "language": "en", "lines": ["To eat the world's due, by the grave and thee."]}
+    ];
+    // do not remove the next line
+    fragments = ({
+ "fragments": [
+  {
+   "begin": "0.000", 
+   "children": [], 
+   "end": "4.040", 
+   "id": "f000001", 
+   "language": "swe", 
+   "lines": [
+    "Kapitel 6."
+   ]
+  }, 
+  {
+   "begin": "4.040", 
+   "children": [], 
+   "end": "8.080", 
+   "id": "f000002", 
+   "language": "swe", 
+   "lines": [
+    "H\u00d6GHASTIGHETSSAMH\u00c4LLET."
+   ]
+  }, 
+  {
+   "begin": "8.080", 
+   "children": [], 
+   "end": "11.640", 
+   "id": "f000003", 
+   "language": "swe", 
+   "lines": [
+    "V\u00e5r kulturs besatthet av hastighet \u00e4r ett otyg."
+   ]
+  }, 
+  {
+   "begin": "11.640", 
+   "children": [], 
+   "end": "21.000", 
+   "id": "f000004", 
+   "language": "swe", 
+   "lines": [
+    "Trots \u00f6verv\u00e4ldigande bevis f\u00f6r att fart d\u00f6dar s\u00e5 gasar vi p\u00e5, snabbare och snabbare."
+   ]
+  }, 
+  {
+   "begin": "21.000", 
+   "children": [], 
+   "end": "24.080", 
+   "id": "f000005", 
+   "language": "swe", 
+   "lines": [
+    "Fler och fler h\u00e4stkrafter i bilen."
+   ]
+  }, 
+  {
+   "begin": "24.080", 
+   "children": [], 
+   "end": "29.160", 
+   "id": "f000006", 
+   "language": "swe", 
+   "lines": [
+    "Hastighetsm\u00e4tare som ger oss dr\u00f6mmar om f\u00f6rbjudna farter."
+   ]
+  }, 
+  {
+   "begin": "29.160", 
+   "children": [], 
+   "end": "35.640", 
+   "id": "f000007", 
+   "language": "swe", 
+   "lines": [
+    "Gn\u00e4ll p\u00e5 sossesverige som inte till\u00e5ter fria hastigheter p\u00e5 motorv\u00e4garna."
+   ]
+  }, 
+  {
+   "begin": "35.640", 
+   "children": [], 
+   "end": "38.720", 
+   "id": "f000008", 
+   "language": "swe", 
+   "lines": [
+    "Fortk\u00f6rning och racing p\u00e5 teve."
+   ]
+  }, 
+  {
+   "begin": "38.720", 
+   "children": [], 
+   "end": "41.920", 
+   "id": "f000009", 
+   "language": "swe", 
+   "lines": [
+    "Mot b\u00e4ttre vetande trycker vi gasen i botten."
+   ]
+  }, 
+  {
+   "begin": "41.920", 
+   "children": [], 
+   "end": "54.680", 
+   "id": "f000010", 
+   "language": "swe", 
+   "lines": [
+    "Kraftigt \u00f6kad br\u00e4nslef\u00f6rbrukning och s\u00e5ledes \u00f6kade koldioxidutsl\u00e4pp eller d\u00f6da barn ska inte f\u00e5 hindra oss fr\u00e5n att k\u00f6ra fort."
+   ]
+  }, 
+  {
+   "begin": "54.680", 
+   "children": [], 
+   "end": "58.960", 
+   "id": "f000011", 
+   "language": "swe", 
+   "lines": [
+    "Det \u00e4r ju en s\u00e5n frihetsk\u00e4nsla!"
+   ]
+  }, 
+  {
+   "begin": "58.960", 
+   "children": [], 
+   "end": "64.120", 
+   "id": "f000012", 
+   "language": "swe", 
+   "lines": [
+    "Men om detta \u00e4r frihet, vad \u00e4r d\u00e5 friheten v\u00e4rd?"
+   ]
+  }, 
+  {
+   "begin": "64.120", 
+   "children": [], 
+   "end": "83.880", 
+   "id": "f000013", 
+   "language": "swe", 
+   "lines": [
+    "\u00c4r det inte n\u00e5got konstigt med friheten n\u00e4r eventuella tidsvinster \u00e4ts upp av att vi beh\u00f6ver jobba \u00e4nnu mer f\u00f6r att ha r\u00e5d att \u00e5ka, liksom att den kortare restiden f\u00f6r med sig en regionf\u00f6rstoring som inneb\u00e4r att vi m\u00e5ste \u00e5ka l\u00e4ngre till jobbet?"
+   ]
+  }, 
+  {
+   "begin": "83.880", 
+   "children": [], 
+   "end": "96.360", 
+   "id": "f000014", 
+   "language": "swe", 
+   "lines": [
+    "H\u00f6ghastighetssamh\u00e4llet manifesteras kanske allra tydligast i v\u00e5r samtids vurm f\u00f6r flygmaskiner och h\u00f6ghastighetst\u00e5g, tv\u00e5 transportmedel som vi nu kommer att titta n\u00e4rmare p\u00e5."
+   ]
+  }, 
+  {
+   "begin": "96.360", 
+   "children": [], 
+   "end": "110.640", 
+   "id": "f000015", 
+   "language": "swe", 
+   "lines": [
+    "Till en b\u00f6rjan \u00e4r det dock p\u00e5 sin plats att h\u00f6ja ett varningens finger f\u00f6r att g\u00f6ra motst\u00e5ndet mot h\u00f6ghastighetssamh\u00e4llet till ett individuellt omfamnande av det l\u00e5ngsamma, det \u00e4kta."
+   ]
+  }, 
+  {
+   "begin": "110.640", 
+   "children": [], 
+   "end": "121.680", 
+   "id": "f000016", 
+   "language": "swe", 
+   "lines": [
+    "Att G\u00d6RA VALET att \u00e5ka InterCity ist\u00e4llet f\u00f6r X2000, sakta mula k\u00e4ften full av slow food."
+   ]
+  }, 
+  {
+   "begin": "121.680", 
+   "children": [], 
+   "end": "124.600", 
+   "id": "f000017", 
+   "language": "swe", 
+   "lines": [
+    "F\u00f6r det \u00e4r inget fritt val:"
+   ]
+  }, 
+  {
+   "begin": "124.600", 
+   "children": [], 
+   "end": "127.480", 
+   "id": "f000018", 
+   "language": "swe", 
+   "lines": [
+    "de allra flesta har inte lyxen att v\u00e4lja."
+   ]
+  }, 
+  {
+   "begin": "127.480", 
+   "children": [], 
+   "end": "142.640", 
+   "id": "f000019", 
+   "language": "swe", 
+   "lines": [
+    "F\u00f6r de flesta som lever i ett h\u00f6ghastighetssamh\u00e4lle s\u00e5 g\u00e4ller det att h\u00e4nga med f\u00f6r att klara sig, hetspendla till jobbet och \u00e4ta \u00e4cklig take-away p\u00e5 n\u00e5gon \u00f6de bensinmack f\u00f6r att spara tid."
+   ]
+  }, 
+  {
+   "begin": "142.640", 
+   "children": [], 
+   "end": "149.200", 
+   "id": "f000020", 
+   "language": "swe", 
+   "lines": [
+    "Det finns ingen individuell n\u00f6dbroms, f\u00f6rutom m\u00f6jligen att g\u00e5 in i v\u00e4ggen."
+   ]
+  }, 
+  {
+   "begin": "149.200", 
+   "children": [], 
+   "end": "154.640", 
+   "id": "f000021", 
+   "language": "swe", 
+   "lines": [
+    "Antingen stannar hela t\u00e5get eller s\u00e5 tvingas alla med."
+   ]
+  }, 
+  {
+   "begin": "154.640", 
+   "children": [], 
+   "end": "172.760", 
+   "id": "f000022", 
+   "language": "swe", 
+   "lines": [
+    "Visst kan kanske en del yrkesgrupper, s\u00e5som akademiker och frilansare, \u201dunna sig\u201d en l\u00e5ngsam resa med InterCity, men att tro att detta individuella val under dagens omst\u00e4ndigheter kan generaliseras \u00e4r bara l\u00f6jligt."
+   ]
+  }, 
+  {
+   "begin": "172.760", 
+   "children": [], 
+   "end": "176.480", 
+   "id": "f000023", 
+   "language": "swe", 
+   "lines": [
+    "N\u00f6dbromsen m\u00e5ste vara gemensam:"
+   ]
+  }, 
+  {
+   "begin": "176.480", 
+   "children": [], 
+   "end": "181.080", 
+   "id": "f000024", 
+   "language": "swe", 
+   "lines": [
+    "Ingen ska med!"
+   ]
+  }, 
+  {
+   "begin": "181.080", 
+   "children": [], 
+   "end": "184.040", 
+   "id": "f000025", 
+   "language": "swe", 
+   "lines": [
+    "H\u00f6ghastighetst\u00e5g"
+   ]
+  }, 
+  {
+   "begin": "184.040", 
+   "children": [], 
+   "end": "191.960", 
+   "id": "f000026", 
+   "language": "swe", 
+   "lines": [
+    "H\u00f6ghastighetst\u00e5g \u00e4r n\u00e5got som i dagsl\u00e4get f\u00f6respr\u00e5kas av v\u00e4ldigt m\u00e5nga som en l\u00f6sning p\u00e5 framtidens transportproblem:"
+   ]
+  }, 
+  {
+   "begin": "191.960", 
+   "children": [], 
+   "end": "205.600", 
+   "id": "f000027", 
+   "language": "swe", 
+   "lines": [
+    "snabbt, folkligt och klimatsmart s\u00e4ger f\u00f6respr\u00e5karna, dit en majoritet av riksdagspartierna och ett antal klimat-, milj\u00f6- och stadsaktivister kan r\u00e4knas."
+   ]
+  }, 
+  {
+   "begin": "205.600", 
+   "children": [], 
+   "end": "216.080", 
+   "id": "f000028", 
+   "language": "swe", 
+   "lines": [
+    "H\u00f6ghastighetst\u00e5gen ska i framtiden konkurrera ut flyget \u00e5tminstone inrikes, och p\u00e5 k\u00f6pet ta andelar fr\u00e5n bilismen."
+   ]
+  }, 
+  {
+   "begin": "216.080", 
+   "children": [], 
+   "end": "222.000", 
+   "id": "f000029", 
+   "language": "swe", 
+   "lines": [
+    "Det finns m\u00e5nga problem med det ensidiga f\u00f6respr\u00e5kandet av h\u00f6ghastighetst\u00e5g."
+   ]
+  }, 
+  {
+   "begin": "222.000", 
+   "children": [], 
+   "end": "235.000", 
+   "id": "f000030", 
+   "language": "swe", 
+   "lines": [
+    "Liksom i andra komplexa fr\u00e5gor g\u00e4ller det att vara pragmatisk och t\u00e4nka till ordentligt innan man best\u00e4mmer sig f\u00f6r att ta absolut st\u00e4llning f\u00f6r n\u00e5gonting."
+   ]
+  }, 
+  {
+   "begin": "235.000", 
+   "children": [], 
+   "end": "243.240", 
+   "id": "f000031", 
+   "language": "swe", 
+   "lines": [
+    "H\u00f6ghastighetst\u00e5g beh\u00f6ver inte vara n\u00e5got uteslutande d\u00e5ligt, men det \u00e4r garanterat inte enbart positivt."
+   ]
+  }, 
+  {
+   "begin": "243.240", 
+   "children": [], 
+   "end": "264.960", 
+   "id": "f000032", 
+   "language": "swe", 
+   "lines": [
+    "H\u00e4r vill vi b\u00f6rja med att g\u00e5 igenom n\u00e5gra konsekvenser som ett byggande av h\u00f6ghastighetsbanor i Sverige skulle medf\u00f6ra, f\u00f6r att sedan ta upp lite mer tekniska detaljer om huruvida h\u00f6ghastighetst\u00e5gen verkligen \u00e4r s\u00e5 klimatsmarta och samh\u00e4llsekonomiskt effektiva som deras f\u00f6respr\u00e5kare menar."
+   ]
+  }, 
+  {
+   "begin": "264.960", 
+   "children": [], 
+   "end": "278.160", 
+   "id": "f000033", 
+   "language": "swe", 
+   "lines": [
+    "Ett av m\u00e5len med att bygga en h\u00f6ghastighetsbana likt den som har f\u00f6reslagits mellan Stockholm och G\u00f6teborg \u00e4r att det ska g\u00e5 fort, g\u00e4rna v\u00e4ldigt fort, att \u00e5ka den str\u00e4ckan."
+   ]
+  }, 
+  {
+   "begin": "278.160", 
+   "children": [], 
+   "end": "284.000", 
+   "id": "f000034", 
+   "language": "swe", 
+   "lines": [
+    "Det kan l\u00e5ta som en sj\u00e4lvklarhet, och dessutom som n\u00e5got sj\u00e4lvklart positivt."
+   ]
+  }, 
+  {
+   "begin": "284.000", 
+   "children": [], 
+   "end": "295.560", 
+   "id": "f000035", 
+   "language": "swe", 
+   "lines": [
+    "Inte kan det v\u00e4l vara d\u00e5ligt att det g\u00e5r fortare att ta sig till Liseberg eller h\u00e4lsa p\u00e5 mormor i Stockholm \u2013 och p\u00e5 ett klimatsmart s\u00e4tt dessutom?"
+   ]
+  }, 
+  {
+   "begin": "295.560", 
+   "children": [], 
+   "end": "308.360", 
+   "id": "f000036", 
+   "language": "swe", 
+   "lines": [
+    "Fr\u00e5gan \u00e4r dock hur stor skillnad den marginella tidsvinsten (mellan 10 och 45 minuter beroende p\u00e5 utr\u00e4kningsmetod) egentligen har f\u00f6r den som n\u00f6jesreser."
+   ]
+  }, 
+  {
+   "begin": "308.360", 
+   "children": [], 
+   "end": "312.520", 
+   "id": "f000037", 
+   "language": "swe", 
+   "lines": [
+    "Knappast s\u00e4rskilt stor."
+   ]
+  }, 
+  {
+   "begin": "312.520", 
+   "children": [], 
+   "end": "329.680", 
+   "id": "f000038", 
+   "language": "swe", 
+   "lines": [
+    "Den stora skillnaden (vinsten enligt f\u00f6respr\u00e5karna) \u00e4r snarare att h\u00f6ghastighetst\u00e5gen skulle minska restiden till en niv\u00e5 som p\u00e5 allvar skulle kunna m\u00f6jligg\u00f6ra arbetspendling och \u00f6kad regionf\u00f6rstoring."
+   ]
+  }, 
+  {
+   "begin": "329.680", 
+   "children": [], 
+   "end": "343.280", 
+   "id": "f000039", 
+   "language": "swe", 
+   "lines": [
+    "Finns m\u00f6jligheten att jobba i Stockholm och bo i G\u00f6teborg, eller vice versa, kommer m\u00e4nniskor att se sig tvungna att g\u00f6ra detta, och likas\u00e5 kommer arbetsf\u00f6rmedlingen att kunna tvinga dem till det."
+   ]
+  }, 
+  {
+   "begin": "343.280", 
+   "children": [], 
+   "end": "351.080", 
+   "id": "f000040", 
+   "language": "swe", 
+   "lines": [
+    "Detta st\u00e5r i skarp kontrast till den utveckling av v\u00e5ra st\u00e4der som vi tidigare diskuterat som f\u00f6rdelaktig."
+   ]
+  }, 
+  {
+   "begin": "351.080", 
+   "children": [], 
+   "end": "361.560", 
+   "id": "f000041", 
+   "language": "swe", 
+   "lines": [
+    "F\u00f6r varf\u00f6r skulle det finnas ett egenv\u00e4rde i regionf\u00f6rstoring, funktionsuppdelning och on\u00f6diga, p\u00e5tvingade restimmar?"
+   ]
+  }, 
+  {
+   "begin": "361.560", 
+   "children": [], 
+   "end": "378.480", 
+   "id": "f000042", 
+   "language": "swe", 
+   "lines": [
+    "Att skynda p\u00e5 den redan skenande regionf\u00f6rstoringen \u00e4r sannerligen inte ett vettigt s\u00e4tt att bygga st\u00e4der f\u00f6r att l\u00f6sa de framtida resurs- och klimatproblemen \u2013 f\u00f6r att inte tala om hur j\u00e4vligt det \u00e4r att ha tv\u00e5 timmars restid till jobbet!"
+   ]
+  }, 
+  {
+   "begin": "378.480", 
+   "children": [], 
+   "end": "390.320", 
+   "id": "f000043", 
+   "language": "swe", 
+   "lines": [
+    "Att bygga h\u00f6ghastighetsbanor och i f\u00f6rl\u00e4ngningen tvinga in folk i \u00e4nnu l\u00e4ngre arbetspendling \u00e4r ett 1900-talst\u00e4nk som h\u00f6r transport\u00e5ldern till."
+   ]
+  }, 
+  {
+   "begin": "390.320", 
+   "children": [], 
+   "end": "399.080", 
+   "id": "f000044", 
+   "language": "swe", 
+   "lines": [
+    "Vad vi beh\u00f6ver \u00e4r verktyg f\u00f6r att styra stadens rumsliga utbredning och p\u00e5 s\u00e5 s\u00e4tt minimera antalet n\u00f6dv\u00e4ndiga resor."
+   ]
+  }, 
+  {
+   "begin": "399.080", 
+   "children": [], 
+   "end": "406.640", 
+   "id": "f000045", 
+   "language": "swe", 
+   "lines": [
+    "Klimatsmart eller bara osmart?"
+   ]
+  }, 
+  {
+   "begin": "406.640", 
+   "children": [], 
+   "end": "414.960", 
+   "id": "f000046", 
+   "language": "swe", 
+   "lines": [
+    "Att h\u00f6ghastighetst\u00e5gen \u00e4r snabbare \u00e4n vanliga t\u00e5g och klimatsmartare \u00e4n flyget \u00e4r v\u00e4l n\u00e4rmast en plattityd."
+   ]
+  }, 
+  {
+   "begin": "414.960", 
+   "children": [], 
+   "end": "421.800", 
+   "id": "f000047", 
+   "language": "swe", 
+   "lines": [
+    "Fr\u00e5gan \u00e4r dock om byggandet av infrastruktur f\u00f6r h\u00f6ghastighetst\u00e5g verkligen \u00e4r r\u00e4tt."
+   ]
+  }, 
+  {
+   "begin": "421.800", 
+   "children": [], 
+   "end": "429.400", 
+   "id": "f000048", 
+   "language": "swe", 
+   "lines": [
+    "N\u00e4r vi bygger infrastruktur som vi ska leva med i \u00e5tminstone 100 \u00e5r kr\u00e4vs det att ordentliga utredningar g\u00f6rs."
+   ]
+  }, 
+  {
+   "begin": "429.400", 
+   "children": [], 
+   "end": "446.760", 
+   "id": "f000049", 
+   "language": "swe", 
+   "lines": [
+    "Precis som vi och m\u00e5nga andra har kritiserat stadsmotorv\u00e4gen F\u00f6rbifart Stockholm och liknande projekt f\u00f6r att de planeras och byggs utan att alternativen har utretts, s\u00e5 har inte heller alternativen till h\u00f6ghastighetst\u00e5g unders\u00f6kts ordentligt."
+   ]
+  }, 
+  {
+   "begin": "446.760", 
+   "children": [], 
+   "end": "469.920", 
+   "id": "f000050", 
+   "language": "swe", 
+   "lines": [
+    "Regeringens utredning av h\u00f6ghastighetsbanor beaktar inte dess alternativ p\u00e5 ett seri\u00f6st s\u00e4tt \u2013 n\u00e5got som bland annat har p\u00e5pekats av Statens institut f\u00f6r kommunikationsanalys (SIKA), Statens v\u00e4g- och transportforskningsinstitut (VTI) och Ekonomistyrningsverket i deras remissvar."
+   ]
+  }, 
+  {
+   "begin": "469.920", 
+   "children": [], 
+   "end": "481.120", 
+   "id": "f000051", 
+   "language": "swe", 
+   "lines": [
+    "Inom modern transportforskning \u00e4r det praxis att man vid stora infrastrukturprojekt f\u00f6ljer en modell som kallas avoid\u2013shift\u2013improve."
+   ]
+  }, 
+  {
+   "begin": "481.120", 
+   "children": [], 
+   "end": "491.560", 
+   "id": "f000052", 
+   "language": "swe", 
+   "lines": [
+    "Det \u00e4r ett t\u00e4nkes\u00e4tt som utg\u00e5r fr\u00e5n att all utbyggnad av infrastruktur, och i princip alla resor, \u00e4r kostsamma och har en negativ milj\u00f6p\u00e5verkan."
+   ]
+  }, 
+  {
+   "begin": "491.560", 
+   "children": [], 
+   "end": "503.680", 
+   "id": "f000053", 
+   "language": "swe", 
+   "lines": [
+    "I Sverige inf\u00f6rde V\u00e4gverket en liknande princip kallad fyrstegsprincipen i b\u00f6rjan av 00-talet, och \u00e5tf\u00f6ljdes snart av Banverket."
+   ]
+  }, 
+  {
+   "begin": "503.680", 
+   "children": [], 
+   "end": "515.680", 
+   "id": "f000054", 
+   "language": "swe", 
+   "lines": [
+    "Fyrstegsprincipen inneb\u00e4r att varje upplevd brist p\u00e5 transport-infrastruktur ska avhj\u00e4lpas med f\u00f6ljande \u201d\u00e5tg\u00e4rdstrappa\u201d:"
+   ]
+  }, 
+  {
+   "begin": "515.680", 
+   "children": [], 
+   "end": "521.120", 
+   "id": "f000055", 
+   "language": "swe", 
+   "lines": [
+    "1. \u00c5tg\u00e4rder som kan p\u00e5verka transportbehovet och valet av transports\u00e4tt."
+   ]
+  }, 
+  {
+   "begin": "521.120", 
+   "children": [], 
+   "end": "530.000", 
+   "id": "f000056", 
+   "language": "swe", 
+   "lines": [
+    "2. \u00c5tg\u00e4rder som ger mer effektivt utnyttjande av befintliga v\u00e4g- /j\u00e4rnv\u00e4gsn\u00e4t och fordon."
+   ]
+  }, 
+  {
+   "begin": "530.000", 
+   "children": [], 
+   "end": "535.560", 
+   "id": "f000057", 
+   "language": "swe", 
+   "lines": [
+    "3. Begr\u00e4nsade ombyggnads\u00e5tg\u00e4rder."
+   ]
+  }, 
+  {
+   "begin": "535.560", 
+   "children": [], 
+   "end": "542.320", 
+   "id": "f000058", 
+   "language": "swe", 
+   "lines": [
+    "4. Nyinvesteringar och st\u00f6rre ombyggnads\u00e5tg\u00e4rder."
+   ]
+  }, 
+  {
+   "begin": "542.320", 
+   "children": [], 
+   "end": "552.640", 
+   "id": "f000059", 
+   "language": "swe", 
+   "lines": [
+    "Regeringens utredning om h\u00f6ghastighetsbanor \u00e4r ett klassiskt exempel p\u00e5 att man utreder hur n\u00e5got ska g\u00f6ras innan man har analyserat om det beh\u00f6vs."
+   ]
+  }, 
+  {
+   "begin": "552.640", 
+   "children": [], 
+   "end": "560.440", 
+   "id": "f000060", 
+   "language": "swe", 
+   "lines": [
+    "Det \u00e4r ocks\u00e5 ett exempel p\u00e5 hur man flagrant bryter mot allt vad fyrstegsprincipen st\u00e5r f\u00f6r."
+   ]
+  }, 
+  {
+   "begin": "560.440", 
+   "children": [], 
+   "end": "564.240", 
+   "id": "f000061", 
+   "language": "swe", 
+   "lines": [
+    "Det \u00e4r sj\u00e4lvklart att h\u00f6ghastighetst\u00e5g \u00e4r b\u00e4ttre \u00e4n flyg."
+   ]
+  }, 
+  {
+   "begin": "564.240", 
+   "children": [], 
+   "end": "577.280", 
+   "id": "f000062", 
+   "language": "swe", 
+   "lines": [
+    "Men det \u00e4r lika sj\u00e4lvklart att h\u00f6ghastighetsbanor enbart ter sig s\u00e5 fantastiska som de uppenbarligen g\u00f6r om man utg\u00e5r fr\u00e5n ett \u201dbusiness as usual\u201d-perspektiv."
+   ]
+  }, 
+  {
+   "begin": "577.280", 
+   "children": [], 
+   "end": "592.120", 
+   "id": "f000063", 
+   "language": "swe", 
+   "lines": [
+    "Och det \u00e4r ocks\u00e5 just vad f\u00f6respr\u00e5karna g\u00f6r, med argument som \u201dj\u00e4rnv\u00e4gskapaciteten h\u00e5ller p\u00e5 att ta slut\u201d och \u201dvi beh\u00f6ver frig\u00f6ra kapacitet f\u00f6r att kunna k\u00f6ra mer gods p\u00e5 t\u00e5g\u201d."
+   ]
+  }, 
+  {
+   "begin": "592.120", 
+   "children": [], 
+   "end": "608.120", 
+   "id": "f000064", 
+   "language": "swe", 
+   "lines": [
+    "Dessa argument blir betydligt svagare om vi s\u00e4tter in transportfr\u00e5gan i ett klimatperspektiv och erk\u00e4nner att \u201dbusiness as usual\u201d, det vill s\u00e4ga en fortsatt kraftig \u00f6kning av s\u00e5v\u00e4l passagerar- som godstrafik, inte \u00e4r h\u00e5llbart."
+   ]
+  }, 
+  {
+   "begin": "608.120", 
+   "children": [], 
+   "end": "631.320", 
+   "id": "f000065", 
+   "language": "swe", 
+   "lines": [
+    "Tv\u00e5 av de mest \u00f6vergripande systemanalyserna som vi har sett av hur olika samh\u00e4llssektorer p\u00e5verkar klimatet \u00e4r Tv\u00e5gradersm\u00e5let i sikte? fr\u00e5n Naturv\u00e5rdsverket och Europe\u2019s Share of the Climate Challenge fr\u00e5n Stockholm Environment Institute och Friends of the Earth Europe."
+   ]
+  }, 
+  {
+   "begin": "631.320", 
+   "children": [], 
+   "end": "649.920", 
+   "id": "f000066", 
+   "language": "swe", 
+   "lines": [
+    "B\u00e5da dessa rapporter n\u00e5r liknande slutsatser, n\u00e4mligen att inte ens med de mest teknikoptimistiska scenarion finns det n\u00e5gon m\u00f6jlighet att l\u00f6sa klimatfr\u00e5gan om rese- och transportvolymerna forts\u00e4tter att \u00f6ka enligt dagens konventionella ber\u00e4kningar."
+   ]
+  }, 
+  {
+   "begin": "649.920", 
+   "children": [], 
+   "end": "661.600", 
+   "id": "f000067", 
+   "language": "swe", 
+   "lines": [
+    "Med detta i \u00e5tanke tycks det n\u00e4rmast dumdristigt att bygga h\u00f6ghastighetsbanor, d\u00e5 det inte skulle bidra till att minska antalet transportkilometer."
+   ]
+  }, 
+  {
+   "begin": "661.600", 
+   "children": [], 
+   "end": "667.080", 
+   "id": "f000068", 
+   "language": "swe", 
+   "lines": [
+    "Snarare \u00e4r det s\u00e5 att mer infrastruktur n\u00e4stan alltid leder till fler transporter."
+   ]
+  }, 
+  {
+   "begin": "667.080", 
+   "children": [], 
+   "end": "686.760", 
+   "id": "f000069", 
+   "language": "swe", 
+   "lines": [
+    "Dels d\u00e4rf\u00f6r att ny infrastruktur ger folk fler m\u00f6jligheter att transportera sig, och dels d\u00e4rf\u00f6r att en investering i transportinfrastruktur p\u00e5 125 miljarder kronor kr\u00e4ver ett h\u00f6gt nyttjande f\u00f6r att bli samh\u00e4llsekonomiskt l\u00f6nsam."
+   ]
+  }, 
+  {
+   "begin": "686.760", 
+   "children": [], 
+   "end": "702.840", 
+   "id": "f000070", 
+   "language": "swe", 
+   "lines": [
+    "Men om vi bortser fr\u00e5n detta, och t\u00e4nker oss att h\u00f6ghastighetsbanorna endast ska ers\u00e4tta en stor del av inrikesflyget, en del av bilismen och den nuvarande t\u00e5gtrafiken, \u00e4r det \u00e4nd\u00e5 l\u00e5ngt ifr\u00e5n ett smart framtidsval."
+   ]
+  }, 
+  {
+   "begin": "702.840", 
+   "children": [], 
+   "end": "719.960", 
+   "id": "f000071", 
+   "language": "swe", 
+   "lines": [
+    "F\u00f6rutom klimatkrisen kommer vi under den tid som h\u00f6ghastighetsbanorna planeras vara i drift att st\u00e4llas inf\u00f6r en rad andra problem relaterade till en generell resurskris, det som p\u00e5 engelska brukar ben\u00e4mnas peak everything."
+   ]
+  }, 
+  {
+   "begin": "719.960", 
+   "children": [], 
+   "end": "733.480", 
+   "id": "f000072", 
+   "language": "swe", 
+   "lines": [
+    "Det mest v\u00e4lk\u00e4nda av dessa \u00e4r oljekr\u00f6net, som kommer att leda till en energikris och nya krav p\u00e5 inte bara klimatsmarta, utan \u00e4ven energisn\u00e5la transporter."
+   ]
+  }, 
+  {
+   "begin": "733.480", 
+   "children": [], 
+   "end": "738.720", 
+   "id": "f000073", 
+   "language": "swe", 
+   "lines": [
+    "Ju h\u00f6gre hastighet, desto h\u00f6gre energif\u00f6rbrukning, allt annat lika."
+   ]
+  }, 
+  {
+   "begin": "738.720", 
+   "children": [], 
+   "end": "756.760", 
+   "id": "f000074", 
+   "language": "swe", 
+   "lines": [
+    "Per K\u00e5gesson, doktor i milj\u00f6- och energisystemanalys, har efter en genomg\u00e5ng av befintlig forskning uppskattat att energif\u00f6rbrukningen vid en \u00f6verg\u00e5ng fr\u00e5n befintliga banor till h\u00f6ghastighetsbanor \u00f6kar med minst 60 procent."
+   ]
+  }, 
+  {
+   "begin": "756.760", 
+   "children": [], 
+   "end": "781.040", 
+   "id": "f000075", 
+   "language": "swe", 
+   "lines": [
+    "Med den annalkande resurskrisen i \u00e5tanke ska vi heller inte gl\u00f6mma bort de enorma m\u00e4ngder olja, st\u00e5l och koppar som kr\u00e4vs f\u00f6r att bygga infrastrukturen och t\u00e5gen, f\u00f6r att inte tala om alla de ingrepp i mycket skyddsv\u00e4rd natur som kommer att kr\u00e4vas f\u00f6r att l\u00e4gga sp\u00e5ren."
+   ]
+  }, 
+  {
+   "begin": "781.040", 
+   "children": [], 
+   "end": "794.880", 
+   "id": "f000076", 
+   "language": "swe", 
+   "lines": [
+    "Att bygga de h\u00f6ghastighetsbanor som regeringens utredning f\u00f6resl\u00e5r skulle kosta 125 miljarder, med reservation f\u00f6r att budgeten f\u00f6r infrastrukturprojekt i princip alltid spr\u00e4cks."
+   ]
+  }, 
+  {
+   "begin": "794.880", 
+   "children": [], 
+   "end": "804.520", 
+   "id": "f000077", 
+   "language": "swe", 
+   "lines": [
+    "T\u00e4nk om dessa pengar investerades i den eftersatta kollektivtrafiken i Sveriges st\u00e4der ist\u00e4llet."
+   ]
+  }, 
+  {
+   "begin": "804.520", 
+   "children": [], 
+   "end": "814.160", 
+   "id": "f000078", 
+   "language": "swe", 
+   "lines": [
+    "Det vore garanterat ett s\u00e4krare kort f\u00f6r att med begr\u00e4nsade resurser uppn\u00e5 st\u00f6rsta m\u00f6jliga minskning av klimatfarliga utsl\u00e4pp fr\u00e5n transportsektorn."
+   ]
+  }, 
+  {
+   "begin": "814.160", 
+   "children": [], 
+   "end": "823.560", 
+   "id": "f000079", 
+   "language": "swe", 
+   "lines": [
+    "H\u00f6ghastighetsvurmarna talar sig ocks\u00e5 g\u00e4rna varma om en t\u00e5gkorridor ut i Europa."
+   ]
+  }, 
+  {
+   "begin": "823.560", 
+   "children": [], 
+   "end": "830.520", 
+   "id": "f000080", 
+   "language": "swe", 
+   "lines": [
+    "Ett stort problem d\u00e4r \u00e4r dock att det inte kommer att finnas n\u00e5gra h\u00f6ghastighetsf\u00f6rbindelser genom Danmark och in i Tyskland."
+   ]
+  }, 
+  {
+   "begin": "830.520", 
+   "children": [], 
+   "end": "843.240", 
+   "id": "f000081", 
+   "language": "swe", 
+   "lines": [
+    "Vill man ut i Europa verkar det rimligare att satsa p\u00e5 att h\u00f6ja standarden, s\u00e4nka priserna och \u00f6ka antalet avg\u00e5ngar p\u00e5 natt\u00e5gen s\u00f6derut."
+   ]
+  }, 
+  {
+   "begin": "843.240", 
+   "children": [], 
+   "end": "856.680", 
+   "id": "f000082", 
+   "language": "swe", 
+   "lines": [
+    "Att s\u00e4nka l\u00e5gprisflyget med hj\u00e4lp av h\u00f6ghastighetst\u00e5g l\u00e5ter behj\u00e4rtansv\u00e4rt, och vi \u00e4r de f\u00f6rsta att skriva under p\u00e5 behovet av att radikalt minska flygtrafiken."
+   ]
+  }, 
+  {
+   "begin": "856.680", 
+   "children": [], 
+   "end": "868.840", 
+   "id": "f000083", 
+   "language": "swe", 
+   "lines": [
+    "Men ett skifte fr\u00e5n l\u00e5gprisflyg till h\u00f6ghastighetst\u00e5g skulle inneb\u00e4ra h\u00f6gre priser och effektivt st\u00e4nga ute m\u00e5nga m\u00e4nniskor som knappt har r\u00e5d att \u00e5ka t\u00e5g i dagsl\u00e4get."
+   ]
+  }, 
+  {
+   "begin": "868.840", 
+   "children": [], 
+   "end": "895.200", 
+   "id": "f000084", 
+   "language": "swe", 
+   "lines": [
+    "F\u00f6r \u00e4ven om regeringens utredning hade som ing\u00e5ngsv\u00e4rde att prisniv\u00e5n ska f\u00f6rbli of\u00f6r\u00e4ndrad gentemot dagens t\u00e5gpriser (som i m\u00e5nga fall \u00e4r hiskeligt h\u00f6ga) s\u00e5 har denna f\u00f6ruts\u00e4ttning totals\u00e5gats av bland annat nationalekonomiprofessorn Lars Hultkrantz i ett s\u00e4rskilt yttrande i utredningen, och \u00e4ven av SIKA i deras remissvar."
+   ]
+  }, 
+  {
+   "begin": "895.200", 
+   "children": [], 
+   "end": "916.640", 
+   "id": "f000085", 
+   "language": "swe", 
+   "lines": [
+    "Dessutom har det visat sig p\u00e5 str\u00e4ckor d\u00e4r h\u00f6ghastighetsbanor har byggts, exempelvis mellan Paris och Bryssel, att den regulj\u00e4ra t\u00e5gtrafiken i princip har f\u00f6rsvunnit, vilket h\u00e4nvisar de som inte har r\u00e5d med de nya t\u00e5gen till regionalt\u00e5g med massor av kr\u00e5ngliga byten."
+   ]
+  }, 
+  {
+   "begin": "916.640", 
+   "children": [], 
+   "end": "927.640", 
+   "id": "f000086", 
+   "language": "swe", 
+   "lines": [
+    "Visst, aff\u00e4rsresen\u00e4rerna och EU- byr\u00e5kraterna som tidigare fl\u00f6g har bytt till t\u00e5g och forts\u00e4tter sitt tokpendlande med gott klimatsamvete."
+   ]
+  }, 
+  {
+   "begin": "927.640", 
+   "children": [], 
+   "end": "936.760", 
+   "id": "f000087", 
+   "language": "swe", 
+   "lines": [
+    "Men fr\u00e5gan \u00e4r om det var det som menades med ett snabbt och klimatsmart resande f\u00f6r alla?"
+   ]
+  }, 
+  {
+   "begin": "936.760", 
+   "children": [], 
+   "end": "938.760", 
+   "id": "f000088", 
+   "language": "swe", 
+   "lines": [
+    "Far och flyg \u00e5t pipsv\u00e4ngen!"
+   ]
+  }, 
+  {
+   "begin": "938.760", 
+   "children": [], 
+   "end": "959.440", 
+   "id": "f000089", 
+   "language": "swe", 
+   "lines": [
+    "Under n\u00e5gra vackra v\u00e5rn\u00e4tter i april 2010 satt vi uppe i en Etherpad och utforskade flygets frihetsparadoxer, dess klimatp\u00e5verkan och relation till automobiliteten och h\u00f6ghastighetssamh\u00e4llet, n\u00e4r pl\u00f6tsligt n\u00e5got svindlande intr\u00e4ffade."
+   ]
+  }, 
+  {
+   "begin": "959.440", 
+   "children": [], 
+   "end": "970.840", 
+   "id": "f000090", 
+   "language": "swe", 
+   "lines": [
+    "Ett n\u00e4stan totalt flygstopp \u00f6ver Europa gick \u00f6ver en natt fr\u00e5n att vara en vild fantasi till att bli en realitet, ett faktum."
+   ]
+  }, 
+  {
+   "begin": "970.840", 
+   "children": [], 
+   "end": "986.600", 
+   "id": "f000091", 
+   "language": "swe", 
+   "lines": [
+    "Det undantagstillst\u00e5nd som de dagarnas flygstopp innebar visade p\u00e5 ett flertal saker, bland annat att det g\u00e5r att organisera samh\u00e4llen bortom flyget."
+   ]
+  }, 
+  {
+   "begin": "986.600", 
+   "children": [], 
+   "end": "997.920", 
+   "id": "f000092", 
+   "language": "swe", 
+   "lines": [
+    "Att sluta nyttja de flygmaskiner som b\u00f6r betraktas som en av transport\u00e5lderns v\u00e4rsta skapelser visade sig inte alls vara en om\u00f6jlighet."
+   ]
+  }, 
+  {
+   "begin": "997.920", 
+   "children": [], 
+   "end": "1009.760", 
+   "id": "f000093", 
+   "language": "swe", 
+   "lines": [
+    "Men n\u00e4r det sker pl\u00f6tsligt och ov\u00e4ntat, som d\u00e5 vid vulkanen Eyjafjallaj\u00f6kulls utbrott, dumpas kostnaden ofta p\u00e5 enskilda individer och f\u00f6retag."
+   ]
+  }, 
+  {
+   "begin": "1009.760", 
+   "children": [], 
+   "end": "1021.520", 
+   "id": "f000094", 
+   "language": "swe", 
+   "lines": [
+    "Privat bokade hotell ger inga pengar tillbaka, och \u00e4r du strandsatt p\u00e5 en charterort f\u00e5r du boendet betalt, men ingen inkomst om du missar jobbet."
+   ]
+  }, 
+  {
+   "begin": "1021.520", 
+   "children": [], 
+   "end": "1028.040", 
+   "id": "f000095", 
+   "language": "swe", 
+   "lines": [
+    "Detsamma g\u00e4ller de f\u00f6retag som inte haft n\u00e5gon m\u00f6jlighet att p\u00e5 ett planerat s\u00e4tt st\u00e4lla om sin verksamhet."
+   ]
+  }, 
+  {
+   "begin": "1028.040", 
+   "children": [], 
+   "end": "1035.360", 
+   "id": "f000096", 
+   "language": "swe", 
+   "lines": [
+    "Trots chockeffekten i denna h\u00e4ndelse fortl\u00f6pte dock det mesta i samh\u00e4llet."
+   ]
+  }, 
+  {
+   "begin": "1035.360", 
+   "children": [], 
+   "end": "1061.520", 
+   "id": "f000097", 
+   "language": "swe", 
+   "lines": [
+    "\u00c4ven om vissa gr\u00e4t \u00f6ver det faktum att det kanske inte blev n\u00e5got f\u00e4rskt citrongr\u00e4s till den d\u00e4r h\u00e4rliga kycklinggrytan de l\u00e4rde sig p\u00e5 Koh Samui s\u00e5 gav oss h\u00e4ndelsen m\u00e5nga positiva besked \u2013 till exempel att en planerad omst\u00e4llning fr\u00e5n ett flygintensivt samh\u00e4lle inte beh\u00f6ver vara s\u00e4rdeles sv\u00e5r att genomf\u00f6ra, och att den dessutom kan inneb\u00e4ra m\u00e5nga nya m\u00f6jligheter!"
+   ]
+  }, 
+  {
+   "begin": "1061.520", 
+   "children": [], 
+   "end": "1079.880", 
+   "id": "f000098", 
+   "language": "swe", 
+   "lines": [
+    "Visst kanske ett g\u00e4ng flygbolag skulle ligga risigt till om vulkanerna forts\u00e4tter leverera, eller om vi p\u00e5 andra mer civiliserade s\u00e4tt r\u00f6r oss bortom flygsamh\u00e4llet, men fr\u00e5gan \u00e4r vad dessa flygbolag \u00e4r v\u00e4rda i j\u00e4mf\u00f6relse med att v\u00e5r planet har ett stabilt klimat."
+   ]
+  }, 
+  {
+   "begin": "1079.880", 
+   "children": [], 
+   "end": "1095.120", 
+   "id": "f000099", 
+   "language": "swe", 
+   "lines": [
+    "Ett par m\u00e5nader f\u00f6re vulkanutbrottet hade flygindustrins lobbyorganisation Svenskt Flyg initierat en debatt d\u00e4r bland andra Maria Rankka fr\u00e5n den nyliberala tankesmedjan Timbro kom till tals."
+   ]
+  }, 
+  {
+   "begin": "1095.120", 
+   "children": [], 
+   "end": "1097.680", 
+   "id": "f000100", 
+   "language": "swe", 
+   "lines": [
+    "Hon skr\u00e4dde inte orden:"
+   ]
+  }, 
+  {
+   "begin": "1097.680", 
+   "children": [], 
+   "end": "1101.920", 
+   "id": "f000101", 
+   "language": "swe", 
+   "lines": [
+    "Flygmotst\u00e5ndet \u00e4r klassf\u00f6rakt!"
+   ]
+  }, 
+  {
+   "begin": "1101.920", 
+   "children": [], 
+   "end": "1113.840", 
+   "id": "f000102", 
+   "language": "swe", 
+   "lines": [
+    "I en debattartikel med denna rubrik likst\u00e4ller hon krav p\u00e5 h\u00f6gre avgifter och skatter f\u00f6r flyg med diktaturers begr\u00e4nsningar av sina medborgares resande."
+   ]
+  }, 
+  {
+   "begin": "1113.840", 
+   "children": [], 
+   "end": "1125.720", 
+   "id": "f000103", 
+   "language": "swe", 
+   "lines": [
+    "Att vilja diskutera problemen med flygets utbredning blir i Timbros v\u00e4rld synonymt med fr\u00e4mlingsfientlighet och migrationsmotst\u00e5nd."
+   ]
+  }, 
+  {
+   "begin": "1125.720", 
+   "children": [], 
+   "end": "1130.920", 
+   "id": "f000104", 
+   "language": "swe", 
+   "lines": [
+    "Problemet \u00e4r att vi de facto st\u00e5r inf\u00f6r en energikris:"
+   ]
+  }, 
+  {
+   "begin": "1130.920", 
+   "children": [], 
+   "end": "1148.000", 
+   "id": "f000105", 
+   "language": "swe", 
+   "lines": [
+    "v\u00e5r energianv\u00e4ndning m\u00e5ste b\u00e5de effektiviseras och minskas enormt, vilket g\u00f6r flyget s\u00e4rskilt d\u00e5ligt som masstransportmedel d\u00e5 det \u00e4r det mest energikr\u00e4vande transportslaget."
+   ]
+  }, 
+  {
+   "begin": "1148.000", 
+   "children": [], 
+   "end": "1155.160", 
+   "id": "f000106", 
+   "language": "swe", 
+   "lines": [
+    "Att forts\u00e4tta flyga som vanligt \u00e4r dessutom of\u00f6renligt med Sveriges klimatm\u00e5l."
+   ]
+  }, 
+  {
+   "begin": "1155.160", 
+   "children": [], 
+   "end": "1161.720", 
+   "id": "f000107", 
+   "language": "swe", 
+   "lines": [
+    "Ibland undrar vi hur sv\u00e5rt det kan vara att h\u00e5lla tv\u00e5 tankar i huvudet samtidigt."
+   ]
+  }, 
+  {
+   "begin": "1161.720", 
+   "children": [], 
+   "end": "1184.480", 
+   "id": "f000108", 
+   "language": "swe", 
+   "lines": [
+    "Att ta konsekvenserna av energi- och klimatkrisen, och inse att flyget m\u00e5ste tas ned fr\u00e5n sin ohotade position i trafikmaktordningen som det enda masstransportmedlet som inte beskattas, betyder inte att vi f\u00f6rnekar det faktum att l\u00e5gprisflyget faktiskt har \u00f6kat rekreations- m\u00f6jligheterna f\u00f6r stora delar av den europeiska arbetarklassen."
+   ]
+  }, 
+  {
+   "begin": "1184.480", 
+   "children": [], 
+   "end": "1201.120", 
+   "id": "f000109", 
+   "language": "swe", 
+   "lines": [
+    "Men \u00e4ven om l\u00e5gprisflyget har medf\u00f6rt vissa f\u00f6rb\u00e4ttringar f\u00f6r arbetarklassen i de rika l\u00e4nderna s\u00e5 kommer det f\u00f6r den stora majoriteten av jordens befolkning aldrig vara m\u00f6jligt att flyga s\u00e4rskilt frekvent, om \u00e4n alls."
+   ]
+  }, 
+  {
+   "begin": "1201.120", 
+   "children": [], 
+   "end": "1212.040", 
+   "id": "f000110", 
+   "language": "swe", 
+   "lines": [
+    "Trots detta anser allts\u00e5 Timbro att ett ifr\u00e5gas\u00e4ttande av flyget g\u00e5r att likst\u00e4lla med en vilja att inskr\u00e4nka m\u00e4nniskors frihet och mobilitet."
+   ]
+  }, 
+  {
+   "begin": "1212.040", 
+   "children": [], 
+   "end": "1235.960", 
+   "id": "f000111", 
+   "language": "swe", 
+   "lines": [
+    "Det \u00e4r ett ganska fult trick av Timbro att anv\u00e4nda den svenska arbetarklassen som slagtr\u00e4 i debatten, f\u00f6r om de var allvarliga med sina utsagor om klassf\u00f6rakt skulle de givetvis bidra till en utveckling d\u00e4r \u00e4ven ekonomiskt svagare grupper hade m\u00f6jlighet att transportera sig klimatsmart."
+   ]
+  }, 
+  {
+   "begin": "1235.960", 
+   "children": [], 
+   "end": "1250.960", 
+   "id": "f000112", 
+   "language": "swe", 
+   "lines": [
+    "En klassmedveten klimat- och energipolitik arbetar sj\u00e4lvklart genom att nedmontera flyget och samtidigt inf\u00f6ra \u00e5tg\u00e4rder som g\u00f6r t\u00e5get billigare och smidigare."
+   ]
+  }, 
+  {
+   "begin": "1250.960", 
+   "children": [], 
+   "end": "1253.000", 
+   "id": "f000113", 
+   "language": "swe", 
+   "lines": [
+    "Det \u00e4r n\u00e5got konstigt med friheten"
+   ]
+  }, 
+  {
+   "begin": "1253.000", 
+   "children": [], 
+   "end": "1258.120", 
+   "id": "f000114", 
+   "language": "swe", 
+   "lines": [
+    "Vad \u00e4r det egentligen f\u00f6r frihet som flyget erbjuder?"
+   ]
+  }, 
+  {
+   "begin": "1258.120", 
+   "children": [], 
+   "end": "1272.080", 
+   "id": "f000115", 
+   "language": "swe", 
+   "lines": [
+    "Vi har tidigare diskuterat hur den frihet som bilen ger \u00e4r full av mots\u00e4gelser, hur den p\u00e5st\u00e5dda friheten p\u00e5 v\u00e4garna har vuxit fram hand i hand med en f\u00f6rdjupad kontroll av r\u00f6relse."
+   ]
+  }, 
+  {
+   "begin": "1272.080", 
+   "children": [], 
+   "end": "1284.600", 
+   "id": "f000116", 
+   "language": "swe", 
+   "lines": [
+    "Flyg och flygplatser \u00e4r om m\u00f6jligt \u00e4nnu mer kontrollerade och reglerade \u00e4n bilsamh\u00e4llet, men de omges av samma frihetsmyter som bilen och motorv\u00e4gen."
+   ]
+  }, 
+  {
+   "begin": "1284.600", 
+   "children": [], 
+   "end": "1287.240", 
+   "id": "f000117", 
+   "language": "swe", 
+   "lines": [
+    "Regler om mat."
+   ]
+  }, 
+  {
+   "begin": "1287.240", 
+   "children": [], 
+   "end": "1288.280", 
+   "id": "f000118", 
+   "language": "swe", 
+   "lines": [
+    "Regler om dryck."
+   ]
+  }, 
+  {
+   "begin": "1288.280", 
+   "children": [], 
+   "end": "1291.320", 
+   "id": "f000119", 
+   "language": "swe", 
+   "lines": [
+    "Bagage som scannas och genoms\u00f6ks."
+   ]
+  }, 
+  {
+   "begin": "1291.320", 
+   "children": [], 
+   "end": "1297.880", 
+   "id": "f000120", 
+   "language": "swe", 
+   "lines": [
+    "Ditt privatliv utfl\u00e4kt genom den \u00f6ppnade v\u00e4skan som alla ser inneh\u00e5llet i."
+   ]
+  }, 
+  {
+   "begin": "1297.880", 
+   "children": [], 
+   "end": "1308.960", 
+   "id": "f000121", 
+   "language": "swe", 
+   "lines": [
+    "Kroppar som kl\u00e4s av, visiteras och vallas genom smala hagar fram till den biometriska personidentifikationen."
+   ]
+  }, 
+  {
+   "begin": "1308.960", 
+   "children": [], 
+   "end": "1332.160", 
+   "id": "f000122", 
+   "language": "swe", 
+   "lines": [
+    "Snart utvidgas kontrollen till att \u00e4ven registrera tankar och intentioner, eller snarare psykofysiologiska tecken p\u00e5 stress och oro (din kroppstemperatur, din andedr\u00e4kt, din hj\u00e4rtrytm), f\u00f6r att sedan matchas mot modeller f\u00f6r vad som \u00e4r \u201dtypiskt f\u00f6r terrorister\u201d."
+   ]
+  }, 
+  {
+   "begin": "1332.160", 
+   "children": [], 
+   "end": "1344.640", 
+   "id": "f000123", 
+   "language": "swe", 
+   "lines": [
+    "I kombination med de st\u00e4ndiga uppmaningarna om att ha uppsikt \u00f6ver sitt bagage skapar flygplatsen och dess kontrollregim en atmosf\u00e4r av r\u00e4dsla och \u00e5ngest."
+   ]
+  }, 
+  {
+   "begin": "1344.640", 
+   "children": [], 
+   "end": "1349.520", 
+   "id": "f000124", 
+   "language": "swe", 
+   "lines": [
+    "Varf\u00f6r tar inte mannen med sig sin v\u00e4ska fr\u00e5n sin plats?"
+   ]
+  }, 
+  {
+   "begin": "1349.520", 
+   "children": [], 
+   "end": "1353.440", 
+   "id": "f000125", 
+   "language": "swe", 
+   "lines": [
+    "Varf\u00f6r piper det i metalldetektorn n\u00e4r jag g\u00e5r igenom?"
+   ]
+  }, 
+  {
+   "begin": "1353.440", 
+   "children": [], 
+   "end": "1359.160", 
+   "id": "f000126", 
+   "language": "swe", 
+   "lines": [
+    "Varf\u00f6r tittar personalen s\u00e5 misst\u00e4nksamt p\u00e5 mig, har jag gjort n\u00e5got fel?"
+   ]
+  }, 
+  {
+   "begin": "1359.160", 
+   "children": [], 
+   "end": "1361.640", 
+   "id": "f000127", 
+   "language": "swe", 
+   "lines": [
+    "Vem \u00e4r ficktjuven?"
+   ]
+  }, 
+  {
+   "begin": "1361.640", 
+   "children": [], 
+   "end": "1363.400", 
+   "id": "f000128", 
+   "language": "swe", 
+   "lines": [
+    "Vem \u00e4r bombsmugglaren?"
+   ]
+  }, 
+  {
+   "begin": "1363.400", 
+   "children": [], 
+   "end": "1371.960", 
+   "id": "f000129", 
+   "language": "swe", 
+   "lines": [
+    "Det \u00e4r inte bara ett \u201dmisst\u00e4nkt\u201d utseende eller bagage som triggar ingripanden fr\u00e5n s\u00e4kerhetskontrollen:"
+   ]
+  }, 
+  {
+   "begin": "1371.960", 
+   "children": [], 
+   "end": "1375.000", 
+   "id": "f000130", 
+   "language": "swe", 
+   "lines": [
+    "\u00e4ven det du s\u00e4ger kan v\u00e4ndas emot dig."
+   ]
+  }, 
+  {
+   "begin": "1375.000", 
+   "children": [], 
+   "end": "1389.560", 
+   "id": "f000131", 
+   "language": "swe", 
+   "lines": [
+    "Den brittiske sociologen Steve Woolgar har p\u00e5pekat att flygplatser \u00e4r ett av de f\u00e5 st\u00e4llen i v\u00e4rlden d\u00e4r man inte f\u00e5r sk\u00e4mta, eftersom man d\u00e5 riskerar att hamna i finkan."
+   ]
+  }, 
+  {
+   "begin": "1389.560", 
+   "children": [], 
+   "end": "1400.320", 
+   "id": "f000132", 
+   "language": "swe", 
+   "lines": [
+    "Kontrollapparaten tar dock inte slut p\u00e5 flygplatsen, utan f\u00f6ljer med p\u00e5 resan \u00e4nda in i flygplanets minsta vr\u00e5."
+   ]
+  }, 
+  {
+   "begin": "1400.320", 
+   "children": [], 
+   "end": "1403.920", 
+   "id": "f000133", 
+   "language": "swe", 
+   "lines": [
+    "Lampor ovanf\u00f6r dig s\u00e4ger \u00e5t dig vad du ska g\u00f6ra."
+   ]
+  }, 
+  {
+   "begin": "1403.920", 
+   "children": [], 
+   "end": "1404.600", 
+   "id": "f000134", 
+   "language": "swe", 
+   "lines": [
+    "Res dig upp."
+   ]
+  }, 
+  {
+   "begin": "1404.600", 
+   "children": [], 
+   "end": "1405.720", 
+   "id": "f000135", 
+   "language": "swe", 
+   "lines": [
+    "S\u00e4tt dig ner."
+   ]
+  }, 
+  {
+   "begin": "1405.720", 
+   "children": [], 
+   "end": "1407.280", 
+   "id": "f000136", 
+   "language": "swe", 
+   "lines": [
+    "Sp\u00e4nn fast b\u00e4ltet."
+   ]
+  }, 
+  {
+   "begin": "1407.280", 
+   "children": [], 
+   "end": "1408.280", 
+   "id": "f000137", 
+   "language": "swe", 
+   "lines": [
+    "Best\u00e4ll dryck."
+   ]
+  }, 
+  {
+   "begin": "1408.280", 
+   "children": [], 
+   "end": "1409.480", 
+   "id": "f000138", 
+   "language": "swe", 
+   "lines": [
+    "\u00c4t mat."
+   ]
+  }, 
+  {
+   "begin": "1409.480", 
+   "children": [], 
+   "end": "1413.800", 
+   "id": "f000139", 
+   "language": "swe", 
+   "lines": [
+    "Titta ut genom f\u00f6nstret n\u00e4r kaptenen beskriver utsikten."
+   ]
+  }, 
+  {
+   "begin": "1413.800", 
+   "children": [], 
+   "end": "1425.320", 
+   "id": "f000140", 
+   "language": "swe", 
+   "lines": [
+    "Vartenda moment \u00e4r inrutat och kontrollerat, och det enda s\u00e4ttet att f\u00f6rs\u00f6ka ha en angen\u00e4m resa \u00e4r att flyta med."
+   ]
+  }, 
+  {
+   "begin": "1425.320", 
+   "children": [], 
+   "end": "1435.000", 
+   "id": "f000141", 
+   "language": "swe", 
+   "lines": [
+    "Alternativet att ligga fastsp\u00e4nd p\u00e5 golvet kanske inte ens ter sig s\u00e5 illa, med tanke p\u00e5 flygstolarnas inbyggda m\u00e4nniskof\u00f6rakt."
+   ]
+  }, 
+  {
+   "begin": "1435.000", 
+   "children": [], 
+   "end": "1449.080", 
+   "id": "f000142", 
+   "language": "swe", 
+   "lines": [
+    "Vetenskapsteoretikern Christopher Kullenberg har tr\u00e4ffs\u00e4kert sammanfattat flygresan som en oavbruten \u00e5ngest orsakad av den sj\u00e4lvdisciplinering som \u00e4r n\u00f6dv\u00e4ndig f\u00f6r att kunna fullf\u00f6lja resan."
+   ]
+  }, 
+  {
+   "begin": "1449.080", 
+   "children": [], 
+   "end": "1460.600", 
+   "id": "f000143", 
+   "language": "swe", 
+   "lines": [
+    "Om vi ska ta timbroiterna p\u00e5 orden \u00e4r flyget sj\u00e4lva sinnebilden f\u00f6r frihet \u2013 n\u00e5got som verkar sm\u00e5tt absurt att de verkligen skulle tycka."
+   ]
+  }, 
+  {
+   "begin": "1460.600", 
+   "children": [], 
+   "end": "1468.480", 
+   "id": "f000144", 
+   "language": "swe", 
+   "lines": [
+    "Enligt v\u00e5r f\u00f6re detta infrastrukturminister \u00c5sa Torstensson \u00e4r flygning ren och sk\u00e4r frihet."
+   ]
+  }, 
+  {
+   "begin": "1468.480", 
+   "children": [], 
+   "end": "1479.360", 
+   "id": "f000145", 
+   "language": "swe", 
+   "lines": [
+    "Vi b\u00f6r fr\u00e5ga oss sj\u00e4lva vilken sorts frihet som \u00e4r kompatibel med en kontrollapparat som inte skulle kunna genomdrivas i n\u00e5gon annan del av samh\u00e4llet."
+   ]
+  }, 
+  {
+   "begin": "1479.360", 
+   "children": [], 
+   "end": "1494.240", 
+   "id": "f000146", 
+   "language": "swe", 
+   "lines": [
+    "P\u00e5 vilket s\u00e4tt flygcharter till Kanarie\u00f6arna eller Cypern \u00e4r att f\u00f6redra framf\u00f6r t\u00e5gcharter till Bulgarien eller Spanien \u00e4r en fr\u00e5ga som g\u00f6r flygvurmarna svaret skyldiga."
+   ]
+  }, 
+  {
+   "begin": "1494.240", 
+   "children": [], 
+   "end": "1507.640", 
+   "id": "f000147", 
+   "language": "swe", 
+   "lines": [
+    "Varf\u00f6r marknadsliberaler \u00e4r s\u00e5 m\u00e5na om att snedvrida marknaden och ge konkurrensf\u00f6rdelar till ett skadligt transportmedel i just den h\u00e4r fr\u00e5gan \u00e4r sv\u00e5rf\u00f6rst\u00e5eligt."
+   ]
+  }, 
+  {
+   "begin": "1507.640", 
+   "children": [], 
+   "end": "1525.720", 
+   "id": "f000148", 
+   "language": "swe", 
+   "lines": [
+    "Att semester och resande kommer att ta sig nya uttryck i sp\u00e5ren av energi- och klimatkriser \u00e4r inget konstigt i sig, och flyget har aldrig varit och kommer aldrig att vara den enda garanten f\u00f6r mobilitet och semesterm\u00f6jligheter."
+   ]
+  }, 
+  {
+   "begin": "1525.720", 
+   "children": [], 
+   "end": "1528.520", 
+   "id": "f000149", 
+   "language": "swe", 
+   "lines": [
+    "Det finns frihet bortom flyget."
+   ]
+  }, 
+  {
+   "begin": "1528.520", 
+   "children": [], 
+   "end": "1535.960", 
+   "id": "f000150", 
+   "language": "swe", 
+   "lines": [
+    "Framtiden kommer att kr\u00e4va att vi omv\u00e4rderar v\u00e5r syn p\u00e5 tid."
+   ]
+  }, 
+  {
+   "begin": "1535.960", 
+   "children": [], 
+   "end": "1541.720", 
+   "id": "f000151", 
+   "language": "swe", 
+   "lines": [
+    "V\u00e5r uppgift \u00e4r att realisera den potential som ligger i omv\u00e4rderingen."
+   ]
+  }, 
+  {
+   "begin": "1541.720", 
+   "children": [], 
+   "end": "1550.480", 
+   "id": "f000152", 
+   "language": "swe", 
+   "lines": [
+    "L\u00e5ngresor kan f\u00e5 ta lite l\u00e4ngre tid \u2013 tid vi redan har tj\u00e4nat in p\u00e5 att slippa mycket av dagens on\u00f6diga tv\u00e5ngspendling."
+   ]
+  }, 
+  {
+   "begin": "1550.480", 
+   "children": [], 
+   "end": "1568.280", 
+   "id": "f000153", 
+   "language": "swe", 
+   "lines": [
+    "Att l\u00e5ta arbete och arbetspendling ta allt mindre del av v\u00e5r tid och p\u00e5 s\u00e5 s\u00e4tt f\u00e5 m\u00f6jlighet att njuta av en l\u00e5ng t\u00e5gresa \u00e4r knappasten f\u00f6rs\u00e4mring av livskvaliteten, och dessutom n\u00e5got som kan komma alla till del."
+   ]
+  }, 
+  {
+   "begin": "1568.280", 
+   "children": [], 
+   "end": "1577.520", 
+   "id": "f000154", 
+   "language": "swe", 
+   "lines": [
+    "Att l\u00e5ta v\u00e5ra resors l\u00e4ngd n\u00e4rmare korrelera med tiden vi \u00e4gnar \u00e5t dem \u00f6ppnar ocks\u00e5 upp f\u00f6r nya s\u00e4tt att se p\u00e5 v\u00e5r omgivning."
+   ]
+  }, 
+  {
+   "begin": "1577.520", 
+   "children": [], 
+   "end": "1584.840", 
+   "id": "f000155", 
+   "language": "swe", 
+   "lines": [
+    "L\u00e5nga resor i h\u00f6g hastighet har en tendens att g\u00f6ra oss blinda f\u00f6r det vi har framf\u00f6r n\u00e4san."
+   ]
+  }, 
+  {
+   "begin": "1584.840", 
+   "children": [], 
+   "end": "1614.320", 
+   "id": "f000156", 
+   "language": "swe", 
+   "lines": [
+    "Wolfgang Sachs beskriver i boken For Love of the Automobile hur For the gaze greedy for distance, the living space of the immediate vicinity degenerates into mere thoroughfares, into a dead space between the beginning and the end; the point is to overcome this space with the least possible loss in time."
+   ]
+  }, 
+  {
+   "begin": "1614.320", 
+   "children": [], 
+   "end": "1622.680", 
+   "id": "f000157", 
+   "language": "swe", 
+   "lines": [
+    "Sachs genomg\u00e5ng av bilens kulturhistoria g\u00e5r till stora delar att applicera \u00e4ven p\u00e5 flyget."
+   ]
+  }, 
+  {
+   "begin": "1622.680", 
+   "children": [], 
+   "end": "1629.120", 
+   "id": "f000158", 
+   "language": "swe", 
+   "lines": [
+    "Det som \u00e4r n\u00e4ra bleknar j\u00e4mf\u00f6rt med det som skymtar vid m\u00f6jlighetens horisont."
+   ]
+  }, 
+  {
+   "begin": "1629.120", 
+   "children": [], 
+   "end": "1643.680", 
+   "id": "f000159", 
+   "language": "swe", 
+   "lines": [
+    "Automobilitetens hegemoni och effektivitet g\u00f6r skogsdungen bakom huset, sj\u00f6n en cykeltur bort och konsertk\u00e4llaren med ouppt\u00e4ckt musik i kvarteret mindre lockande."
+   ]
+  }, 
+  {
+   "begin": "1643.680", 
+   "children": [], 
+   "end": "1653.960", 
+   "id": "f000160", 
+   "language": "swe", 
+   "lines": [
+    "H\u00e4r kr\u00e4vs \u00e5terigen att vi st\u00e4ller om fokus och zoomar in p\u00e5 r\u00e4tten till tillg\u00e4nglighet ist\u00e4llet f\u00f6r mobilitet."
+   ]
+  }, 
+  {
+   "begin": "1653.960", 
+   "children": [], 
+   "end": "1658.400", 
+   "id": "f000161", 
+   "language": "swe", 
+   "lines": [
+    "Det vi beh\u00f6ver ska finnas i v\u00e5r n\u00e4rhet."
+   ]
+  }, 
+  {
+   "begin": "1658.400", 
+   "children": [], 
+   "end": "1663.800", 
+   "id": "f000162", 
+   "language": "swe", 
+   "lines": [
+    "Det ska inte kr\u00e4vas ett st\u00e4ndigt resande f\u00f6r att tillgodose v\u00e5ra behov."
+   ]
+  }, 
+  {
+   "begin": "1663.800", 
+   "children": [], 
+   "end": "1674.040", 
+   "id": "f000163", 
+   "language": "swe", 
+   "lines": [
+    "Vi m\u00e5ste anpassa samh\u00e4llet f\u00f6r att m\u00f6jligg\u00f6ra kortare arbetstid och fullv\u00e4rdiga semesterm\u00f6jligheter f\u00f6r folk d\u00e4r de bor."
+   ]
+  }, 
+  {
+   "begin": "1674.040", 
+   "children": [], 
+   "end": "1683.880", 
+   "id": "f000164", 
+   "language": "swe", 
+   "lines": [
+    "N\u00e4r arbetarr\u00f6relsen drev igenom den f\u00f6rsta lagstadgade r\u00e4tten till semester, b\u00f6rjade en m\u00e4ngd alternativ att byggas upp."
+   ]
+  }, 
+  {
+   "begin": "1683.880", 
+   "children": [], 
+   "end": "1691.160", 
+   "id": "f000165", 
+   "language": "swe", 
+   "lines": [
+    "Framf\u00f6rallt gavs m\u00f6jlighet till rekreation i ofta egenbyggda sm\u00e5stugeomr\u00e5den."
+   ]
+  }, 
+  {
+   "begin": "1691.160", 
+   "children": [], 
+   "end": "1702.040", 
+   "id": "f000166", 
+   "language": "swe", 
+   "lines": [
+    "Ett ypperligt exempel \u00e4r sportstugeomr\u00e5det vid Larsboda strand i stockholmsf\u00f6rorten Farsta, som ligger inkl\u00e4mt i en ekskog vid Drevviken."
+   ]
+  }, 
+  {
+   "begin": "1702.040", 
+   "children": [], 
+   "end": "1705.960", 
+   "id": "f000167", 
+   "language": "swe", 
+   "lines": [
+    "N\u00e4ra, tillg\u00e4ngligt och klimatsmart."
+   ]
+  }, 
+  {
+   "begin": "1705.960", 
+   "children": [], 
+   "end": "1715.720", 
+   "id": "f000168", 
+   "language": "swe", 
+   "lines": [
+    "Likas\u00e5 \u00e4r koloniomr\u00e5den en fredad oas f\u00f6r m\u00e5nga stadsbor d\u00e4r de f\u00e5r b\u00f6ka i jorden och k\u00e4nna doften av naturen."
+   ]
+  }, 
+  {
+   "begin": "1715.720", 
+   "children": [], 
+   "end": "1726.000", 
+   "id": "f000169", 
+   "language": "swe", 
+   "lines": [
+    "Men i ett samh\u00e4lle som fortfarande klamrar sig fast vid den heliga automobiliteten kan dessa omr\u00e5den l\u00e4tt raseras och offras."
+   ]
+  }, 
+  {
+   "begin": "1726.000", 
+   "children": [], 
+   "end": "1739.960", 
+   "id": "f000170", 
+   "language": "swe", 
+   "lines": [
+    "Det faktum att t\u00e4t stad ofta \u00e4r mer energieffektiv \u00e4n utspridd stad har lett till att id\u00e9n om f\u00f6rt\u00e4tning har f\u00e5tt n\u00e5got av en hegemonisk st\u00e4llning bland s\u00e5v\u00e4l politiker som stadsplanerare."
+   ]
+  }, 
+  {
+   "begin": "1739.960", 
+   "children": [], 
+   "end": "1755.400", 
+   "id": "f000171", 
+   "language": "swe", 
+   "lines": [
+    "Men f\u00f6rt\u00e4tning ensamt kommer inte l\u00f6sa alla klimat- och energiproblem, och n\u00e4r f\u00f6rt\u00e4tningsdiskursen dessutom anv\u00e4nds som ett s\u00e4tt att f\u00e5 bygga p\u00e5 fel st\u00e4llen och av fel anledningar \u00e4r det dags att se upp."
+   ]
+  }, 
+  {
+   "begin": "1755.400", 
+   "children": [], 
+   "end": "1770.600", 
+   "id": "f000172", 
+   "language": "swe", 
+   "lines": [
+    "Varje enskilt f\u00f6rt\u00e4tningsinitiativ beh\u00f6ver noggrant unders\u00f6kas s\u00e5 att det inte bara utm\u00e5las som energi- och klimatsmart f\u00f6r att urs\u00e4kta att det egentligen r\u00f6r sig om en omv\u00e4nd Robin Hood-politik."
+   ]
+  }, 
+  {
+   "begin": "1770.600", 
+   "children": [], 
+   "end": "1780.880", 
+   "id": "f000173", 
+   "language": "swe", 
+   "lines": [
+    "Vi \u00e4r m\u00e5nga som \u00e4lskar staden, men det inneb\u00e4r inte att vi ska beh\u00f6va leva i betongasketism utan rekreations- och semesterm\u00f6jligheter."
+   ]
+  }, 
+  {
+   "begin": "1780.880", 
+   "children": [], 
+   "end": "1790.880", 
+   "id": "f000174", 
+   "language": "swe", 
+   "lines": [
+    "Precis som n\u00f6jen och social samvaro \u00e4r sj\u00e4lvklara i staden ska en h\u00e5llbar stad ocks\u00e5 kunna stoltsera med klimatsmarta semesterm\u00f6jligheter."
+   ]
+  }, 
+  {
+   "begin": "1790.880", 
+   "children": [], 
+   "end": "1797.360", 
+   "id": "f000175", 
+   "language": "swe", 
+   "lines": [
+    "Om det \u00e4r n\u00e5got som \u00e4r klassf\u00f6rakt s\u00e5 \u00e4r det att begr\u00e4nsa den n\u00e4ra och tillg\u00e4ngliga semestern."
+   ]
+  }, 
+  {
+   "begin": "1797.360", 
+   "children": [], 
+   "end": "1808.800", 
+   "id": "f000176", 
+   "language": "swe", 
+   "lines": [
+    "De som har m\u00f6jlighet att flytta in i lyxvillor byggda p\u00e5 raserade semesterdr\u00f6mmar \u00e4r samma m\u00e4nniskor som kommer att forts\u00e4tta flyga oavsett pris."
+   ]
+  }, 
+  {
+   "begin": "1808.800", 
+   "children": [], 
+   "end": "1821.040", 
+   "id": "f000177", 
+   "language": "swe", 
+   "lines": [
+    "Att flyga g\u00f6r precis som att \u00e5ka bil att de sm\u00e5 sakerna, de som f\u00e5r v\u00e5ra liv att bryta av mot vardagens monotoni, uppl\u00f6ses i resten av omgivningen."
+   ]
+  }, 
+  {
+   "begin": "1821.040", 
+   "children": [], 
+   "end": "1829.120", 
+   "id": "f000178", 
+   "language": "swe", 
+   "lines": [
+    "Ett synf\u00e4lt suddigt av hastighet kr\u00e4ver en kontrollerad omgivning f\u00f6r att inte perceptionsf\u00f6rm\u00e5gan ska undermineras."
+   ]
+  }, 
+  {
+   "begin": "1829.120", 
+   "children": [], 
+   "end": "1843.200", 
+   "id": "f000179", 
+   "language": "swe", 
+   "lines": [
+    "Den omgivning som kr\u00e4vs f\u00f6r att m\u00f6jligg\u00f6ra biltrafik st\u00e5r i direkt mots\u00e4ttning till den omgivning som kan verka stimulerande f\u00f6r de som r\u00f6r sig i g\u00e5ng- eller cykelhastighet."
+   ]
+  }, 
+  {
+   "begin": "1843.200", 
+   "children": [], 
+   "end": "1851.960", 
+   "id": "f000180", 
+   "language": "swe", 
+   "lines": [
+    "Vi v\u00e4nder oss \u00e5terigen till Wolfgang Sachs som pekar p\u00e5 hur olika hastigheter f\u00f6r\u00e4ndrar v\u00e5r relation till omgivningen:"
+   ]
+  }, 
+  {
+   "begin": "1851.960", 
+   "children": [], 
+   "end": "1860.160", 
+   "id": "f000181", 
+   "language": "swe", 
+   "lines": [
+    "Pedestrians (and bicyclists) love the minor and the incidental."
+   ]
+  }, 
+  {
+   "begin": "1860.160", 
+   "children": [], 
+   "end": "1883.360", 
+   "id": "f000182", 
+   "language": "swe", 
+   "lines": [
+    "They feel good where the buildings wear different faces, where the eye can wander over trees, yards, and balconies, where there are people to meet or watch, where they can linger, join in, and get involved, where a multitude of impressions and stimuli can be had along their short way. ..."
+   ]
+  }, 
+  {
+   "begin": "1883.360", 
+   "children": [], 
+   "end": "1888.000", 
+   "id": "f000183", 
+   "language": "swe", 
+   "lines": [
+    "The situation is wholly different for drivers:"
+   ]
+  }, 
+  {
+   "begin": "1888.000", 
+   "children": [], 
+   "end": "1912.720", 
+   "id": "f000184", 
+   "language": "swe", 
+   "lines": [
+    "they hate surprises and demand predictability; only drawn-out monotony gives them security; only large billboards can capture their attention; only straight, broad, and uneventful routes guarantee them a quick passage without interruption."
+   ]
+  }, 
+  {
+   "begin": "1912.720", 
+   "children": [], 
+   "end": "1928.880", 
+   "id": "f000185", 
+   "language": "swe", 
+   "lines": [
+    "The car driver tolerates variety only in the rhythm of kilometers, whereas for the pedestrian, space made to conform to speed is faceless and boring."
+   ]
+  }, 
+  {
+   "begin": "1928.880", 
+   "children": [], 
+   "end": "1935.440", 
+   "id": "f000186", 
+   "language": "swe", 
+   "lines": [
+    "Dessa tv\u00e5 samh\u00e4llen \u00e4r om\u00f6jliga att f\u00f6rena."
+   ]
+  }, 
+  {
+   "begin": "1935.440", 
+   "children": [], 
+   "end": "1940.080", 
+   "id": "f000187", 
+   "language": "swe", 
+   "lines": [
+    "Myllrande n\u00e4rhet eller monoton automobilitet."
+   ]
+  }, 
+  {
+   "begin": "1940.080", 
+   "children": [], 
+   "end": "1953.640", 
+   "id": "f000188", 
+   "language": "swe", 
+   "lines": [
+    "Stora delar av v\u00e5ra st\u00e4der har styckats s\u00f6nder av den planering f\u00f6r automobilitet som tagit sig uttryck i saker som SCAFT och id\u00e9n om funktionsseparering."
+   ]
+  }, 
+  {
+   "begin": "1953.640", 
+   "children": [], 
+   "end": "1964.680", 
+   "id": "f000189", 
+   "language": "swe", 
+   "lines": [
+    "Men det \u00e4r viktigt att v\u00e5rt svar p\u00e5 dagens bilberoende samh\u00e4lle inte upprepar de misstag som f\u00f6rsatt oss d\u00e4r vi \u00e4r idag."
+   ]
+  }, 
+  {
+   "begin": "1964.680", 
+   "children": [], 
+   "end": "1967.680", 
+   "id": "f000190", 
+   "language": "swe", 
+   "lines": [
+    "Id\u00e9n om f\u00f6rt\u00e4tning f\u00e5r inte bli en ny SCAFT:"
+   ]
+  }, 
+  {
+   "begin": "1967.680", 
+   "children": [], 
+   "end": "1976.400", 
+   "id": "f000191", 
+   "language": "swe", 
+   "lines": [
+    "ett verktyg f\u00f6r att forma staden i ett stycke och ett slagtr\u00e4 mot alla former av olikt\u00e4nkande."
+   ]
+  }, 
+  {
+   "begin": "1976.400", 
+   "children": [], 
+   "end": "1988.480", 
+   "id": "f000192", 
+   "language": "swe", 
+   "lines": [
+    "V\u00e5rt svar m\u00e5ste bli ett myller av olika id\u00e9er, grundade i insikten om att det inte kan finnas en l\u00f6sning p\u00e5 alla problem vi st\u00e5r inf\u00f6r."
+   ]
+  }, 
+  {
+   "begin": "1988.480", 
+   "children": [], 
+   "end": "1993.080", 
+   "id": "f000193", 
+   "language": "swe", 
+   "lines": [
+    "Tillbaka till askan i luften och flygstoppet."
+   ]
+  }, 
+  {
+   "begin": "1993.080", 
+   "children": [], 
+   "end": "2007.360", 
+   "id": "f000194", 
+   "language": "swe", 
+   "lines": [
+    "N\u00e4r vulkanen p\u00e5 Island helt sonika st\u00e4llde oss inf\u00f6r nya f\u00f6ruts\u00e4ttningar s\u00e5 innebar det inte att samh\u00e4llet paralyserades, \u00e4ven om flygliberalerna gjorde sitt b\u00e4sta f\u00f6r att f\u00e5 det att framst\u00e5 s\u00e5."
+   ]
+  }, 
+  {
+   "begin": "2007.360", 
+   "children": [], 
+   "end": "2016.440", 
+   "id": "f000195", 
+   "language": "swe", 
+   "lines": [
+    "Undantagstillst\u00e5ndet innebar d\u00e4remot en situation d\u00e4r nya id\u00e9er, l\u00f6sningar och initiativ v\u00e4xte fram."
+   ]
+  }, 
+  {
+   "begin": "2016.440", 
+   "children": [], 
+   "end": "2027.840", 
+   "id": "f000196", 
+   "language": "swe", 
+   "lines": [
+    "Eyjafjallaj\u00f6kull visade att vi inte beh\u00f6ver se p\u00e5 den stundande omst\u00e4llningen som ett annalkande hot, utan att det faktiskt lika v\u00e4l kan vara en m\u00f6jlighet."
+   ]
+  }, 
+  {
+   "begin": "2027.840", 
+   "children": [], 
+   "end": "2047.040", 
+   "id": "f000197", 
+   "language": "swe", 
+   "lines": [
+    "Ist\u00e4llet f\u00f6r att som flygliberalerna skrika oss bl\u00e5a om milj\u00f6talibaner, kan vi dra l\u00e4rdom av situationen som vulkanen f\u00f6rsatte oss i och bli b\u00e4ttre rustade f\u00f6r den mobilitetsf\u00f6rskjutning som den kommande f\u00f6rbr\u00e4nningsoml\u00e4ggningen oundvikligen kommer att inneb\u00e4ra."
+   ]
+  }, 
+  {
+   "begin": "2047.040", 
+   "children": [], 
+   "end": "2057.080", 
+   "id": "f000198", 
+   "language": "swe", 
+   "lines": [
+    "I Mexiko h\u00e4rleder man begreppet \u201dcivilsamh\u00e4llet\u201d till den enorma jordb\u00e4vningen i Mexico City 1985."
+   ]
+  }, 
+  {
+   "begin": "2057.080", 
+   "children": [], 
+   "end": "2070.520", 
+   "id": "f000199", 
+   "language": "swe", 
+   "lines": [
+    "N\u00e4r milit\u00e4ren beordrades ut f\u00f6r att skydda de rika enklaverna mot plundring v\u00e4ndes befolkningens ilska och frustration \u00f6ver den uteblivna hj\u00e4lpen till ett enormt sj\u00e4lvorganiserat hj\u00e4lparbete."
+   ]
+  }, 
+  {
+   "begin": "2070.520", 
+   "children": [], 
+   "end": "2075.960", 
+   "id": "f000200", 
+   "language": "swe", 
+   "lines": [
+    "Ett alternativ till statens trygghet v\u00e4xte fram underifr\u00e5n."
+   ]
+  }, 
+  {
+   "begin": "2075.960", 
+   "children": [], 
+   "end": "2086.720", 
+   "id": "f000201", 
+   "language": "swe", 
+   "lines": [
+    "En glimt av denna potential kunde vi se i hur sociala medier anv\u00e4ndes f\u00f6r att organisera olika sorters sam\u00e5kning f\u00f6r strandsatta flygresen\u00e4rer."
+   ]
+  }, 
+  {
+   "begin": "2086.720", 
+   "children": [], 
+   "end": "2091.800", 
+   "id": "f000202", 
+   "language": "swe", 
+   "lines": [
+    "Som samh\u00e4llsforskaren Karl Palm\u00e5s tr\u00e4ffande beskrev det:"
+   ]
+  }, 
+  {
+   "begin": "2091.800", 
+   "children": [], 
+   "end": "2099.840", 
+   "id": "f000203", 
+   "language": "swe", 
+   "lines": [
+    "Det geniala i ask-grejen \u00e4r ju att den verkar s\u00e5 direkt p\u00e5 att sl\u00e5 ut en viss teknologi."
+   ]
+  }, 
+  {
+   "begin": "2099.840", 
+   "children": [], 
+   "end": "2113.120", 
+   "id": "f000204", 
+   "language": "swe", 
+   "lines": [
+    "Och n\u00e4r denna teknologi \u2013 detta handlingsutrymme \u2013 \u00e4r ute ur leken, s\u00e5 rullar den m\u00e4nskliga aktiviteten ut i nya riktningar."
+   ]
+  }
+ ]
+}).fragments;
+    // do not remove the line above
+    roundTimeValues();
+    prepareTable();
+    prepareControls();
+}
+function buttonLoadAudio(evt) {
+    var audioFile = evt.target.files[0];
+    if (audioFile) {
+        var audioFilePath = URL.createObjectURL(audioFile);
+        loadAudio(audioFilePath);
+        ainfo = "[Audio file: \"" + audioFile.name + "\"]";
+        document.getElementById("fileinfo").innerHTML = ainfo + " " + cinfo;
+        document.getElementById("step1").style.display = "none";
+    } else {
+        alert("Failed to load the audio file.");
+    }
+}
+function loadAudio(audioFilePath) {
+    audioElement.setAttribute("src", audioFilePath);
+}
+function buttonLoadJSON(evt) {
+     var jsonFile = evt.target.files[0];
+     if (jsonFile) {
+        loadJSON(jsonFile);
+     } else {
+        alert("Failed to load the JSON file.");
+     }
+}
+function loadJSON(jsonFile) {
+    var reader = new FileReader();
+    reader.onload = function(e) { 
+        try {
+            fragments = JSON.parse(e.target.result).fragments;
+        } catch (e) {
+            alert("Unable to parse the given JSON file.");
+            return;
+        }
+        roundTimeValues();
+        prepareTable();
+        prepareControls();
+        cinfo = "[JSON file: \"" + jsonFile.name + "\"]";
+        document.getElementById("step2").style.display = "none";
+        document.getElementById("fileinfo").innerHTML = ainfo + " " + cinfo;
+    }
+    reader.readAsText(jsonFile);
+}   
+function prepareControls() {
+    // add event listeners
+    for (var i = 0; i < fragments.length; i++) {
+        if (showID) {
+            document.getElementById(getStringID(i, "id")).addEventListener("click", fragmentClick);
+        }
+        document.getElementById(getStringID(i, "cell")).addEventListener("click", fragmentClick);
+        document.getElementById(getStringID(i, "text")).addEventListener("click", fragmentClick);
+        document.getElementById(getStringID(i, "time")).addEventListener("click", fragmentClick);
+        document.getElementById(getStringID(i, "increase")).addEventListener("click", increaseClick);
+        document.getElementById(getStringID(i, "decrease")).addEventListener("click", decreaseClick);
+    }
+    document.getElementById("stop").addEventListener("click", stopOverlay);
+    document.getElementById("buttonShowID").addEventListener("click", changeShowID);
+    document.getElementById("alignText").addEventListener("change", changeAlignText);
+    document.getElementById("buttonContinuousPlay").addEventListener("click", changeContinuousPlay);
+    document.getElementById("buttonTimeFormat").addEventListener("click", changeTimeFormat);
+    document.getElementById("timeStep").addEventListener("change", changeTimeStep);
+    document.getElementById("transitionOffset").addEventListener("change", changeTransitionOffset);
+    document.getElementById("playbackRate").addEventListener("change", changePlaybackRate);
+    document.getElementById("outputFormat").addEventListener("change", changeOutputFormat, false);
+    document.getElementById("download").addEventListener("click", downloadClick);
+    document.getElementById("advancedcontrols").style.visibility = "visible";
+}
+function changeShowID() {
+    showID = !showID;
+    setButtonText("buttonShowID", showID, "ON", "OFF");
+    prepareTable();
+    prepareControls();
+}
+function changeAlignText() {
+    alignText = document.getElementById("alignText").value;
+    applyAlignment();
+}
+function applyAlignment() {
+    for (var i = 0; i < fragments.length; i++) {
+        document.getElementById(getStringID(i, "cell")).style.textAlign = alignText;
+    }
+}
+function changeOutputFormat() {
+    var outputFormat = document.getElementById("outputFormat").value;
+    var disp = "none";
+    if (outputFormat == "smil") {
+        disp = "block";
+    }
+    document.getElementById("smilAudioRef").style.display = disp;
+    document.getElementById("smilPageRef").style.display = disp;
+}
+function changeTimeStep() {
+    timeStep = parseFloat(document.getElementById("timeStep").value);
+}
+function changeTransitionOffset() {
+    transitionOffset = parseFloat(document.getElementById("transitionOffset").value);
+}
+function changePlaybackRate() {
+    audioElement.playbackRate = parseFloat(document.getElementById("playbackRate").value);
+}
+function changeContinuousPlay() {
+    continuousPlay = !continuousPlay;
+    setButtonText("buttonContinuousPlay", continuousPlay, "ON", "OFF");
+}
+function changeTimeFormat() {
+    timeFormatHHMMSSmmm = !timeFormatHHMMSSmmm;
+    setButtonText("buttonTimeFormat", timeFormatHHMMSSmmm, "HH:MM:SS.mmm", "DECIMAL");
+    updateTime();
+}
+function setButtonText(element, variable, true_text, false_text) {
+    var text = false_text;
+    if (variable) {
+        text = true_text;
+    }
+    document.getElementById(element).innerHTML = text;
+}
+function updateTime(i) {
+    if (i == null) {
+        for (var i = 0; i < fragments.length; i++) {
+            var begin = fragments[i].begin;
+            document.getElementById(getStringID(i, "time")).innerHTML =  formatTime(begin);
+        }
+    } else {
+        var begin = fragments[i].begin;
+        document.getElementById(getStringID(i, "time")).innerHTML =  formatTime(begin);
+    }
+}
+function formatTime(time_value) {
+    if (timeFormatHHMMSSmmm) {
+        return timeHHMMSSmmm(time_value, ".");
+    }
+    return time_value.toFixed(3);
+}
+function getStringID(i, element) {
+    if (element == "id") {
+        return ("id" + i);
+    }
+    if (element == "cell") {
+        return ("c" + i);
+    }
+    if (element == "text") {
+        return ("f" + i);
+    }
+    if (element == "time") {
+        return ("t" + i);
+    }
+    if (element == "increase") {
+        return ("t" + i + "inc");
+    }
+    if (element == "decrease") {
+        return ("t" + i + "dec");
+    }
+    return ("" + i);
+}
+function getID(idstring) {
+    var s = idstring;
+    s = s.replace("inc", "");
+    s = s.replace("dec", "");
+    s = s.replace("id", "");
+    s = s.replace("c", "");
+    s = s.replace("t", "");
+    s = s.replace("f", "");
+    return parseInt(s);
+}
+function roundTimeValues() {
+    for (var i = 0; i < fragments.length; i++) {
+        fragments[i].begin = roundTimeValue(fragments[i].begin);
+        fragments[i].end = roundTimeValue(fragments[i].end);
+    }
+}
+function prepareTable() {
+    var rows = [];
+    for (var i = 0; i < fragments.length; ++i) {
+        var id = fragments[i].id;
+        var text = fragments[i].lines.join("<br/>");
+        var begin = fragments[i].begin;
+        var end = fragments[i].end;
+        var row = "";
+        row += "<tr>";
+        row += "<\/tr>";
+        row += "<td><\/td>";
+        if (showID) {
+            row += '<td id="' + getStringID(i, "id") + '">' + id + '<\/td>';
+        }
+        row += '<td id="' + getStringID(i, "cell") + '"><a class="text" id="' + getStringID(i, "text") + '">' + text + '<\/a><\/td>';
+        row += '<td class="edit">';
+        row += '<a class="time" id="' + getStringID(i, "time") + '">' + formatTime(begin) + '<\/a>';
+        row += '<a class="increase" id="' + getStringID(i, "increase") + '">+<\/a>';
+        row += '<a class="decrease" id="' + getStringID(i, "decrease") + '">−<\/a>';
+        row += "<\/td>";
+        row += "<\/tr>";
+        rows[i] = row;
+    }
+    var colID = "";
+    if (showID) {
+        colID = '<col width="100">';
+    }
+    document.getElementById("tb").innerHTML = '<col width="250px">' + colID + '<col><col width="300px"><tbody>' + rows.join("") + "<\/tbody>";
+    applyAlignment();
+}
+function roundTimeValue(time) {
+    return Math.round(time * 1000) / 1000;
+}
+function highlight(style) {
+    try {
+        document.getElementById(getStringID(currentIndex, "cell")).style.backgroundColor = style;
+    } catch (e) {
+        // pass 
+    }
+}
+function fragmentClick(evt) {
+    highlight(CLEAR);
+    currentIndex = getID(evt.target.id);
+    playOverlay(0);
+}
+function increaseClick(evt) {
+    changeTime(evt, timeStep);
+}
+function decreaseClick(evt) {
+    changeTime(evt, -timeStep);
+}
+function changeTime(evt, step) {
+    var i = getID(evt.target.id);
+    fragments[i].begin = roundTimeValue(fragments[i].begin + step);
+    if (fragments[i].begin < 0) {
+        fragments[i].begin = 0.00;
+    }
+    if (i > 0) {
+        fragments[i-1].end = fragments[i].begin;
+    }
+    updateTime(i);
+    highlight(CLEAR);
+    currentIndex = i;
+    playOverlay(0);
+}
+function downloadData() {
+    var aElement = document.createElement("a");
+    aElement.style = "display: none";
+    document.body.appendChild(aElement);
+    return function (data, fileName) {
+        blob = new Blob([data], { type: "octet/stream" }),
+        url = window.URL.createObjectURL(blob);
+        aElement.href = url;
+        aElement.download = fileName;
+        aElement.click();
+    };
+}
+function triggerDownload(data, fileName) {
+    setTimeout(function() {
+        var df = downloadData();
+        df(data, fileName);
+    }, 500);
+    window.URL.revokeObjectURL(url);
+}
+function downloadClick() {
+    var outputFormat = document.getElementById("outputFormat").value;
+    var data = null;
+    switch(outputFormat) {
+        case "csv":
+            data = downloadCSV();
+            break;
+        case "json":
+            data = downloadJSON();
+            break;
+        case "smil":
+            data = downloadSMIL();
+            break;
+        case "srt":
+            data = downloadSRT();
+            break;
+        case "ssv":
+            data = downloadSSV();
+            break;
+        case "ttml":
+            data = downloadTTML();
+            break;
+        case "tsv":
+            data = downloadTSV();
+            break;
+        case "txt":
+            data = downloadTXT();
+            break;
+        case "vtt":
+            data = downloadVTT();
+            break;
+        case "xml":
+            data = downloadXML();
+            break;
+        default:
+            data = downloadJSON();
+    }
+    var message = "The modified " + outputFormat.toUpperCase() + " file will be saved in your default Download directory. Please enter a file name:";
+    var suggestedFileName = "tuned." + outputFormat;
+    var fileName = prompt(message, suggestedFileName);
+    triggerDownload(data, fileName);
+}
+function downloadCSV() {
+    var lines = [];
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[i] = fragments[i].id + "," + fragments[i].begin + "," + fragments[i].end + ',"' + fragments[i].lines.join(" ") + '"';
+    };
+    return lines.join("\n");
+}
+function downloadJSON() {
+    var jsonData = {};
+    jsonData.fragments = fragments;
+    // convert the numbers to strings (as in the original JSON)
+    function numberToString(key, value) {
+        if (typeof value === "number") {
+            value = value.toString();
+        }
+        return value;
+    }
+    return JSON.stringify(jsonData, numberToString, " ");
+}
+function downloadSMIL() {
+    var audioref = document.getElementById("smilAudioRef").value;
+    var pageref = document.getElementById("smilPageRef").value;
+    var lines = [];
+    var j = 0;
+    lines[j++] = '<smil xmlns:epub="http://www.idpf.org/2007/ops" xmlns="http://www.w3.org/ns/SMIL" version="3.0">';
+    lines[j++] = '  <body>';
+    lines[j++] = '    <seq id="s000001" epub:textref="' + pageref + '">';
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[j++] = '      <par id="p' + pad(i+1, 6) + '">';
+        lines[j++] = '        <text src="' + pageref + '#' + fragments[i].id + '"/>';
+        lines[j++] = '        <audio src="' + audioref + '" clipBegin="' + timeSMIL(fragments[i].begin) + '" clipEnd="' + timeSMIL(fragments[i].end)+ '"/>';
+        lines[j++] = '      <\/par>';
+    };
+    lines[j++] = '    <\/seq>';
+    lines[j++] = '  <\/body>';
+    lines[j++] = '<\/smil>';
+    return lines.join("\n");
+}
+function downloadSRT() {
+    var lines = [];
+    var j = 0;
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[j++] = "" + (i+1);
+        lines[j++] = timeSRT(fragments[i].begin) + " --> " + timeSRT(fragments[i].end);
+        var f_lines = fragments[i].lines;
+        for (var k = 0; k < f_lines.length; ++k) {
+            lines[j++] = f_lines[k];
+        }
+        lines[j++] = ""
+    };
+    return lines.join("\n") + "\n";
+}
+function downloadSSV() {
+    var lines = [];
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[i] = fragments[i].begin + " " + fragments[i].end + " " + fragments[i].id + ' "' + fragments[i].lines.join(" ") + '"';
+    };
+    return lines.join("\n");
+}
+function downloadTTML() {
+    var lines = [];
+    var j = 0;
+    lines[j++] = "<?xml version='1.0' encoding='UTF-8'?>";
+    lines[j++] = '<tt xmlns="http://www.w3.org/ns/ttml" xml:lang="">';
+    lines[j++] = '  <body>';
+    lines[j++] = '    <div>';
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[j++] = '      <p xml:id="' + fragments[i].id + '" begin="' + fragments[i].begin + 's" end="' + fragments[i].end + 's">' + fragments[i].lines.join("<br/>") + '<\/p>';
+    };
+    lines[j++] = '    <\/div>';
+    lines[j++] = '  <\/body>';
+    lines[j++] = '<\/tt>';
+    return lines.join("\n");
+}
+function downloadTSV() {
+    var lines = [];
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[i] = fragments[i].begin + "\t" + fragments[i].end + "\t" + fragments[i].id;
+    };
+    return lines.join("\n");
+}
+function downloadTXT() {
+    var lines = [];
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[i] = fragments[i].id + " " + fragments[i].begin + " " + fragments[i].end + ' "' + fragments[i].lines.join(" ") + '"';
+    };
+    return lines.join("\n");
+}
+function downloadVTT() {
+    var lines = [];
+    var j = 0;
+    lines[j++] = "WEBVTT\n"
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[j++] = "" + (i+1);
+        lines[j++] = timeVTT(fragments[i].begin) + " --> " + timeVTT(fragments[i].end);
+        var f_lines = fragments[i].lines;
+        for (var k = 0; k < f_lines.length; ++k) {
+            lines[j++] = f_lines[k];
+        }
+        lines[j++] = ""
+    };
+    return lines.join("\n") + "\n";
+}
+function downloadXML() {
+    var lines = [];
+    var j = 0;
+    lines[j++] = "<?xml version='1.0' encoding='UTF-8'?>";
+    lines[j++] = '<map>';
+    for (var i = 0; i < fragments.length; ++i) {
+        lines[j++] = '  <fragment id="' + fragments[i].id + '" begin="' + fragments[i].begin + '" end="' + fragments[i].end + '">';
+        var f_lines = fragments[i].lines;
+        for (var k = 0; k < f_lines.length; ++k) {
+            lines[j++] = '    <line>' + f_lines[k] + '<\/line>';
+        }
+        lines[j++] = '  <\/fragment>';
+    };
+    lines[j++] = '<\/map>';
+    return lines.join("\n");
+}
+function pad(num, size) {
+    var s = num + "";
+    while (s.length < size) {
+        s = "0" + s;
+    }
+    return s;
+}
+function timeHHMMSSmmm(time_value, decimal_separator) {
+    var tmp = parseFloat(time_value);
+    var hours = parseInt(Math.floor(tmp / 3600));
+    tmp -= (hours * 3600);
+    var minutes = parseInt(Math.floor(tmp / 60));
+    tmp -= minutes * 60;
+    var seconds = parseInt(Math.floor(tmp));
+    tmp -= seconds;
+    var milliseconds = parseInt(Math.floor(tmp * 1000));
+    return pad(hours, 2) + ":" + pad(minutes, 2) + ":" + pad(seconds, 2) + decimal_separator + pad(milliseconds, 3); 
+}
+function timeSMIL(time_value) { 
+    return timeHHMMSSmmm(time_value, ".");
+}
+function timeSRT(time_value) { 
+    return timeHHMMSSmmm(time_value, ",");
+}
+function timeVTT(time_value) { 
+    return timeHHMMSSmmm(time_value, ".");
+}
+function ticker(cTime){
+    
+    // TODO ALPE use a global stopwatch object
+    
+    // "timeupdate" alone isn't accurate enough
+    // to pause exactly at the end of the fragment.
+    // Another option is to use temporal dimensions
+    // for audio source but Chrome doesn't support it with blobs.
+    // If in the last TRANSITION_TIMEOUT seconds, calculate the time left,
+    // and set a corresponding timeout to pause the fragment.
+    if(cTime > fragments[currentIndex].end - TRANSITION_TIMEOUT) {
+        // subtract transitionOffset seconds to account for the delay introduced by this code
+        var timeLeft = (fragments[currentIndex].end - cTime - transitionOffset) * 1000 / audioElement.playbackRate;
+        var index = currentIndex;
+        setTimeout(function() {
+            // do not perform action if the user
+            // jumped to another fragment
+            if (index == currentIndex) {
+                if (continuousPlay) {
+                    playOverlay(1);
+                } else {
+                    highlight(COMPLETED);
+                    stopOverlay();
+                }
+            }
+        }, timeLeft)
+    }
+    // display current time
+    document.getElementById("audioticker").innerHTML = cTime.toFixed(3);
+}
+function stopOverlay() {
+    audioElement.pause();
+    document.getElementById("stop").style.display = "none";
+}
+function playOverlay(inc) {
+    highlight(CLEAR);
+    if (currentIndex + inc < fragments.length) { 
+        currentIndex += inc;
+        highlight(ACTIVE);
+        audioElement.currentTime = fragments[currentIndex].begin;
+        audioElement.play();
+        document.getElementById("audiocontrols").style.display = "block";
+        document.getElementById("stop").style.display = "inline";
+    } else {
+        stopOverlay();
+    }
+}   
+</script>
+<!-- END script -->
+
+    </body>
+</html>

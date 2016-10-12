@@ -1,0 +1,854 @@
+{
+ "fragments": [
+  {
+   "begin": "0.000", 
+   "children": [], 
+   "end": "9.120", 
+   "id": "f000001", 
+   "language": "swe", 
+   "lines": [
+    "TRAFIKMAKTORDNINGEN, av planka punkt nu."
+   ]
+  }, 
+  {
+   "begin": "9.120", 
+   "children": [], 
+   "end": "10.800", 
+   "id": "f000002", 
+   "language": "swe", 
+   "lines": [
+    "Kapitel 1."
+   ]
+  }, 
+  {
+   "begin": "10.800", 
+   "children": [], 
+   "end": "14.600", 
+   "id": "f000003", 
+   "language": "swe", 
+   "lines": [
+    "TRAFIKMAKTORDNINGEN"
+   ]
+  }, 
+  {
+   "begin": "14.600", 
+   "children": [], 
+   "end": "18.240", 
+   "id": "f000004", 
+   "language": "swe", 
+   "lines": [
+    "Mobilitet och klass \u00e4r t\u00e4tt sammanv\u00e4vda."
+   ]
+  }, 
+  {
+   "begin": "18.240", 
+   "children": [], 
+   "end": "39.000", 
+   "id": "f000005", 
+   "language": "swe", 
+   "lines": [
+    "Inte bara d\u00e4rf\u00f6r att m\u00f6jligheten till mobilitet h\u00e4nger samman med ekonomiska resurser, utan \u00e4ven f\u00f6r att ett samh\u00e4lle byggt efter dagens mobilitetsparadigm, det vi kallar automobilitet, direkt bidrar till \u00f6kade ekonomiska och sociala skillnader."
+   ]
+  }, 
+  {
+   "begin": "39.000", 
+   "children": [], 
+   "end": "46.880", 
+   "id": "f000006", 
+   "language": "swe", 
+   "lines": [
+    "Alla kan vid en f\u00f6rsta anblick se att ett samh\u00e4lle som prioriterar bilism gynnar bilister."
+   ]
+  }, 
+  {
+   "begin": "46.880", 
+   "children": [], 
+   "end": "54.880", 
+   "id": "f000007", 
+   "language": "swe", 
+   "lines": [
+    "Lika tydligt \u00e4r det att andelen vita, h\u00f6gavl\u00f6nade m\u00e4n \u00e4r \u00f6verrepresenterad bland bilister."
+   ]
+  }, 
+  {
+   "begin": "54.880", 
+   "children": [], 
+   "end": "68.920", 
+   "id": "f000008", 
+   "language": "swe", 
+   "lines": [
+    "Men ett samh\u00e4lle som prioriterar bilism, och ser evigt \u00f6kande mobilitet som ett n\u00e4rmast magiskt framg\u00e5ngsrecept, \u00f6kar \u00e4ven skillnaderna mellan sina inv\u00e5nare och sina olika delar p\u00e5 andra s\u00e4tt."
+   ]
+  }, 
+  {
+   "begin": "68.920", 
+   "children": [], 
+   "end": "86.480", 
+   "id": "f000009", 
+   "language": "swe", 
+   "lines": [
+    "Trafikmaktordningen \u00e4r en hierarki bland trafikslag, med bilen i toppen och kollektivtrafiken, fotg\u00e4ngarna och cyklisterna nederst, som tar sig uttryck i att dessa f\u00e4rdmedel tilldelas olika mycket resurser och plats."
+   ]
+  }, 
+  {
+   "begin": "86.480", 
+   "children": [], 
+   "end": "93.280", 
+   "id": "f000010", 
+   "language": "swe", 
+   "lines": [
+    "Med bilen \u00f6verst i trafikmaktordningen f\u00e5r vi ett samh\u00e4lle byggt p\u00e5 automobilitet."
+   ]
+  }, 
+  {
+   "begin": "93.280", 
+   "children": [], 
+   "end": "99.520", 
+   "id": "f000011", 
+   "language": "swe", 
+   "lines": [
+    "En v\u00e4rld d\u00e4r v\u00e5ra liv i orimligt stor utstr\u00e4ckning styrs av bilen."
+   ]
+  }, 
+  {
+   "begin": "99.520", 
+   "children": [], 
+   "end": "108.360", 
+   "id": "f000012", 
+   "language": "swe", 
+   "lines": [
+    "Den h\u00e4r boken \u00e4r skriven f\u00f6r att klarg\u00f6ra hur den r\u00e5dande trafikmaktordningen ser ut och vilka konsekvenser den f\u00e5r."
+   ]
+  }, 
+  {
+   "begin": "108.360", 
+   "children": [], 
+   "end": "120.160", 
+   "id": "f000013", 
+   "language": "swe", 
+   "lines": [
+    "Ett samh\u00e4lle byggt p\u00e5 automobilitet \u00e4r inte bara skadligt ur ett ekologiskt perspektiv, det leder \u00e4ven till ekonomisk och social segregering."
+   ]
+  }, 
+  {
+   "begin": "120.160", 
+   "children": [], 
+   "end": "137.320", 
+   "id": "f000014", 
+   "language": "swe", 
+   "lines": [
+    "Genom att belysa problemen med dagens trafikhierarki och skissa p\u00e5 ett annat s\u00e4tt att planera och hantera r\u00f6relse s\u00e5 tror och hoppas vi att vi ocks\u00e5 kan ge inspiration till l\u00f6sningar p\u00e5 andra samh\u00e4llsproblem."
+   ]
+  }, 
+  {
+   "begin": "137.320", 
+   "children": [], 
+   "end": "140.720", 
+   "id": "f000015", 
+   "language": "swe", 
+   "lines": [
+    "Bilismen st\u00e4ller oss mot varandra."
+   ]
+  }, 
+  {
+   "begin": "140.720", 
+   "children": [], 
+   "end": "146.560", 
+   "id": "f000016", 
+   "language": "swe", 
+   "lines": [
+    "Vem har inte upplevt k\u00e4nslan av att s\u00e4tta sig i en bil och helt pl\u00f6tsligt bli bilist?"
+   ]
+  }, 
+  {
+   "begin": "146.560", 
+   "children": [], 
+   "end": "157.440", 
+   "id": "f000017", 
+   "language": "swe", 
+   "lines": [
+    "Att s\u00e4tta sig i en bil verkar n\u00e4stan per automatik leda till ett egoistiskt beteende d\u00e4r alla f\u00f6rs\u00f6ker tj\u00e4na n\u00e5got p\u00e5 andras bekostnad."
+   ]
+  }, 
+  {
+   "begin": "157.440", 
+   "children": [], 
+   "end": "168.920", 
+   "id": "f000018", 
+   "language": "swe", 
+   "lines": [
+    "Att s\u00e4tta sig i en bil f\u00f6rvandlar ens medm\u00e4nniskor (andra bilister, cyklister, fotg\u00e4ngare och kollektivtrafikanter) till hinder."
+   ]
+  }, 
+  {
+   "begin": "168.920", 
+   "children": [], 
+   "end": "178.680", 
+   "id": "f000019", 
+   "language": "swe", 
+   "lines": [
+    "Vem kan inte, med handen p\u00e5 hj\u00e4rtat, k\u00e4nna igen sig i den aggressiva och konkurrerande sj\u00e4lviskheten som bilen framkallar hos en?"
+   ]
+  }, 
+  {
+   "begin": "178.680", 
+   "children": [], 
+   "end": "195.720", 
+   "id": "f000020", 
+   "language": "swe", 
+   "lines": [
+    "Eftersom vi inte tycker att ett s\u00e5dant beteende ska uppmuntras, och eftersom vi \u00e4r \u00f6vertygade om att man inte f\u00f6ds till bilist, utan att man blir det, anser vi att risken f\u00f6r att folk blir bilister m\u00e5ste minimeras."
+   ]
+  }, 
+  {
+   "begin": "195.720", 
+   "children": [], 
+   "end": "206.080", 
+   "id": "f000021", 
+   "language": "swe", 
+   "lines": [
+    "D\u00e4rf\u00f6r vill vi inte bara \u00e4ndra p\u00e5 trafikhierarkin och putta ner bilen till botten, utan vi vill ha ett samh\u00e4lle byggt p\u00e5 helt andra premisser."
+   ]
+  }, 
+  {
+   "begin": "206.080", 
+   "children": [], 
+   "end": "213.080", 
+   "id": "f000022", 
+   "language": "swe", 
+   "lines": [
+    "Ett samh\u00e4lle d\u00e4r ingen tvingas in i bilism, varken aktiv eller passiv s\u00e5dan."
+   ]
+  }, 
+  {
+   "begin": "213.080", 
+   "children": [], 
+   "end": "222.480", 
+   "id": "f000023", 
+   "language": "swe", 
+   "lines": [
+    "Ett samh\u00e4lle d\u00e4r m\u00e4nniskors tillg\u00e4nglighet till det de beh\u00f6ver f\u00f6r att tillfredsst\u00e4lla sina behov och beg\u00e4r s\u00e4tts i f\u00f6rsta rummet."
+   ]
+  }, 
+  {
+   "begin": "222.480", 
+   "children": [], 
+   "end": "226.400", 
+   "id": "f000024", 
+   "language": "swe", 
+   "lines": [
+    "Ett samh\u00e4lle vi bygger och lever tillsammans."
+   ]
+  }, 
+  {
+   "begin": "226.400", 
+   "children": [], 
+   "end": "232.200", 
+   "id": "f000025", 
+   "language": "swe", 
+   "lines": [
+    "Ett samh\u00e4lle av (lokal)samh\u00e4llen."
+   ]
+  }, 
+  {
+   "begin": "232.200", 
+   "children": [], 
+   "end": "235.320", 
+   "id": "f000026", 
+   "language": "swe", 
+   "lines": [
+    "Automobilitet"
+   ]
+  }, 
+  {
+   "begin": "235.320", 
+   "children": [], 
+   "end": "250.200", 
+   "id": "f000027", 
+   "language": "swe", 
+   "lines": [
+    "Automobilitet \u00e4r ett begrepp f\u00f6r att tolka och beskriva de institutioner och praktiker som organiserar, underst\u00f6djer och formar bilens r\u00f6relse genom och p\u00e5verkan p\u00e5 v\u00e5ra samh\u00e4llen."
+   ]
+  }, 
+  {
+   "begin": "250.200", 
+   "children": [], 
+   "end": "265.920", 
+   "id": "f000028", 
+   "language": "swe", 
+   "lines": [
+    "Samtidigt \u00e4r det ocks\u00e5 namnet p\u00e5 den diskurs som ger bilen legitimitet som samh\u00e4llets motor genom att sammankoppla den med frihet, framsteg, r\u00f6relse, individualitet och sj\u00e4lvst\u00e4ndighet."
+   ]
+  }, 
+  {
+   "begin": "265.920", 
+   "children": [], 
+   "end": "277.000", 
+   "id": "f000029", 
+   "language": "swe", 
+   "lines": [
+    "Automobilitet \u00e4r kort och gott en av de principiella socio-teknologiska institutioner genom vilken moderniteten organiseras."
+   ]
+  }, 
+  {
+   "begin": "277.000", 
+   "children": [], 
+   "end": "289.880", 
+   "id": "f000030", 
+   "language": "swe", 
+   "lines": [
+    "Automobilitet \u00e4r en sammans\u00e4ttning av orden autonomi och mobilitet, samt n\u00e5got av en ordvits d\u00e5 \u201dauto\u201d \u00e4ven kan l\u00e4sas som bil."
+   ]
+  }, 
+  {
+   "begin": "289.880", 
+   "children": [], 
+   "end": "300.360", 
+   "id": "f000031", 
+   "language": "swe", 
+   "lines": [
+    "H\u00e4r ska det dock fr\u00e4mst l\u00e4sas som autonomi och som ett begrepp f\u00f6r att beskriva v\u00e5rt samh\u00e4lles syn p\u00e5 mobilitet och autonomi."
+   ]
+  }, 
+  {
+   "begin": "300.360", 
+   "children": [], 
+   "end": "308.040", 
+   "id": "f000032", 
+   "language": "swe", 
+   "lines": [
+    "Du uppn\u00e5r sj\u00e4lvst\u00e4ndighet genom mobilitet, och mobilitet kan bara uppn\u00e5s sj\u00e4lvst\u00e4ndigt."
+   ]
+  }, 
+  {
+   "begin": "308.040", 
+   "children": [], 
+   "end": "325.760", 
+   "id": "f000033", 
+   "language": "swe", 
+   "lines": [
+    "Id\u00e9er starkt sammankopplade med den liberala ideologi d\u00e4r vi alla \u00e4r individer \u2013 fria att sj\u00e4lva v\u00e4lja v\u00e5ra v\u00e4gar och liv \u2013 som i sin mest extrema form f\u00f6rnekar sj\u00e4lva existensen av samh\u00e4llet."
+   ]
+  }, 
+  {
+   "begin": "325.760", 
+   "children": [], 
+   "end": "339.040", 
+   "id": "f000034", 
+   "language": "swe", 
+   "lines": [
+    "Men precis som id\u00e9n om den fria individen skapas och underh\u00e5lls av en viss samh\u00e4llsformation, kr\u00e4ver id\u00e9n om automobilitet en enorm samh\u00e4llelig produktion."
+   ]
+  }, 
+  {
+   "begin": "339.040", 
+   "children": [], 
+   "end": "346.240", 
+   "id": "f000035", 
+   "language": "swe", 
+   "lines": [
+    "Utan v\u00e4gar, bilindustri och oljeindustri kan sj\u00e4lvfallet ingen ta bilen."
+   ]
+  }, 
+  {
+   "begin": "346.240", 
+   "children": [], 
+   "end": "368.200", 
+   "id": "f000036", 
+   "language": "swe", 
+   "lines": [
+    "Automobilitet \u00e4r en sj\u00e4lvmots\u00e4gelse s\u00e5tillvida att bilister inte alls \u00e4r fria att v\u00e4lja sina egna v\u00e4gar, utan k\u00f6r p\u00e5 v\u00e4gar byggda och planerade av politiker, till och fr\u00e5n bost\u00e4der och arbetsplatser f\u00f6rlagda till specifika platser av politiska och ekonomiska sk\u00e4l."
+   ]
+  }, 
+  {
+   "begin": "368.200", 
+   "children": [], 
+   "end": "392.080", 
+   "id": "f000037", 
+   "language": "swe", 
+   "lines": [
+    "Det \u00e4r n\u00e4stan komiskt att bilen i s\u00e5 stor utstr\u00e4ckning har kommit att symbolisera nyckeln till frihet och individualitet \u2013 ja, rentav blivit n\u00e5got av den moderna liberalismens heliga graal \u2013 n\u00e4r den i sj\u00e4lva verket \u00e4r sammankopplad med en hel flora av offentliga och privata kontrolltekniker."
+   ]
+  }, 
+  {
+   "begin": "392.080", 
+   "children": [], 
+   "end": "399.360", 
+   "id": "f000038", 
+   "language": "swe", 
+   "lines": [
+    "F\u00f6r att bilsamh\u00e4llet \u00f6verhuvudtaget ska fungera kr\u00e4vs ett otal regleringsmekanismer:"
+   ]
+  }, 
+  {
+   "begin": "399.360", 
+   "children": [], 
+   "end": "420.440", 
+   "id": "f000039", 
+   "language": "swe", 
+   "lines": [
+    "hur snabbt du f\u00e5r \u00e5ka, vart du kan \u00e5ka, \u00e5t vilket h\u00e5ll du ska \u00e5ka, var du kan stanna, hur mycket din bil f\u00e5r sl\u00e4ppa ut och hur s\u00e4ker din bil m\u00e5ste vara \u2013 detta \u00e4r bara n\u00e5gra exempel p\u00e5 alla de regleringar som omg\u00e4rdar dig varje g\u00e5ng du s\u00e4tter dig i bilen."
+   ]
+  }, 
+  {
+   "begin": "420.440", 
+   "children": [], 
+   "end": "432.240", 
+   "id": "f000040", 
+   "language": "swe", 
+   "lines": [
+    "F\u00f6r att detta ska fungera beh\u00f6vs en stor kontrollapparat som disciplinerar s\u00e5v\u00e4l bilister som icke-bilister till att underkasta sig dessa regler."
+   ]
+  }, 
+  {
+   "begin": "432.240", 
+   "children": [], 
+   "end": "440.400", 
+   "id": "f000041", 
+   "language": "swe", 
+   "lines": [
+    "Friheten p\u00e5 v\u00e4gen har vuxit fram hand i hand med en f\u00f6rdjupning av kontrollen av r\u00f6relse."
+   ]
+  }, 
+  {
+   "begin": "440.400", 
+   "children": [], 
+   "end": "448.880", 
+   "id": "f000042", 
+   "language": "swe", 
+   "lines": [
+    "Den nuvarande regimen av automobilitet b\u00e4r p\u00e5 ett antal ol\u00f6sliga, inneboende och destruktiva tendenser."
+   ]
+  }, 
+  {
+   "begin": "448.880", 
+   "children": [], 
+   "end": "451.960", 
+   "id": "f000043", 
+   "language": "swe", 
+   "lines": [
+    "Massbilism \u00e4r tr\u00e4ngsel."
+   ]
+  }, 
+  {
+   "begin": "451.960", 
+   "children": [], 
+   "end": "466.720", 
+   "id": "f000044", 
+   "language": "swe", 
+   "lines": [
+    "Automobilitet bygger p\u00e5 att samh\u00e4llet underst\u00f6djer och uppmuntrar alla inv\u00e5nare att anv\u00e4nda bilen, men om alla g\u00f6r detta f\u00f6rvandlas automobiliteten snabbt till immobilitet."
+   ]
+  }, 
+  {
+   "begin": "466.720", 
+   "children": [], 
+   "end": "476.000", 
+   "id": "f000045", 
+   "language": "swe", 
+   "lines": [
+    "K\u00f6er, tr\u00e4ngsel och trafikstockningar \u00e4r inte bilsamh\u00e4llets avarter, utan dess logiska konsekvenser."
+   ]
+  }, 
+  {
+   "begin": "476.000", 
+   "children": [], 
+   "end": "479.720", 
+   "id": "f000046", 
+   "language": "swe", 
+   "lines": [
+    "Massbilismen \u00e4r sin egen v\u00e4rsta fiende."
+   ]
+  }, 
+  {
+   "begin": "479.720", 
+   "children": [], 
+   "end": "490.400", 
+   "id": "f000047", 
+   "language": "swe", 
+   "lines": [
+    "Bilistens frihet f\u00f6ruts\u00e4tter massbilism, samtidigt som massbilismen om\u00f6jligg\u00f6r bilistens frihet."
+   ]
+  }, 
+  {
+   "begin": "490.400", 
+   "children": [], 
+   "end": "492.200", 
+   "id": "f000048", 
+   "language": "swe", 
+   "lines": [
+    "Massbilism \u00e4r rovdrift."
+   ]
+  }, 
+  {
+   "begin": "492.200", 
+   "children": [], 
+   "end": "506.000", 
+   "id": "f000049", 
+   "language": "swe", 
+   "lines": [
+    "V\u00e5rt klimat, v\u00e5ra naturresurser, vi sj\u00e4lva, v\u00e5ra st\u00e4der, ja hela det geopolitiska systemet har drabbats av akuta kriser p\u00e5 grund av massbilismen."
+   ]
+  }, 
+  {
+   "begin": "506.000", 
+   "children": [], 
+   "end": "519.560", 
+   "id": "f000050", 
+   "language": "swe", 
+   "lines": [
+    "Klimatf\u00f6r\u00e4ndringarna skenar i takt med motorernas brummande, v\u00e5ra st\u00e4der \u00e4ts upp av bilar och l\u00e4mnar mindre och mindre plats \u00e5t oss som bebor dem."
+   ]
+  }, 
+  {
+   "begin": "519.560", 
+   "children": [], 
+   "end": "531.560", 
+   "id": "f000051", 
+   "language": "swe", 
+   "lines": [
+    "Den \u00e4ndliga oljeproduktionen och oljekr\u00f6net genererar geopolitiska kriser, och till och med krig, f\u00f6r att uppr\u00e4tth\u00e5lla tillg\u00e5ngen p\u00e5 billig olja."
+   ]
+  }, 
+  {
+   "begin": "531.560", 
+   "children": [], 
+   "end": "542.480", 
+   "id": "f000052", 
+   "language": "swe", 
+   "lines": [
+    "F\u00f6r att inte tala om de \u00f6ver 1,2 miljoner m\u00e4nniskor som varje \u00e5r d\u00f6r som en direkt f\u00f6ljd av bilolyckor."
+   ]
+  }, 
+  {
+   "begin": "542.480", 
+   "children": [], 
+   "end": "553.160", 
+   "id": "f000053", 
+   "language": "swe", 
+   "lines": [
+    "Det \u00e4r viktigt att f\u00f6rst\u00e5 att de ovan n\u00e4mnda problemen med massbilismen inte \u00e4r n\u00e5gra tillf\u00e4lliga st\u00f6rningar i ett annars v\u00e4lfungerande system."
+   ]
+  }, 
+  {
+   "begin": "553.160", 
+   "children": [], 
+   "end": "555.920", 
+   "id": "f000054", 
+   "language": "swe", 
+   "lines": [
+    "Det \u00e4r n\u00e4mligen precis tv\u00e4rtom:"
+   ]
+  }, 
+  {
+   "begin": "555.920", 
+   "children": [], 
+   "end": "558.200", 
+   "id": "f000055", 
+   "language": "swe", 
+   "lines": [
+    "detta \u00e4r systemets normalitet."
+   ]
+  }, 
+  {
+   "begin": "558.200", 
+   "children": [], 
+   "end": "569.080", 
+   "id": "f000056", 
+   "language": "swe", 
+   "lines": [
+    "V\u00e5ra v\u00e4gar och bilar, som \u00e4r byggda f\u00f6r att fr\u00e4mja automobilitet, d\u00f6dar \u00f6ver 3 000 m\u00e4nniskor varje dag."
+   ]
+  }, 
+  {
+   "begin": "569.080", 
+   "children": [], 
+   "end": "575.880", 
+   "id": "f000057", 
+   "language": "swe", 
+   "lines": [
+    "Men n\u00e4r h\u00f6rde du senast n\u00e5gon makthavare kritisera massbilismen som system?"
+   ]
+  }, 
+  {
+   "begin": "575.880", 
+   "children": [], 
+   "end": "583.400", 
+   "id": "f000058", 
+   "language": "swe", 
+   "lines": [
+    "Att n\u00e5gon skulle drista sig till att f\u00f6rklara krig mot bilismen ter sig i dagens politiska klimat fullst\u00e4ndigt osannolikt."
+   ]
+  }, 
+  {
+   "begin": "583.400", 
+   "children": [], 
+   "end": "587.440", 
+   "id": "f000059", 
+   "language": "swe", 
+   "lines": [
+    "Visst, i Sverige har vi \u201dnollvisionen\u201d:"
+   ]
+  }, 
+  {
+   "begin": "587.440", 
+   "children": [], 
+   "end": "597.520", 
+   "id": "f000060", 
+   "language": "swe", 
+   "lines": [
+    "en pappersprodukt som f\u00f6rs\u00f6ker r\u00e5da bot p\u00e5 massbilismens symptom utan att ens v\u00e5ga diskutera dess orsaker."
+   ]
+  }, 
+  {
+   "begin": "597.520", 
+   "children": [], 
+   "end": "610.360", 
+   "id": "f000061", 
+   "language": "swe", 
+   "lines": [
+    "Bild\u00f6den tolkas uppenbarligen inte som ett politiskt problem, snarare r\u00e5der det en total resignation inf\u00f6r dessa m\u00f6rdarmaskiner som alltmer tar \u00f6ver v\u00e5r planet."
+   ]
+  }, 
+  {
+   "begin": "610.360", 
+   "children": [], 
+   "end": "620.680", 
+   "id": "f000062", 
+   "language": "swe", 
+   "lines": [
+    "Det \u00e4r tydligt att automobilitet inte \u00e4r ett i praktiken rationellt och fungerande system f\u00f6r organisering av r\u00f6relse."
+   ]
+  }, 
+  {
+   "begin": "620.680", 
+   "children": [], 
+   "end": "627.400", 
+   "id": "f000063", 
+   "language": "swe", 
+   "lines": [
+    "Men redan p\u00e5 ett konceptuellt plan \u00e4r det som system betraktat en om\u00f6jlighet."
+   ]
+  }, 
+  {
+   "begin": "627.400", 
+   "children": [], 
+   "end": "637.760", 
+   "id": "f000064", 
+   "language": "swe", 
+   "lines": [
+    "Det som framst\u00e4lls som ett medel f\u00f6r frihet och oberoende bygger i sj\u00e4lva verket p\u00e5 ett intrikat n\u00e4t av kontrollmekanismer."
+   ]
+  }, 
+  {
+   "begin": "637.760", 
+   "children": [], 
+   "end": "650.760", 
+   "id": "f000065", 
+   "language": "swe", 
+   "lines": [
+    "\u00c4ven om konceptet automobilitet \u00e4r starkt sammankopplat med massbilismen \u00e4r det viktigt att f\u00f6rst\u00e5 hur dessa tankar ocks\u00e5 p\u00e5verkar andra delar av v\u00e5r samh\u00e4llsplanering."
+   ]
+  }, 
+  {
+   "begin": "650.760", 
+   "children": [], 
+   "end": "664.800", 
+   "id": "f000066", 
+   "language": "swe", 
+   "lines": [
+    "Automobilitetsbegreppet utg\u00e5r fr\u00e5n en tolkning av bilsamh\u00e4llet, men kan och b\u00f6r \u00e4ven anv\u00e4ndas f\u00f6r att f\u00f6rst\u00e5 v\u00e5rt s\u00e4tt att t\u00e4nka p\u00e5 individen och hennes m\u00f6jligheter och r\u00e4ttigheter att f\u00f6rflytta sig."
+   ]
+  }, 
+  {
+   "begin": "664.800", 
+   "children": [], 
+   "end": "683.320", 
+   "id": "f000067", 
+   "language": "swe", 
+   "lines": [
+    "I v\u00e5rt samh\u00e4lle, som \u00e4r s\u00e5 bundet vid id\u00e9n om den fria och sj\u00e4lvst\u00e4ndiga (autonoma) individen, kan det vara sv\u00e5rt att se hur m\u00e5nga av v\u00e5ra f\u00f6rest\u00e4llningar som indirekt b\u00e4r denna id\u00e9s pr\u00e4gel."
+   ]
+  }, 
+  {
+   "begin": "683.320", 
+   "children": [], 
+   "end": "695.080", 
+   "id": "f000068", 
+   "language": "swe", 
+   "lines": [
+    "Detta g\u00f6r det \u00e4nnu viktigare f\u00f6r oss att f\u00f6rst\u00e5 trafikmaktordningen och applicera v\u00e5r kunskap om automobilitetsparadigmet p\u00e5 samh\u00e4llsplaneringen."
+   ]
+  }, 
+  {
+   "begin": "695.080", 
+   "children": [], 
+   "end": "713.120", 
+   "id": "f000069", 
+   "language": "swe", 
+   "lines": [
+    "Begreppet automobilitet \u00e4r, r\u00e4tt anv\u00e4nt, ett kraftfullt verktyg f\u00f6r att analysera samh\u00e4llet, och f\u00f6r att skapa f\u00f6rst\u00e5else f\u00f6r hur vi genom medveten samh\u00e4llsplanering kan f\u00f6ra en radikal milj\u00f6- och r\u00e4ttvisepolitik."
+   ]
+  }, 
+  {
+   "begin": "713.120", 
+   "children": [], 
+   "end": "729.680", 
+   "id": "f000070", 
+   "language": "swe", 
+   "lines": [
+    "F\u00f6r att med ett konkret och aktuellt exempel visa hur automobilitet kan anv\u00e4ndas som tolkningsverktyg kan vi titta p\u00e5 en l\u00f6sning som ofta f\u00f6rs fram som ett s\u00e4tt att minska transportsektorns klimatfarliga utsl\u00e4pp, n\u00e4mligen sp\u00e5rbilar."
+   ]
+  }, 
+  {
+   "begin": "729.680", 
+   "children": [], 
+   "end": "735.000", 
+   "id": "f000071", 
+   "language": "swe", 
+   "lines": [
+    "F\u00f6r att kort rekapitulera debatten kring sp\u00e5rbilar:"
+   ]
+  }, 
+  {
+   "begin": "735.000", 
+   "children": [], 
+   "end": "747.320", 
+   "id": "f000072", 
+   "language": "swe", 
+   "lines": [
+    "Vi ser ett problem, biltrafiken st\u00e5r f\u00f6r en st\u00e4ndigt v\u00e4xande del av v\u00e5ra globala utsl\u00e4pp och bidrar kraftigt till f\u00f6rslumningen av v\u00e5ra st\u00e4der."
+   ]
+  }, 
+  {
+   "begin": "747.320", 
+   "children": [], 
+   "end": "755.080", 
+   "id": "f000073", 
+   "language": "swe", 
+   "lines": [
+    "Motgiftet mot biltrafiken s\u00e4gs vara kollektivtrafiken, men hur ska vi f\u00e5 folk att anv\u00e4nda den?"
+   ]
+  }, 
+  {
+   "begin": "755.080", 
+   "children": [], 
+   "end": "771.320", 
+   "id": "f000074", 
+   "language": "swe", 
+   "lines": [
+    "En spontan reaktion \u00e4r ofta att f\u00f6r att f\u00e5 bukt med bilismen s\u00e5 ska vi anpassa kollektivtrafiken till bilistens behov \u2013 n\u00e4r det i sj\u00e4lva verket \u00e4r bilistens behov som \u00e4r problemet."
+   ]
+  }, 
+  {
+   "begin": "771.320", 
+   "children": [], 
+   "end": "781.800", 
+   "id": "f000075", 
+   "language": "swe", 
+   "lines": [
+    "Sp\u00e5rbilar kanske \u2013 med betoning p\u00e5 kanske \u2013 lockar en del bilister att st\u00e4lla bilen hemma, men f\u00f6r\u00e4ndrar de hur v\u00e5ra st\u00e4der \u00e4r uppbyggda?"
+   ]
+  }, 
+  {
+   "begin": "781.800", 
+   "children": [], 
+   "end": "785.320", 
+   "id": "f000076", 
+   "language": "swe", 
+   "lines": [
+    "Knappast!"
+   ]
+  }, 
+  {
+   "begin": "785.320", 
+   "children": [], 
+   "end": "800.200", 
+   "id": "f000077", 
+   "language": "swe", 
+   "lines": [
+    "Att sp\u00e5rbilsindustrin tillsammans med m\u00e5nga milj\u00f6partister och liberaler f\u00f6respr\u00e5kar sp\u00e5rbilar och d\u00e4rmed f\u00f6rst\u00e4rker id\u00e9n om automobilitet som n\u00e5gonting positivt \u00e4r inte s\u00e4rskilt f\u00f6rv\u00e5nande."
+   ]
+  }, 
+  {
+   "begin": "800.200", 
+   "children": [], 
+   "end": "809.320", 
+   "id": "f000078", 
+   "language": "swe", 
+   "lines": [
+    "Att frikoppla id\u00e9n om individen fr\u00e5n ett st\u00f6rre sammanhang \u2013 samh\u00e4llet \u2013 \u00e4r ett i grunden liberalt projekt."
+   ]
+  }, 
+  {
+   "begin": "809.320", 
+   "children": [], 
+   "end": "815.760", 
+   "id": "f000079", 
+   "language": "swe", 
+   "lines": [
+    "Ett projekt som f\u00f6rsv\u00e5rar m\u00f6jligheterna att t\u00e4nka kring och politisera mobiliteten."
+   ]
+  }, 
+  {
+   "begin": "815.760", 
+   "children": [], 
+   "end": "825.880", 
+   "id": "f000080", 
+   "language": "swe", 
+   "lines": [
+    "F\u00f6r trots att transporter upptar en s\u00e5 stor del av v\u00e5ra liv och v\u00e5r ekonomi f\u00f6rst\u00e5s de alltf\u00f6r s\u00e4llan som politiska."
+   ]
+  }, 
+  {
+   "begin": "825.880", 
+   "children": [], 
+   "end": "834.400", 
+   "id": "f000081", 
+   "language": "swe", 
+   "lines": [
+    "Ist\u00e4llet uppfattas de ofta som tekniska fr\u00e5gor, som problem f\u00f6r ingenj\u00f6rer att l\u00f6sa."
+   ]
+  }, 
+  {
+   "begin": "834.400", 
+   "children": [], 
+   "end": "853.120", 
+   "id": "f000082", 
+   "language": "swe", 
+   "lines": [
+    "Men mobilitetens politiska ekonomi \u00e4r t\u00e4tt knuten till br\u00e4nnheta fr\u00e5gor som stadens utveckling, klimat-, milj\u00f6-, och energikriser, r\u00e4ttvisa, j\u00e4mlikhet och j\u00e4mst\u00e4lldhet samt migration och kapitalackumulation."
+   ]
+  }, 
+  {
+   "begin": "853.120", 
+   "children": [], 
+   "end": "861.160", 
+   "id": "f000083", 
+   "language": "swe", 
+   "lines": [
+    "Trafikmaktordningen g\u00f6r inte bara skillnad p\u00e5 bil och buss, utan \u00e4ven p\u00e5 folk och folk."
+   ]
+  }, 
+  {
+   "begin": "861.160", 
+   "children": [], 
+   "end": "870.880", 
+   "id": "f000084", 
+   "language": "swe", 
+   "lines": [
+    "Fr\u00e5gan om hur vi strukturerar r\u00f6relse \u00e4r f\u00f6r viktig f\u00f6r att l\u00e4mnas \u00e5t experter, f\u00f6retag eller politiker."
+   ]
+  }, 
+  {
+   "begin": "870.880", 
+   "children": [], 
+   "end": "876.640", 
+   "id": "f000085", 
+   "language": "swe", 
+   "lines": [
+    "Den \u00e4r n\u00e5got vi beh\u00f6ver diskutera och besluta om kollektivt."
+   ]
+  }
+ ]
+}
