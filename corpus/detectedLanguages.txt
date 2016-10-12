@@ -1,0 +1,46 @@
+corpus/txt/tmo_0261.txt	en	[en:0.9999966671236012]	Visually exciting landscapes with temporal depth, as architectural historian James Marston Fitch argued, offered residents and visitors a strong sense of place. ...
+corpus/txt/tmo_0262.txt	en	[en:0.9999961503742116]	Certainly, widened streets and new city freeways broke up traditional cityscapes and hastened the decline of the pedestrian-orientation of cities.
+corpus/txt/tmo_0263.txt	en	[en:0.9999959555553974]	But nothing fragmented urban space more than the parking lot.
+corpus/txt/tmo_0264.txt	en	[en:0.9999985094981831]	In the half century between 1920 and 1970, most traditional big city downtowns substantially unraveled – disemboweled, building by building, by expanses of parking lot asphalt.
+corpus/txt/tmo_0269.txt	en	[en:0.9999974741153255]	The simple landscape declares itself openly, presents not problems or surprises, lacks subtlety; there are none of the ambiguities and contradictions and complexities that ... lend meaning to building and man-made environments; there are no deep significances, only a turning to the obvious and a separation of different functions into distinct units.
+corpus/txt/tmo_0414.txt	en	[en:0.7142826935480597, sv:0.2857158626968903]	Hur denna omställning ska gå till är självfallet långt ifrån tydligt, men klimataktivisten och forskaren Tadzio Mueller spekulerar lite om det i tidskriften Turbulence och föreslår bland annat climate justice, by which we assert that there is no way to solve the biocrisis without a massive redistributions of wealth and power – which in turn implies that the biocrisis can only be solved through collective struggle.
+corpus/txt/tmo_0415.txt	en	[en:0.9999963547705676]	The second is, currently for want of a better word, degrowth, which refers to the need for collectively planned economic shrinkage.
+corpus/txt/tmo_0426.txt	en	[en:0.9999970212759164]	”The future is not set.
+corpus/txt/tmo_0427.txt	en	[en:0.9999952502947032]	There is no fate but what we make for ourselves.
+corpus/txt/tmo_0434.txt	en	[en:0.9999969940310969]	”Nobody wins unless everybody wins”
+corpus/txt/tmo_0460.txt	en	[en:0.999997314741867]	The highway’s jammed with broken heroes on a last chance power drive
+corpus/txt/tmo_0461.txt	en	[en:0.9999970045608927]	Everybody’s out on the run tonight but there’s no place left to hide
+corpus/txt/tmo_0466.txt	en	[en:0.9999954706641863]	The individual freedom in itself, without connection to your community, your family and your friends, ends up being empty and meaningless.
+corpus/txt/tmo_0467.txt	en	[en:0.9999963178518981]	I realized that those people I put in that car fifteen years ago where out there trying to make a connection.
+corpus/txt/tmo_0479.txt	en	[en:0.9999977553281678]	This train / Carries saints and sinners
+corpus/txt/tmo_0480.txt	en	[en:0.9999972821404065]	This train / Carries losers and winners
+corpus/txt/tmo_0481.txt	en	[en:0.9999976759164906]	This train / Dreams will not be thwarted
+corpus/txt/tmo_0482.txt	en	[en:0.9999976250015219]	This train / Faith will be rewarded
+corpus/txt/tmo_0483.txt	en	[en:0.9999970136554379]	This train / Hear the steel wheels singin’
+corpus/txt/tmo_0484.txt	en	[en:0.9999960379201582]	This train / Bells of freedom ringin’ Vackra ord.
+corpus/txt/tmo_0527.txt	en	[en:0.9999969940310969]	Nobody wins unless everybody wins!
+corpus/txt/tmo_0683.txt	en	[en:0.9999974238235565]	Wolfgang Sachs beskriver i boken For Love of the Automobile hur For the gaze greedy for distance, the living space of the immediate vicinity degenerates into mere thoroughfares, into a dead space between the beginning and the end; the point is to overcome this space with the least possible loss in time.
+corpus/txt/tmo_0708.txt	en	[en:0.9999974612312863]	Pedestrians (and bicyclists) love the minor and the incidental.
+corpus/txt/tmo_0709.txt	en	[en:0.9999966916335032]	They feel good where the buildings wear different faces, where the eye can wander over trees, yards, and balconies, where there are people to meet or watch, where they can linger, join in, and get involved, where a multitude of impressions and stimuli can be had along their short way. ...
+corpus/txt/tmo_0710.txt	en	[en:0.9999975922331407]	The situation is wholly different for drivers:
+corpus/txt/tmo_0711.txt	en	[en:0.9999968913216655]	they hate surprises and demand predictability; only drawn-out monotony gives them security; only large billboards can capture their attention; only straight, broad, and uneventful routes guarantee them a quick passage without interruption.
+corpus/txt/tmo_0712.txt	en	[en:0.9999959978766573]	The car driver tolerates variety only in the rhythm of kilometers, whereas for the pedestrian, space made to conform to speed is faceless and boring.
+corpus/txt/tmo_0797.txt	en	[en:0.580031671025939, no:0.27707019006563444, sv:0.14289812324841725]	Flytta till ett ”gated community”!
+corpus/txt/tmo_0805.txt	en	[en:0.9999961153863813]	Homeland security may have just reached the stage that Internet investing hit in 1997.
+corpus/txt/tmo_0806.txt	en	[en:0.9999973613501119]	Back then, all you needed to do was put an ”e” in front of your company name and your IPO would rocket.
+corpus/txt/tmo_0807.txt	en	[en:0.9999970819568774]	Now you can do the same with ”fortress”.
+corpus/txt/tmo_0901.txt	en	[en:0.9999966891727298]	The daily activity most injurious to happiness is commuting.”
+corpus/txt/tmo_0905.txt	en	[en:0.999998446658824]	”Traffic is a different kind of hell every day.”
+corpus/txt/tmo_0910.txt	en	[en:0.7142822073091922, sv:0.2857174486224003]	Just detta gör kulturgeografen Erika Sandow i avhandlingen On the Road: Social Aspects of Commuting Long Distances to Work.
+corpus/txt/tmo_0928.txt	en	[en:0.9999937479869325]	Enligt Sandow beror detta på att women have continued to be the primary caretakers of household and family obligations.
+corpus/txt/tmo_0929.txt	en	[en:0.999996375718768]	For example, women make several stops and run errands on their way to work more often than men do.
+corpus/txt/tmo_0930.txt	en	[en:0.9999968982957008]	Men commute by driving a car more often than women do, while women use public transportation more often.
+corpus/txt/tmo_0931.txt	en	[en:0.999997174067797]	Moreover, women are still mainly employed in low-income occupations, which make long-distance commuting less economically worthwhile and attractive than it is for men with their normally higher-income occupations.
+corpus/txt/tmo_0932.txt	en	[en:0.9999968992540371]	Moreover, many women are employed in the public-service sector, in which workplace location can allow a short commuting distance.
+corpus/txt/tmo_0936.txt	en	[en:0.9999955974601404]	As a consequence, the majority of long-distance commuting women do not feel they have enough support and therefore experience lower family satisfaction and less success in their work role than do short- distance commuting women.
+corpus/txt/tmo_0937.txt	en	[en:0.9999958453592535]	As longer commutes reduce the time left for other daily activities, this often results in altered divisions of labour between paid and unpaid work whereby the non-commuting partner (often the woman) reduces his or her working hours and instead shoulders more household-related work.
+corpus/txt/tmo_0938.txt	en	[en:0.9999979364018263]	The non-commuting partner thus experiences an economic loss.
+corpus/txt/tmo_0978.txt	en	[en:0.999998445778403]	”There is really a sense of community, we look after each other.”
+corpus/txt/tmo_0980.txt	en	[en:0.9999962152569501]	”It’s not so friendly, you barely see anyone.”
+corpus/txt/tmo_0982.txt	en	[en:0.9999973170919508]	”People just go from their cars to their houses.”
+corpus/txt/tmo_1095.txt	es	[es:0.999996885848258]	Danos más gasolina!

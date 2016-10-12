@@ -1,0 +1,38 @@
+Avg. likelihood: (1) -36.5561 1e+32
+Accepted sentences are: 1099 / 1099
+Avg. likelihood: (2) -36.0752 0.480809
+Accepted sentences are: 1097 / 1099
+Avg. likelihood: (3) -33.687 2.38821
+Accepted sentences are: 954 / 1099
+Avg. likelihood: (4) -32.6903 0.996778
+Accepted sentences are: 899 / 1099
+Avg. likelihood: (5) -32.5027 0.187548
+Accepted sentences are: 905 / 1099
+Avg. likelihood: (6) -32.4534 0.0493397
+Accepted sentences are: 917 / 1099
+Avg. likelihood: (7) -32.3825 0.0708619
+Accepted sentences are: 933 / 1099
+Avg. likelihood: (8) -32.2671 0.11543
+Accepted sentences are: 975 / 1099
+Avg. likelihood: (9) -32.1555 0.111537
+Accepted sentences are: 1002 / 1099
+Avg. likelihood: (10) -32.0819 0.0736441
+Accepted sentences are: 1017 / 1099
+Avg. likelihood: (11) -32.0349 0.047006
+Accepted sentences are: 1024 / 1099
+Avg. likelihood: (12) -32.0099 0.024996
+Accepted sentences are: 1028 / 1099
+Avg. likelihood: (13) -31.9891 0.0207647
+Accepted sentences are: 1031 / 1099
+Avg. likelihood: (14) -31.9772 0.0119294
+Accepted sentences are: 1030 / 1099
+Avg. likelihood: (15) -31.9771 0.00014274
+Accepted sentences are: 1029 / 1099
+Avg. likelihood: (16) -31.9474 0.0296338
+Accepted sentences are: 1040 / 1099
+Avg. likelihood: (17) -32.0525 -0.105091
+Accepted sentences are: 1019 / 1099
+Avg. likelihood: (18) -32.0967 -0.0441463
+Accepted sentences are: 1001 / 1099
+Avg. likelihood: (19) -32.0979 -0.00119253
+Accepted sentences are: 996 / 1099

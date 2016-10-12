@@ -104,7 +104,7 @@ edit database.config:
 
 EHMMLabeler.prepareAudioFiles false
 (only set to false if audio files have not been changed!)
-
+(this is also remarkably slow, 1000 files take about an hour)
 
 EHMMLabeler.doTraining false
 EHMMLabeler.startEHMMModelDir /home/harald/git/trafikmaktordningen-audiobook/mary_sv_tmo_ehmm_mod
