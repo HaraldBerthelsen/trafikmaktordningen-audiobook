@@ -112,21 +112,14 @@ EHMMLabeler.startEHMMModelDir /home/harald/git/trafikmaktordningen-audiobook/mar
 
 It should now only take a minute or two to realign the files.
 
+TODO: look at how to realign only the changed files!
+AND look at the irish aligner. Is it julius?
 
 
+------------
+Finished voice
 
-
-
-
-
-
-
-
-
-
-TODO CORRECTIONS:
-
-egrep [0-9]{4} corpus/txt/*
-
-check for years, they will very often be mislabelled by mary. Compounds like 1900-talet will be especially wrong.
-There are 28 of these.
+marytts unitselection and hsmm voices build.
+But don't sound very good.
+There are problems with sentence split, it still splits in the last of first word very often. Also perhaps pauses not marked in the text cause problems?
+Anyway hsmm voice committed. 
