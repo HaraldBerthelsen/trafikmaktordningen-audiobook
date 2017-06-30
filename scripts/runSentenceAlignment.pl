@@ -8,12 +8,7 @@ unless (-e $syncmaps_dir) {
 }
 
 #MODIFY AENEAS CONFIG HERE IF NEEDED
-#Boundary offset -0.200 seems to be the best setting, it moves every boundary back 200 ms. Without it, many sentences start too late. With it, there are a few cases where they instead start too early.
-#No I now disagree with myself here.. It seems to go the wrong way. Switching back to running without any modification
-
-#$aeneas_config = "task_language=swe|os_task_file_format=json|is_text_type=plain|task_adjust_boundary_algorithm=offset|task_adjust_boundary_offset_value=-0.200";
-
-$aeneas_config = "task_language=swe|os_task_file_format=json|is_text_type=plain";
+$aeneas_config = "task_language=swe|os_task_file_format=json|is_text_type=plain|task_adjust_boundary_algorithm=percent|task_adjust_boundary_percent_value=50";
     
 for ($i = 1; $i < 10; $i++) {
 
